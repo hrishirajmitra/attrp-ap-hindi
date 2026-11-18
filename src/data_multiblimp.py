@@ -26,7 +26,8 @@ from .tokenize import try_single_or_first
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_DIR = ROOT / "data" / "multiblimp"
 
-MIN_SINGLE_POOL = 150
+MIN_SINGLE_POOL = 100
+MIN_WINDOW, MAX_WINDOW = 8, 24
 LANG_FILE = {"en": "eng_data.tsv", "hi": "hin_data.tsv"}
 
 
@@ -76,7 +77,7 @@ def generate_multiblimp_batch(
         raise RuntimeError(f"No MultiBLiMP rows for lang={lang} phenomenon={phenomenon}")
 
     lead = True  # next word follows a space in running text, for both scripts
-    usable: list[dict] = []
+    cand: list[dict] = []
     for r in rows:
         # NOTE: the TSV `verb` / `swap_head` columns are NOT reliably the word
         # right after `prefix` (checked: 197/200 mismatches in hin). Derive the
@@ -103,9 +104,7 @@ def generate_multiblimp_batch(
             )
         except ValueError:
             continue
-        if pos_id == neg_id:
-            continue
-        usable.append(
+        cand.append(
             {
                 **r,
                 "prefix": prefix,
@@ -117,44 +116,57 @@ def generate_multiblimp_batch(
                 "swap": swap,
             }
         )
-    if len(usable) < 8:
-        raise RuntimeError(
-            f"Too few usable MultiBLiMP items for lang={lang} (got {len(usable)})"
-        )
-    # Prefer pairs whose contrast words are both single tokens (so the logit difference is a
-    # clean one-token contrast). If fewer than MIN_SINGLE_POOL such pairs exist the full pool is
-    # used and the batch single-token rate will (correctly) fail the competence gate.
-    pool_single_rate = sum(1 for u in usable if u["n_pos"] == 1 and u["n_neg"] == 1) / len(usable)
+    if not cand:
+        raise RuntimeError(f"No MultiBLiMP candidates for lang={lang}")
+    # Descriptor of the whole candidate pool (before any filtering): how often is the contrast a
+    # clean one-token-vs-one-token pair in this model's tokenizer?
+    pool_single_rate = sum(1 for u in cand if u["n_pos"] == 1 and u["n_neg"] == 1) / len(cand)
+    # A first-token contrast with identical first tokens is meaningless -> drop.
+    usable = [u for u in cand if u["pos_id"] != u["neg_id"]]
+    # Prefer pairs whose contrast words are both single tokens. If fewer than MIN_SINGLE_POOL
+    # exist the (first-token) pool is used and the batch single-token rate fails the gate.
     single_pool = [u for u in usable if u["n_pos"] == 1 and u["n_neg"] == 1]
     pool_filtered = len(single_pool) >= MIN_SINGLE_POOL
     if pool_filtered:
         usable = single_pool
+    if len(usable) < 8:
+        raise RuntimeError(
+            f"Too few usable MultiBLiMP items for lang={lang} (got {len(usable)} of {len(cand)})"
+        )
+
+    # Fixed-length window: every prompt is [first token] + the last (K-1) tokens of its prefix,
+    # so clean/corrupted prompts and all prompts in the batch share one length (no padding).
+    # K = min(MAX_WINDOW, 30th percentile of prefix lengths in the pool), >= MIN_WINDOW.
+    toks_all = [model.to_tokens(u["prefix"])[0] for u in usable]
+    lens = sorted(int(t.numel()) for t in toks_all)
+    K = max(MIN_WINDOW, min(MAX_WINDOW, lens[int(0.3 * (len(lens) - 1))]))
+    keep = [(u, t) for u, t in zip(usable, toks_all) if t.numel() >= K]
+    if len(keep) < 8:
+        raise RuntimeError(f"Too few MultiBLiMP prefixes with >= {K} tokens (lang={lang})")
+
+    def _window(t: torch.Tensor) -> torch.Tensor:
+        return torch.cat([t[:1], t[-(K - 1):]])
 
     clean_s, corr_s, pos_ids, neg_ids = [], [], [], []
     clean_t, corr_t = [], []
     n_toks = []
     metas = []
-    target_len = None
+    seen_clean: set[tuple] = set()
     tries = 0
     while len(clean_s) < n:
         tries += 1
         if tries > n * 400:
-            raise RuntimeError(
-                f"Could not build enough equal-length MultiBLiMP pairs (lang={lang})"
-            )
-        a, b = rng.sample(usable, 2)
-        if a["pos_id"] == b["pos_id"] and a["prefix"] == b["prefix"]:
+            raise RuntimeError(f"Could not build enough MultiBLiMP pairs (lang={lang})")
+        (a, ta), (b, tb) = rng.sample(keep, 2)
+        ct, rt = _window(ta), _window(tb)
+        if torch.equal(ct, rt) or a["pos_id"] == b["pos_id"] and a["neg_id"] == b["neg_id"]:
             continue
-        ct = model.to_tokens(a["prefix"])[0]
-        rt = model.to_tokens(b["prefix"])[0]
-        if ct.numel() != rt.numel():
+        key = tuple(ct.tolist())
+        if key in seen_clean and len(keep) >= n:
             continue
-        if target_len is None:
-            target_len = ct.numel()
-        if ct.numel() != target_len:
-            continue
-        clean_s.append(a["prefix"])
-        corr_s.append(b["prefix"])
+        seen_clean.add(key)
+        clean_s.append(model.to_string(ct[1:]))
+        corr_s.append(model.to_string(rt[1:]))
         clean_t.append(ct)
         corr_t.append(rt)
         pos_ids.append(a["pos_id"])
@@ -187,7 +199,9 @@ def generate_multiblimp_batch(
         meta={
             "source": "multiblimp",
             "single_token_answer_rate": single_rate,
-            "n_pool": len(usable),
+            "n_pool": len(keep),
+            "n_candidates": len(cand),
+            "window_tokens": K,
             "pool_single_token_rate": pool_single_rate,
             "pool_filtered_to_single_token": pool_filtered,
             "phenomenon_counts": phen_counts,

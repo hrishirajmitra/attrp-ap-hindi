@@ -27,6 +27,7 @@ def main() -> None:
     p = argparse.ArgumentParser()
     p.add_argument("--models", nargs="*", default=["gpt2", "Qwen/Qwen2.5-0.5B"])
     p.add_argument("--n", type=int, default=8)
+    p.add_argument("--only-tasks", nargs="*", default=None)
     p.add_argument("--out", type=Path, default=ROOT / "results" / "smoke")
     args = p.parse_args()
 
@@ -35,6 +36,8 @@ def main() -> None:
         model = load_model(name, "cuda")
         print(f"\n##### {name}  L={model.cfg.n_layers} H={model.cfg.n_heads}", flush=True)
         for task, lang in gate_cells(name):
+            if args.only_tasks and task not in args.only_tasks:
+                continue
             for direction in ("denoising", "noising"):
                 tag = f"{name.replace('/', '__')}__{task}__{lang}__{direction}"
                 try:
