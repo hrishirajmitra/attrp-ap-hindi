@@ -14,7 +14,21 @@
 _mpb_t0=$SECONDS
 _mpb_log() { echo "[node_bootstrap $(hostname) +$((SECONDS - _mpb_t0))s] $*"; }
 
-MP_SCRATCH="${MP_SCRATCH:-/ssd_scratch/hrishiraj.mitra}"
+# Pick the local disk with the most free space: /ssd_scratch is shared and sometimes full
+# (observed 0-22 GB free on gnode046/082) while /tmp is a separate 1.8 TB disk on every node.
+if [[ -z "${MP_SCRATCH:-}" ]]; then
+  _best=0; _bestdir=""
+  for _d in /ssd_scratch /tmp; do
+    [[ -d "$_d" && -w "$_d" ]] || continue
+    _avail=$(df -BG --output=avail "$_d" 2>/dev/null | tail -1 | tr -dc '0-9')
+    _avail=${_avail:-0}
+    if (( _avail > _best )); then _best=$_avail; _bestdir=$_d; fi
+  done
+  if (( _best < 20 )); then
+    echo "[node_bootstrap $(hostname)] ERROR: no local disk with >=20GB free (best=${_best}G)"; return 1
+  fi
+  MP_SCRATCH="$_bestdir/hrishiraj.mitra"
+fi
 MP_REQ="${MP_REQ:-$HOME/mp/requirements.txt}"
 MP_WHEELHOUSE="${MP_WHEELHOUSE:-$HOME/wheelhouse}"
 MP_PYTHON="${MP_PYTHON:-/software/apps/u22/python/3.12.15/bin/python3}"
