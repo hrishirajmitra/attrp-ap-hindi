@@ -1,0 +1,22 @@
+# torch installed separately from ~/pipcache on Ada (see slurm/setup_env.sh)
+torch>=2.1.0
+# TL 4.x removed HookedTransformer; Project A uses the classic TL 2/3 API
+transformer-lens>=2.0.0,<4.0.0
+transformers>=4.40.0,<5.0.0
+accelerate>=0.27.0
+numpy>=1.24.0
+scipy>=1.10.0
+pandas>=2.0.0
+matplotlib>=3.7.0
+tqdm>=4.66.0
+einops>=0.7.0
+jaxtyping>=0.2.20
+fancy-einsum>=0.0.3
+beartype>=0.14.0
+huggingface-hub>=0.20.0
+safetensors>=0.4.0
+sentencepiece>=0.1.99
+protobuf>=4.25.0
+datasets>=2.16.0
+# sae-lens: install separately if needed (Project A does not require SAEs)
+# sae-lens>=3.0.0

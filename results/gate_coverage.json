@@ -1,0 +1,979 @@
+{
+  "thresholds": {
+    "n_prompts": 100,
+    "min_clean_accuracy": 0.8,
+    "min_clean_logit_diff": 0.5,
+    "max_corrupted_logit_diff": 0.25,
+    "min_single_token_rate": 0.9
+  },
+  "rows": [
+    {
+      "model": "gpt2",
+      "task": "ioi",
+      "lang": "en",
+      "pass": null,
+      "expected_pass": true,
+      "offline_note": true,
+      "reasons": [
+        "offline expectation only \u2014 run scripts/gate.py on Ada to lock"
+      ]
+    },
+    {
+      "model": "gpt2",
+      "task": "ioi",
+      "lang": "hi",
+      "pass": null,
+      "expected_pass": false,
+      "offline_note": true,
+      "reasons": [
+        "offline expectation only \u2014 run scripts/gate.py on Ada to lock"
+      ]
+    },
+    {
+      "model": "gpt2",
+      "task": "capitals",
+      "lang": "en",
+      "pass": null,
+      "expected_pass": true,
+      "offline_note": true,
+      "reasons": [
+        "offline expectation only \u2014 run scripts/gate.py on Ada to lock"
+      ]
+    },
+    {
+      "model": "gpt2",
+      "task": "capitals",
+      "lang": "hi",
+      "pass": null,
+      "expected_pass": false,
+      "offline_note": true,
+      "reasons": [
+        "offline expectation only \u2014 run scripts/gate.py on Ada to lock"
+      ]
+    },
+    {
+      "model": "gpt2",
+      "task": "agreement",
+      "lang": "en",
+      "pass": null,
+      "expected_pass": true,
+      "offline_note": true,
+      "reasons": [
+        "offline expectation only \u2014 run scripts/gate.py on Ada to lock"
+      ]
+    },
+    {
+      "model": "gpt2",
+      "task": "agreement",
+      "lang": "hi",
+      "pass": null,
+      "expected_pass": false,
+      "offline_note": true,
+      "reasons": [
+        "offline expectation only \u2014 run scripts/gate.py on Ada to lock"
+      ]
+    },
+    {
+      "model": "gpt2",
+      "task": "induction",
+      "lang": "en",
+      "pass": null,
+      "expected_pass": true,
+      "offline_note": true,
+      "reasons": [
+        "offline expectation only \u2014 run scripts/gate.py on Ada to lock"
+      ]
+    },
+    {
+      "model": "gpt2",
+      "task": "induction",
+      "lang": "hi",
+      "pass": null,
+      "expected_pass": false,
+      "offline_note": true,
+      "reasons": [
+        "offline expectation only \u2014 run scripts/gate.py on Ada to lock"
+      ]
+    },
+    {
+      "model": "EleutherAI/pythia-160m",
+      "task": "ioi",
+      "lang": "en",
+      "pass": null,
+      "expected_pass": true,
+      "offline_note": true,
+      "reasons": [
+        "offline expectation only \u2014 run scripts/gate.py on Ada to lock"
+      ]
+    },
+    {
+      "model": "EleutherAI/pythia-160m",
+      "task": "ioi",
+      "lang": "hi",
+      "pass": null,
+      "expected_pass": false,
+      "offline_note": true,
+      "reasons": [
+        "offline expectation only \u2014 run scripts/gate.py on Ada to lock"
+      ]
+    },
+    {
+      "model": "EleutherAI/pythia-160m",
+      "task": "capitals",
+      "lang": "en",
+      "pass": null,
+      "expected_pass": true,
+      "offline_note": true,
+      "reasons": [
+        "offline expectation only \u2014 run scripts/gate.py on Ada to lock"
+      ]
+    },
+    {
+      "model": "EleutherAI/pythia-160m",
+      "task": "capitals",
+      "lang": "hi",
+      "pass": null,
+      "expected_pass": false,
+      "offline_note": true,
+      "reasons": [
+        "offline expectation only \u2014 run scripts/gate.py on Ada to lock"
+      ]
+    },
+    {
+      "model": "EleutherAI/pythia-160m",
+      "task": "agreement",
+      "lang": "en",
+      "pass": null,
+      "expected_pass": true,
+      "offline_note": true,
+      "reasons": [
+        "offline expectation only \u2014 run scripts/gate.py on Ada to lock"
+      ]
+    },
+    {
+      "model": "EleutherAI/pythia-160m",
+      "task": "agreement",
+      "lang": "hi",
+      "pass": null,
+      "expected_pass": false,
+      "offline_note": true,
+      "reasons": [
+        "offline expectation only \u2014 run scripts/gate.py on Ada to lock"
+      ]
+    },
+    {
+      "model": "EleutherAI/pythia-160m",
+      "task": "induction",
+      "lang": "en",
+      "pass": null,
+      "expected_pass": true,
+      "offline_note": true,
+      "reasons": [
+        "offline expectation only \u2014 run scripts/gate.py on Ada to lock"
+      ]
+    },
+    {
+      "model": "EleutherAI/pythia-160m",
+      "task": "induction",
+      "lang": "hi",
+      "pass": null,
+      "expected_pass": false,
+      "offline_note": true,
+      "reasons": [
+        "offline expectation only \u2014 run scripts/gate.py on Ada to lock"
+      ]
+    },
+    {
+      "model": "EleutherAI/pythia-410m",
+      "task": "ioi",
+      "lang": "en",
+      "pass": null,
+      "expected_pass": true,
+      "offline_note": true,
+      "reasons": [
+        "offline expectation only \u2014 run scripts/gate.py on Ada to lock"
+      ]
+    },
+    {
+      "model": "EleutherAI/pythia-410m",
+      "task": "ioi",
+      "lang": "hi",
+      "pass": null,
+      "expected_pass": false,
+      "offline_note": true,
+      "reasons": [
+        "offline expectation only \u2014 run scripts/gate.py on Ada to lock"
+      ]
+    },
+    {
+      "model": "EleutherAI/pythia-410m",
+      "task": "capitals",
+      "lang": "en",
+      "pass": null,
+      "expected_pass": true,
+      "offline_note": true,
+      "reasons": [
+        "offline expectation only \u2014 run scripts/gate.py on Ada to lock"
+      ]
+    },
+    {
+      "model": "EleutherAI/pythia-410m",
+      "task": "capitals",
+      "lang": "hi",
+      "pass": null,
+      "expected_pass": false,
+      "offline_note": true,
+      "reasons": [
+        "offline expectation only \u2014 run scripts/gate.py on Ada to lock"
+      ]
+    },
+    {
+      "model": "EleutherAI/pythia-410m",
+      "task": "agreement",
+      "lang": "en",
+      "pass": null,
+      "expected_pass": true,
+      "offline_note": true,
+      "reasons": [
+        "offline expectation only \u2014 run scripts/gate.py on Ada to lock"
+      ]
+    },
+    {
+      "model": "EleutherAI/pythia-410m",
+      "task": "agreement",
+      "lang": "hi",
+      "pass": null,
+      "expected_pass": false,
+      "offline_note": true,
+      "reasons": [
+        "offline expectation only \u2014 run scripts/gate.py on Ada to lock"
+      ]
+    },
+    {
+      "model": "EleutherAI/pythia-410m",
+      "task": "induction",
+      "lang": "en",
+      "pass": null,
+      "expected_pass": true,
+      "offline_note": true,
+      "reasons": [
+        "offline expectation only \u2014 run scripts/gate.py on Ada to lock"
+      ]
+    },
+    {
+      "model": "EleutherAI/pythia-410m",
+      "task": "induction",
+      "lang": "hi",
+      "pass": null,
+      "expected_pass": false,
+      "offline_note": true,
+      "reasons": [
+        "offline expectation only \u2014 run scripts/gate.py on Ada to lock"
+      ]
+    },
+    {
+      "model": "Qwen/Qwen2.5-0.5B",
+      "task": "ioi",
+      "lang": "en",
+      "pass": null,
+      "expected_pass": true,
+      "offline_note": true,
+      "reasons": [
+        "offline expectation only \u2014 run scripts/gate.py on Ada to lock"
+      ]
+    },
+    {
+      "model": "Qwen/Qwen2.5-0.5B",
+      "task": "ioi",
+      "lang": "hi",
+      "pass": null,
+      "expected_pass": true,
+      "offline_note": true,
+      "reasons": [
+        "offline expectation only \u2014 run scripts/gate.py on Ada to lock"
+      ]
+    },
+    {
+      "model": "Qwen/Qwen2.5-0.5B",
+      "task": "capitals",
+      "lang": "en",
+      "pass": null,
+      "expected_pass": true,
+      "offline_note": true,
+      "reasons": [
+        "offline expectation only \u2014 run scripts/gate.py on Ada to lock"
+      ]
+    },
+    {
+      "model": "Qwen/Qwen2.5-0.5B",
+      "task": "capitals",
+      "lang": "hi",
+      "pass": null,
+      "expected_pass": true,
+      "offline_note": true,
+      "reasons": [
+        "offline expectation only \u2014 run scripts/gate.py on Ada to lock"
+      ]
+    },
+    {
+      "model": "Qwen/Qwen2.5-0.5B",
+      "task": "agreement",
+      "lang": "en",
+      "pass": null,
+      "expected_pass": true,
+      "offline_note": true,
+      "reasons": [
+        "offline expectation only \u2014 run scripts/gate.py on Ada to lock"
+      ]
+    },
+    {
+      "model": "Qwen/Qwen2.5-0.5B",
+      "task": "agreement",
+      "lang": "hi",
+      "pass": null,
+      "expected_pass": true,
+      "offline_note": true,
+      "reasons": [
+        "offline expectation only \u2014 run scripts/gate.py on Ada to lock"
+      ]
+    },
+    {
+      "model": "Qwen/Qwen2.5-0.5B",
+      "task": "induction",
+      "lang": "en",
+      "pass": null,
+      "expected_pass": true,
+      "offline_note": true,
+      "reasons": [
+        "offline expectation only \u2014 run scripts/gate.py on Ada to lock"
+      ]
+    },
+    {
+      "model": "Qwen/Qwen2.5-0.5B",
+      "task": "induction",
+      "lang": "hi",
+      "pass": null,
+      "expected_pass": true,
+      "offline_note": true,
+      "reasons": [
+        "offline expectation only \u2014 run scripts/gate.py on Ada to lock"
+      ]
+    },
+    {
+      "model": "Qwen/Qwen2.5-1.5B",
+      "task": "ioi",
+      "lang": "en",
+      "pass": null,
+      "expected_pass": true,
+      "offline_note": true,
+      "reasons": [
+        "offline expectation only \u2014 run scripts/gate.py on Ada to lock"
+      ]
+    },
+    {
+      "model": "Qwen/Qwen2.5-1.5B",
+      "task": "ioi",
+      "lang": "hi",
+      "pass": null,
+      "expected_pass": true,
+      "offline_note": true,
+      "reasons": [
+        "offline expectation only \u2014 run scripts/gate.py on Ada to lock"
+      ]
+    },
+    {
+      "model": "Qwen/Qwen2.5-1.5B",
+      "task": "capitals",
+      "lang": "en",
+      "pass": null,
+      "expected_pass": true,
+      "offline_note": true,
+      "reasons": [
+        "offline expectation only \u2014 run scripts/gate.py on Ada to lock"
+      ]
+    },
+    {
+      "model": "Qwen/Qwen2.5-1.5B",
+      "task": "capitals",
+      "lang": "hi",
+      "pass": null,
+      "expected_pass": true,
+      "offline_note": true,
+      "reasons": [
+        "offline expectation only \u2014 run scripts/gate.py on Ada to lock"
+      ]
+    },
+    {
+      "model": "Qwen/Qwen2.5-1.5B",
+      "task": "agreement",
+      "lang": "en",
+      "pass": null,
+      "expected_pass": true,
+      "offline_note": true,
+      "reasons": [
+        "offline expectation only \u2014 run scripts/gate.py on Ada to lock"
+      ]
+    },
+    {
+      "model": "Qwen/Qwen2.5-1.5B",
+      "task": "agreement",
+      "lang": "hi",
+      "pass": null,
+      "expected_pass": true,
+      "offline_note": true,
+      "reasons": [
+        "offline expectation only \u2014 run scripts/gate.py on Ada to lock"
+      ]
+    },
+    {
+      "model": "Qwen/Qwen2.5-1.5B",
+      "task": "induction",
+      "lang": "en",
+      "pass": null,
+      "expected_pass": true,
+      "offline_note": true,
+      "reasons": [
+        "offline expectation only \u2014 run scripts/gate.py on Ada to lock"
+      ]
+    },
+    {
+      "model": "Qwen/Qwen2.5-1.5B",
+      "task": "induction",
+      "lang": "hi",
+      "pass": null,
+      "expected_pass": true,
+      "offline_note": true,
+      "reasons": [
+        "offline expectation only \u2014 run scripts/gate.py on Ada to lock"
+      ]
+    },
+    {
+      "model": "meta-llama/Llama-3.2-1B",
+      "task": "ioi",
+      "lang": "en",
+      "pass": null,
+      "expected_pass": true,
+      "offline_note": true,
+      "reasons": [
+        "offline expectation only \u2014 run scripts/gate.py on Ada to lock"
+      ]
+    },
+    {
+      "model": "meta-llama/Llama-3.2-1B",
+      "task": "ioi",
+      "lang": "hi",
+      "pass": null,
+      "expected_pass": true,
+      "offline_note": true,
+      "reasons": [
+        "offline expectation only \u2014 run scripts/gate.py on Ada to lock"
+      ]
+    },
+    {
+      "model": "meta-llama/Llama-3.2-1B",
+      "task": "capitals",
+      "lang": "en",
+      "pass": null,
+      "expected_pass": true,
+      "offline_note": true,
+      "reasons": [
+        "offline expectation only \u2014 run scripts/gate.py on Ada to lock"
+      ]
+    },
+    {
+      "model": "meta-llama/Llama-3.2-1B",
+      "task": "capitals",
+      "lang": "hi",
+      "pass": null,
+      "expected_pass": true,
+      "offline_note": true,
+      "reasons": [
+        "offline expectation only \u2014 run scripts/gate.py on Ada to lock"
+      ]
+    },
+    {
+      "model": "meta-llama/Llama-3.2-1B",
+      "task": "agreement",
+      "lang": "en",
+      "pass": null,
+      "expected_pass": true,
+      "offline_note": true,
+      "reasons": [
+        "offline expectation only \u2014 run scripts/gate.py on Ada to lock"
+      ]
+    },
+    {
+      "model": "meta-llama/Llama-3.2-1B",
+      "task": "agreement",
+      "lang": "hi",
+      "pass": null,
+      "expected_pass": true,
+      "offline_note": true,
+      "reasons": [
+        "offline expectation only \u2014 run scripts/gate.py on Ada to lock"
+      ]
+    },
+    {
+      "model": "meta-llama/Llama-3.2-1B",
+      "task": "induction",
+      "lang": "en",
+      "pass": null,
+      "expected_pass": true,
+      "offline_note": true,
+      "reasons": [
+        "offline expectation only \u2014 run scripts/gate.py on Ada to lock"
+      ]
+    },
+    {
+      "model": "meta-llama/Llama-3.2-1B",
+      "task": "induction",
+      "lang": "hi",
+      "pass": null,
+      "expected_pass": true,
+      "offline_note": true,
+      "reasons": [
+        "offline expectation only \u2014 run scripts/gate.py on Ada to lock"
+      ]
+    },
+    {
+      "model": "google/gemma-3-1b-pt",
+      "task": "ioi",
+      "lang": "en",
+      "pass": null,
+      "expected_pass": true,
+      "offline_note": true,
+      "reasons": [
+        "offline expectation only \u2014 run scripts/gate.py on Ada to lock"
+      ]
+    },
+    {
+      "model": "google/gemma-3-1b-pt",
+      "task": "ioi",
+      "lang": "hi",
+      "pass": null,
+      "expected_pass": true,
+      "offline_note": true,
+      "reasons": [
+        "offline expectation only \u2014 run scripts/gate.py on Ada to lock"
+      ]
+    },
+    {
+      "model": "google/gemma-3-1b-pt",
+      "task": "capitals",
+      "lang": "en",
+      "pass": null,
+      "expected_pass": true,
+      "offline_note": true,
+      "reasons": [
+        "offline expectation only \u2014 run scripts/gate.py on Ada to lock"
+      ]
+    },
+    {
+      "model": "google/gemma-3-1b-pt",
+      "task": "capitals",
+      "lang": "hi",
+      "pass": null,
+      "expected_pass": true,
+      "offline_note": true,
+      "reasons": [
+        "offline expectation only \u2014 run scripts/gate.py on Ada to lock"
+      ]
+    },
+    {
+      "model": "google/gemma-3-1b-pt",
+      "task": "agreement",
+      "lang": "en",
+      "pass": null,
+      "expected_pass": true,
+      "offline_note": true,
+      "reasons": [
+        "offline expectation only \u2014 run scripts/gate.py on Ada to lock"
+      ]
+    },
+    {
+      "model": "google/gemma-3-1b-pt",
+      "task": "agreement",
+      "lang": "hi",
+      "pass": null,
+      "expected_pass": true,
+      "offline_note": true,
+      "reasons": [
+        "offline expectation only \u2014 run scripts/gate.py on Ada to lock"
+      ]
+    },
+    {
+      "model": "google/gemma-3-1b-pt",
+      "task": "induction",
+      "lang": "en",
+      "pass": null,
+      "expected_pass": true,
+      "offline_note": true,
+      "reasons": [
+        "offline expectation only \u2014 run scripts/gate.py on Ada to lock"
+      ]
+    },
+    {
+      "model": "google/gemma-3-1b-pt",
+      "task": "induction",
+      "lang": "hi",
+      "pass": null,
+      "expected_pass": true,
+      "offline_note": true,
+      "reasons": [
+        "offline expectation only \u2014 run scripts/gate.py on Ada to lock"
+      ]
+    },
+    {
+      "model": "sarvamai/sarvam-1",
+      "task": "ioi",
+      "lang": "en",
+      "pass": null,
+      "expected_pass": true,
+      "offline_note": true,
+      "reasons": [
+        "offline expectation only \u2014 run scripts/gate.py on Ada to lock"
+      ]
+    },
+    {
+      "model": "sarvamai/sarvam-1",
+      "task": "ioi",
+      "lang": "hi",
+      "pass": null,
+      "expected_pass": true,
+      "offline_note": true,
+      "reasons": [
+        "offline expectation only \u2014 run scripts/gate.py on Ada to lock"
+      ]
+    },
+    {
+      "model": "sarvamai/sarvam-1",
+      "task": "capitals",
+      "lang": "en",
+      "pass": null,
+      "expected_pass": true,
+      "offline_note": true,
+      "reasons": [
+        "offline expectation only \u2014 run scripts/gate.py on Ada to lock"
+      ]
+    },
+    {
+      "model": "sarvamai/sarvam-1",
+      "task": "capitals",
+      "lang": "hi",
+      "pass": null,
+      "expected_pass": true,
+      "offline_note": true,
+      "reasons": [
+        "offline expectation only \u2014 run scripts/gate.py on Ada to lock"
+      ]
+    },
+    {
+      "model": "sarvamai/sarvam-1",
+      "task": "agreement",
+      "lang": "en",
+      "pass": null,
+      "expected_pass": true,
+      "offline_note": true,
+      "reasons": [
+        "offline expectation only \u2014 run scripts/gate.py on Ada to lock"
+      ]
+    },
+    {
+      "model": "sarvamai/sarvam-1",
+      "task": "agreement",
+      "lang": "hi",
+      "pass": null,
+      "expected_pass": true,
+      "offline_note": true,
+      "reasons": [
+        "offline expectation only \u2014 run scripts/gate.py on Ada to lock"
+      ]
+    },
+    {
+      "model": "sarvamai/sarvam-1",
+      "task": "induction",
+      "lang": "en",
+      "pass": null,
+      "expected_pass": true,
+      "offline_note": true,
+      "reasons": [
+        "offline expectation only \u2014 run scripts/gate.py on Ada to lock"
+      ]
+    },
+    {
+      "model": "sarvamai/sarvam-1",
+      "task": "induction",
+      "lang": "hi",
+      "pass": null,
+      "expected_pass": true,
+      "offline_note": true,
+      "reasons": [
+        "offline expectation only \u2014 run scripts/gate.py on Ada to lock"
+      ]
+    }
+  ],
+  "passed_cells": [],
+  "expected_pass_cells": [
+    {
+      "model": "gpt2",
+      "task": "ioi",
+      "lang": "en"
+    },
+    {
+      "model": "gpt2",
+      "task": "capitals",
+      "lang": "en"
+    },
+    {
+      "model": "gpt2",
+      "task": "agreement",
+      "lang": "en"
+    },
+    {
+      "model": "gpt2",
+      "task": "induction",
+      "lang": "en"
+    },
+    {
+      "model": "EleutherAI/pythia-160m",
+      "task": "ioi",
+      "lang": "en"
+    },
+    {
+      "model": "EleutherAI/pythia-160m",
+      "task": "capitals",
+      "lang": "en"
+    },
+    {
+      "model": "EleutherAI/pythia-160m",
+      "task": "agreement",
+      "lang": "en"
+    },
+    {
+      "model": "EleutherAI/pythia-160m",
+      "task": "induction",
+      "lang": "en"
+    },
+    {
+      "model": "EleutherAI/pythia-410m",
+      "task": "ioi",
+      "lang": "en"
+    },
+    {
+      "model": "EleutherAI/pythia-410m",
+      "task": "capitals",
+      "lang": "en"
+    },
+    {
+      "model": "EleutherAI/pythia-410m",
+      "task": "agreement",
+      "lang": "en"
+    },
+    {
+      "model": "EleutherAI/pythia-410m",
+      "task": "induction",
+      "lang": "en"
+    },
+    {
+      "model": "Qwen/Qwen2.5-0.5B",
+      "task": "ioi",
+      "lang": "en"
+    },
+    {
+      "model": "Qwen/Qwen2.5-0.5B",
+      "task": "ioi",
+      "lang": "hi"
+    },
+    {
+      "model": "Qwen/Qwen2.5-0.5B",
+      "task": "capitals",
+      "lang": "en"
+    },
+    {
+      "model": "Qwen/Qwen2.5-0.5B",
+      "task": "capitals",
+      "lang": "hi"
+    },
+    {
+      "model": "Qwen/Qwen2.5-0.5B",
+      "task": "agreement",
+      "lang": "en"
+    },
+    {
+      "model": "Qwen/Qwen2.5-0.5B",
+      "task": "agreement",
+      "lang": "hi"
+    },
+    {
+      "model": "Qwen/Qwen2.5-0.5B",
+      "task": "induction",
+      "lang": "en"
+    },
+    {
+      "model": "Qwen/Qwen2.5-0.5B",
+      "task": "induction",
+      "lang": "hi"
+    },
+    {
+      "model": "Qwen/Qwen2.5-1.5B",
+      "task": "ioi",
+      "lang": "en"
+    },
+    {
+      "model": "Qwen/Qwen2.5-1.5B",
+      "task": "ioi",
+      "lang": "hi"
+    },
+    {
+      "model": "Qwen/Qwen2.5-1.5B",
+      "task": "capitals",
+      "lang": "en"
+    },
+    {
+      "model": "Qwen/Qwen2.5-1.5B",
+      "task": "capitals",
+      "lang": "hi"
+    },
+    {
+      "model": "Qwen/Qwen2.5-1.5B",
+      "task": "agreement",
+      "lang": "en"
+    },
+    {
+      "model": "Qwen/Qwen2.5-1.5B",
+      "task": "agreement",
+      "lang": "hi"
+    },
+    {
+      "model": "Qwen/Qwen2.5-1.5B",
+      "task": "induction",
+      "lang": "en"
+    },
+    {
+      "model": "Qwen/Qwen2.5-1.5B",
+      "task": "induction",
+      "lang": "hi"
+    },
+    {
+      "model": "meta-llama/Llama-3.2-1B",
+      "task": "ioi",
+      "lang": "en"
+    },
+    {
+      "model": "meta-llama/Llama-3.2-1B",
+      "task": "ioi",
+      "lang": "hi"
+    },
+    {
+      "model": "meta-llama/Llama-3.2-1B",
+      "task": "capitals",
+      "lang": "en"
+    },
+    {
+      "model": "meta-llama/Llama-3.2-1B",
+      "task": "capitals",
+      "lang": "hi"
+    },
+    {
+      "model": "meta-llama/Llama-3.2-1B",
+      "task": "agreement",
+      "lang": "en"
+    },
+    {
+      "model": "meta-llama/Llama-3.2-1B",
+      "task": "agreement",
+      "lang": "hi"
+    },
+    {
+      "model": "meta-llama/Llama-3.2-1B",
+      "task": "induction",
+      "lang": "en"
+    },
+    {
+      "model": "meta-llama/Llama-3.2-1B",
+      "task": "induction",
+      "lang": "hi"
+    },
+    {
+      "model": "google/gemma-3-1b-pt",
+      "task": "ioi",
+      "lang": "en"
+    },
+    {
+      "model": "google/gemma-3-1b-pt",
+      "task": "ioi",
+      "lang": "hi"
+    },
+    {
+      "model": "google/gemma-3-1b-pt",
+      "task": "capitals",
+      "lang": "en"
+    },
+    {
+      "model": "google/gemma-3-1b-pt",
+      "task": "capitals",
+      "lang": "hi"
+    },
+    {
+      "model": "google/gemma-3-1b-pt",
+      "task": "agreement",
+      "lang": "en"
+    },
+    {
+      "model": "google/gemma-3-1b-pt",
+      "task": "agreement",
+      "lang": "hi"
+    },
+    {
+      "model": "google/gemma-3-1b-pt",
+      "task": "induction",
+      "lang": "en"
+    },
+    {
+      "model": "google/gemma-3-1b-pt",
+      "task": "induction",
+      "lang": "hi"
+    },
+    {
+      "model": "sarvamai/sarvam-1",
+      "task": "ioi",
+      "lang": "en"
+    },
+    {
+      "model": "sarvamai/sarvam-1",
+      "task": "ioi",
+      "lang": "hi"
+    },
+    {
+      "model": "sarvamai/sarvam-1",
+      "task": "capitals",
+      "lang": "en"
+    },
+    {
+      "model": "sarvamai/sarvam-1",
+      "task": "capitals",
+      "lang": "hi"
+    },
+    {
+      "model": "sarvamai/sarvam-1",
+      "task": "agreement",
+      "lang": "en"
+    },
+    {
+      "model": "sarvamai/sarvam-1",
+      "task": "agreement",
+      "lang": "hi"
+    },
+    {
+      "model": "sarvamai/sarvam-1",
+      "task": "induction",
+      "lang": "en"
+    },
+    {
+      "model": "sarvamai/sarvam-1",
+      "task": "induction",
+      "lang": "hi"
+    }
+  ],
+  "offline": true
+}

@@ -1,0 +1,6 @@
+{
+  "status": "skipped",
+  "reason": "missing deps: No module named 'torch'",
+  "engine_decision": "keep_ours_crosscheck_optional",
+  "see": "results/ENGINE_DECISION.md"
+}

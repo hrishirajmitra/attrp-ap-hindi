@@ -1,0 +1,2815 @@
+{
+  "n_jobs": 312,
+  "source_gate": "/home/hrishiraj/Documents/IIIT/Mech Interp/mp/results/gate_coverage.json",
+  "used_expected": true,
+  "jobs": [
+    {
+      "model": "gpt2",
+      "task": "ioi",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 0,
+      "ig_sweep": "5,10,20",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "gpt2",
+      "task": "ioi",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 1,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "gpt2",
+      "task": "ioi",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 2,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "gpt2",
+      "task": "ioi",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 3,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "gpt2",
+      "task": "ioi",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 4,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "gpt2",
+      "task": "ioi",
+      "lang": "en",
+      "direction": "noising",
+      "seed": 0,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "gpt2",
+      "task": "capitals",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 0,
+      "ig_sweep": "5,10,20",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "gpt2",
+      "task": "capitals",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 1,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "gpt2",
+      "task": "capitals",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 2,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "gpt2",
+      "task": "capitals",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 3,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "gpt2",
+      "task": "capitals",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 4,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "gpt2",
+      "task": "capitals",
+      "lang": "en",
+      "direction": "noising",
+      "seed": 0,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "gpt2",
+      "task": "agreement",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 0,
+      "ig_sweep": "5,10,20",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "gpt2",
+      "task": "agreement",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 1,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "gpt2",
+      "task": "agreement",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 2,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "gpt2",
+      "task": "agreement",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 3,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "gpt2",
+      "task": "agreement",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 4,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "gpt2",
+      "task": "agreement",
+      "lang": "en",
+      "direction": "noising",
+      "seed": 0,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "gpt2",
+      "task": "induction",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 0,
+      "ig_sweep": "5,10,20",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "gpt2",
+      "task": "induction",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 1,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "gpt2",
+      "task": "induction",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 2,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "gpt2",
+      "task": "induction",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 3,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "gpt2",
+      "task": "induction",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 4,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "gpt2",
+      "task": "induction",
+      "lang": "en",
+      "direction": "noising",
+      "seed": 0,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "EleutherAI/pythia-160m",
+      "task": "ioi",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 0,
+      "ig_sweep": "5,10,20",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "EleutherAI/pythia-160m",
+      "task": "ioi",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 1,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "EleutherAI/pythia-160m",
+      "task": "ioi",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 2,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "EleutherAI/pythia-160m",
+      "task": "ioi",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 3,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "EleutherAI/pythia-160m",
+      "task": "ioi",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 4,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "EleutherAI/pythia-160m",
+      "task": "ioi",
+      "lang": "en",
+      "direction": "noising",
+      "seed": 0,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "EleutherAI/pythia-160m",
+      "task": "capitals",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 0,
+      "ig_sweep": "5,10,20",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "EleutherAI/pythia-160m",
+      "task": "capitals",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 1,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "EleutherAI/pythia-160m",
+      "task": "capitals",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 2,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "EleutherAI/pythia-160m",
+      "task": "capitals",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 3,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "EleutherAI/pythia-160m",
+      "task": "capitals",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 4,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "EleutherAI/pythia-160m",
+      "task": "capitals",
+      "lang": "en",
+      "direction": "noising",
+      "seed": 0,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "EleutherAI/pythia-160m",
+      "task": "agreement",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 0,
+      "ig_sweep": "5,10,20",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "EleutherAI/pythia-160m",
+      "task": "agreement",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 1,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "EleutherAI/pythia-160m",
+      "task": "agreement",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 2,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "EleutherAI/pythia-160m",
+      "task": "agreement",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 3,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "EleutherAI/pythia-160m",
+      "task": "agreement",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 4,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "EleutherAI/pythia-160m",
+      "task": "agreement",
+      "lang": "en",
+      "direction": "noising",
+      "seed": 0,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "EleutherAI/pythia-160m",
+      "task": "induction",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 0,
+      "ig_sweep": "5,10,20",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "EleutherAI/pythia-160m",
+      "task": "induction",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 1,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "EleutherAI/pythia-160m",
+      "task": "induction",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 2,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "EleutherAI/pythia-160m",
+      "task": "induction",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 3,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "EleutherAI/pythia-160m",
+      "task": "induction",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 4,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "EleutherAI/pythia-160m",
+      "task": "induction",
+      "lang": "en",
+      "direction": "noising",
+      "seed": 0,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "EleutherAI/pythia-410m",
+      "task": "ioi",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 0,
+      "ig_sweep": "5,10,20",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "EleutherAI/pythia-410m",
+      "task": "ioi",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 1,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "EleutherAI/pythia-410m",
+      "task": "ioi",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 2,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "EleutherAI/pythia-410m",
+      "task": "ioi",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 3,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "EleutherAI/pythia-410m",
+      "task": "ioi",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 4,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "EleutherAI/pythia-410m",
+      "task": "ioi",
+      "lang": "en",
+      "direction": "noising",
+      "seed": 0,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "EleutherAI/pythia-410m",
+      "task": "capitals",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 0,
+      "ig_sweep": "5,10,20",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "EleutherAI/pythia-410m",
+      "task": "capitals",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 1,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "EleutherAI/pythia-410m",
+      "task": "capitals",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 2,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "EleutherAI/pythia-410m",
+      "task": "capitals",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 3,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "EleutherAI/pythia-410m",
+      "task": "capitals",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 4,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "EleutherAI/pythia-410m",
+      "task": "capitals",
+      "lang": "en",
+      "direction": "noising",
+      "seed": 0,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "EleutherAI/pythia-410m",
+      "task": "agreement",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 0,
+      "ig_sweep": "5,10,20",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "EleutherAI/pythia-410m",
+      "task": "agreement",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 1,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "EleutherAI/pythia-410m",
+      "task": "agreement",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 2,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "EleutherAI/pythia-410m",
+      "task": "agreement",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 3,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "EleutherAI/pythia-410m",
+      "task": "agreement",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 4,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "EleutherAI/pythia-410m",
+      "task": "agreement",
+      "lang": "en",
+      "direction": "noising",
+      "seed": 0,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "EleutherAI/pythia-410m",
+      "task": "induction",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 0,
+      "ig_sweep": "5,10,20",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "EleutherAI/pythia-410m",
+      "task": "induction",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 1,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "EleutherAI/pythia-410m",
+      "task": "induction",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 2,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "EleutherAI/pythia-410m",
+      "task": "induction",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 3,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "EleutherAI/pythia-410m",
+      "task": "induction",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 4,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "EleutherAI/pythia-410m",
+      "task": "induction",
+      "lang": "en",
+      "direction": "noising",
+      "seed": 0,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "Qwen/Qwen2.5-0.5B",
+      "task": "ioi",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 0,
+      "ig_sweep": "5,10,20",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "Qwen/Qwen2.5-0.5B",
+      "task": "ioi",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 1,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "Qwen/Qwen2.5-0.5B",
+      "task": "ioi",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 2,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "Qwen/Qwen2.5-0.5B",
+      "task": "ioi",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 3,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "Qwen/Qwen2.5-0.5B",
+      "task": "ioi",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 4,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "Qwen/Qwen2.5-0.5B",
+      "task": "ioi",
+      "lang": "en",
+      "direction": "noising",
+      "seed": 0,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "Qwen/Qwen2.5-0.5B",
+      "task": "ioi",
+      "lang": "hi",
+      "direction": "denoising",
+      "seed": 0,
+      "ig_sweep": "5,10,20",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "Qwen/Qwen2.5-0.5B",
+      "task": "ioi",
+      "lang": "hi",
+      "direction": "denoising",
+      "seed": 1,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "Qwen/Qwen2.5-0.5B",
+      "task": "ioi",
+      "lang": "hi",
+      "direction": "denoising",
+      "seed": 2,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "Qwen/Qwen2.5-0.5B",
+      "task": "ioi",
+      "lang": "hi",
+      "direction": "denoising",
+      "seed": 3,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "Qwen/Qwen2.5-0.5B",
+      "task": "ioi",
+      "lang": "hi",
+      "direction": "denoising",
+      "seed": 4,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "Qwen/Qwen2.5-0.5B",
+      "task": "ioi",
+      "lang": "hi",
+      "direction": "noising",
+      "seed": 0,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "Qwen/Qwen2.5-0.5B",
+      "task": "capitals",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 0,
+      "ig_sweep": "5,10,20",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "Qwen/Qwen2.5-0.5B",
+      "task": "capitals",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 1,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "Qwen/Qwen2.5-0.5B",
+      "task": "capitals",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 2,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "Qwen/Qwen2.5-0.5B",
+      "task": "capitals",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 3,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "Qwen/Qwen2.5-0.5B",
+      "task": "capitals",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 4,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "Qwen/Qwen2.5-0.5B",
+      "task": "capitals",
+      "lang": "en",
+      "direction": "noising",
+      "seed": 0,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "Qwen/Qwen2.5-0.5B",
+      "task": "capitals",
+      "lang": "hi",
+      "direction": "denoising",
+      "seed": 0,
+      "ig_sweep": "5,10,20",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "Qwen/Qwen2.5-0.5B",
+      "task": "capitals",
+      "lang": "hi",
+      "direction": "denoising",
+      "seed": 1,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "Qwen/Qwen2.5-0.5B",
+      "task": "capitals",
+      "lang": "hi",
+      "direction": "denoising",
+      "seed": 2,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "Qwen/Qwen2.5-0.5B",
+      "task": "capitals",
+      "lang": "hi",
+      "direction": "denoising",
+      "seed": 3,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "Qwen/Qwen2.5-0.5B",
+      "task": "capitals",
+      "lang": "hi",
+      "direction": "denoising",
+      "seed": 4,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "Qwen/Qwen2.5-0.5B",
+      "task": "capitals",
+      "lang": "hi",
+      "direction": "noising",
+      "seed": 0,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "Qwen/Qwen2.5-0.5B",
+      "task": "agreement",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 0,
+      "ig_sweep": "5,10,20",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "Qwen/Qwen2.5-0.5B",
+      "task": "agreement",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 1,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "Qwen/Qwen2.5-0.5B",
+      "task": "agreement",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 2,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "Qwen/Qwen2.5-0.5B",
+      "task": "agreement",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 3,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "Qwen/Qwen2.5-0.5B",
+      "task": "agreement",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 4,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "Qwen/Qwen2.5-0.5B",
+      "task": "agreement",
+      "lang": "en",
+      "direction": "noising",
+      "seed": 0,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "Qwen/Qwen2.5-0.5B",
+      "task": "agreement",
+      "lang": "hi",
+      "direction": "denoising",
+      "seed": 0,
+      "ig_sweep": "5,10,20",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "Qwen/Qwen2.5-0.5B",
+      "task": "agreement",
+      "lang": "hi",
+      "direction": "denoising",
+      "seed": 1,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "Qwen/Qwen2.5-0.5B",
+      "task": "agreement",
+      "lang": "hi",
+      "direction": "denoising",
+      "seed": 2,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "Qwen/Qwen2.5-0.5B",
+      "task": "agreement",
+      "lang": "hi",
+      "direction": "denoising",
+      "seed": 3,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "Qwen/Qwen2.5-0.5B",
+      "task": "agreement",
+      "lang": "hi",
+      "direction": "denoising",
+      "seed": 4,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "Qwen/Qwen2.5-0.5B",
+      "task": "agreement",
+      "lang": "hi",
+      "direction": "noising",
+      "seed": 0,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "Qwen/Qwen2.5-0.5B",
+      "task": "induction",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 0,
+      "ig_sweep": "5,10,20",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "Qwen/Qwen2.5-0.5B",
+      "task": "induction",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 1,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "Qwen/Qwen2.5-0.5B",
+      "task": "induction",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 2,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "Qwen/Qwen2.5-0.5B",
+      "task": "induction",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 3,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "Qwen/Qwen2.5-0.5B",
+      "task": "induction",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 4,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "Qwen/Qwen2.5-0.5B",
+      "task": "induction",
+      "lang": "en",
+      "direction": "noising",
+      "seed": 0,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "Qwen/Qwen2.5-0.5B",
+      "task": "induction",
+      "lang": "hi",
+      "direction": "denoising",
+      "seed": 0,
+      "ig_sweep": "5,10,20",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "Qwen/Qwen2.5-0.5B",
+      "task": "induction",
+      "lang": "hi",
+      "direction": "denoising",
+      "seed": 1,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "Qwen/Qwen2.5-0.5B",
+      "task": "induction",
+      "lang": "hi",
+      "direction": "denoising",
+      "seed": 2,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "Qwen/Qwen2.5-0.5B",
+      "task": "induction",
+      "lang": "hi",
+      "direction": "denoising",
+      "seed": 3,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "Qwen/Qwen2.5-0.5B",
+      "task": "induction",
+      "lang": "hi",
+      "direction": "denoising",
+      "seed": 4,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "Qwen/Qwen2.5-0.5B",
+      "task": "induction",
+      "lang": "hi",
+      "direction": "noising",
+      "seed": 0,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "Qwen/Qwen2.5-1.5B",
+      "task": "ioi",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 0,
+      "ig_sweep": "5,10,20",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "Qwen/Qwen2.5-1.5B",
+      "task": "ioi",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 1,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "Qwen/Qwen2.5-1.5B",
+      "task": "ioi",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 2,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "Qwen/Qwen2.5-1.5B",
+      "task": "ioi",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 3,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "Qwen/Qwen2.5-1.5B",
+      "task": "ioi",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 4,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "Qwen/Qwen2.5-1.5B",
+      "task": "ioi",
+      "lang": "en",
+      "direction": "noising",
+      "seed": 0,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "Qwen/Qwen2.5-1.5B",
+      "task": "ioi",
+      "lang": "hi",
+      "direction": "denoising",
+      "seed": 0,
+      "ig_sweep": "5,10,20",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "Qwen/Qwen2.5-1.5B",
+      "task": "ioi",
+      "lang": "hi",
+      "direction": "denoising",
+      "seed": 1,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "Qwen/Qwen2.5-1.5B",
+      "task": "ioi",
+      "lang": "hi",
+      "direction": "denoising",
+      "seed": 2,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "Qwen/Qwen2.5-1.5B",
+      "task": "ioi",
+      "lang": "hi",
+      "direction": "denoising",
+      "seed": 3,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "Qwen/Qwen2.5-1.5B",
+      "task": "ioi",
+      "lang": "hi",
+      "direction": "denoising",
+      "seed": 4,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "Qwen/Qwen2.5-1.5B",
+      "task": "ioi",
+      "lang": "hi",
+      "direction": "noising",
+      "seed": 0,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "Qwen/Qwen2.5-1.5B",
+      "task": "capitals",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 0,
+      "ig_sweep": "5,10,20",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "Qwen/Qwen2.5-1.5B",
+      "task": "capitals",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 1,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "Qwen/Qwen2.5-1.5B",
+      "task": "capitals",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 2,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "Qwen/Qwen2.5-1.5B",
+      "task": "capitals",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 3,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "Qwen/Qwen2.5-1.5B",
+      "task": "capitals",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 4,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "Qwen/Qwen2.5-1.5B",
+      "task": "capitals",
+      "lang": "en",
+      "direction": "noising",
+      "seed": 0,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "Qwen/Qwen2.5-1.5B",
+      "task": "capitals",
+      "lang": "hi",
+      "direction": "denoising",
+      "seed": 0,
+      "ig_sweep": "5,10,20",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "Qwen/Qwen2.5-1.5B",
+      "task": "capitals",
+      "lang": "hi",
+      "direction": "denoising",
+      "seed": 1,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "Qwen/Qwen2.5-1.5B",
+      "task": "capitals",
+      "lang": "hi",
+      "direction": "denoising",
+      "seed": 2,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "Qwen/Qwen2.5-1.5B",
+      "task": "capitals",
+      "lang": "hi",
+      "direction": "denoising",
+      "seed": 3,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "Qwen/Qwen2.5-1.5B",
+      "task": "capitals",
+      "lang": "hi",
+      "direction": "denoising",
+      "seed": 4,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "Qwen/Qwen2.5-1.5B",
+      "task": "capitals",
+      "lang": "hi",
+      "direction": "noising",
+      "seed": 0,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "Qwen/Qwen2.5-1.5B",
+      "task": "agreement",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 0,
+      "ig_sweep": "5,10,20",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "Qwen/Qwen2.5-1.5B",
+      "task": "agreement",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 1,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "Qwen/Qwen2.5-1.5B",
+      "task": "agreement",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 2,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "Qwen/Qwen2.5-1.5B",
+      "task": "agreement",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 3,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "Qwen/Qwen2.5-1.5B",
+      "task": "agreement",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 4,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "Qwen/Qwen2.5-1.5B",
+      "task": "agreement",
+      "lang": "en",
+      "direction": "noising",
+      "seed": 0,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "Qwen/Qwen2.5-1.5B",
+      "task": "agreement",
+      "lang": "hi",
+      "direction": "denoising",
+      "seed": 0,
+      "ig_sweep": "5,10,20",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "Qwen/Qwen2.5-1.5B",
+      "task": "agreement",
+      "lang": "hi",
+      "direction": "denoising",
+      "seed": 1,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "Qwen/Qwen2.5-1.5B",
+      "task": "agreement",
+      "lang": "hi",
+      "direction": "denoising",
+      "seed": 2,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "Qwen/Qwen2.5-1.5B",
+      "task": "agreement",
+      "lang": "hi",
+      "direction": "denoising",
+      "seed": 3,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "Qwen/Qwen2.5-1.5B",
+      "task": "agreement",
+      "lang": "hi",
+      "direction": "denoising",
+      "seed": 4,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "Qwen/Qwen2.5-1.5B",
+      "task": "agreement",
+      "lang": "hi",
+      "direction": "noising",
+      "seed": 0,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "Qwen/Qwen2.5-1.5B",
+      "task": "induction",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 0,
+      "ig_sweep": "5,10,20",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "Qwen/Qwen2.5-1.5B",
+      "task": "induction",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 1,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "Qwen/Qwen2.5-1.5B",
+      "task": "induction",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 2,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "Qwen/Qwen2.5-1.5B",
+      "task": "induction",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 3,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "Qwen/Qwen2.5-1.5B",
+      "task": "induction",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 4,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "Qwen/Qwen2.5-1.5B",
+      "task": "induction",
+      "lang": "en",
+      "direction": "noising",
+      "seed": 0,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "Qwen/Qwen2.5-1.5B",
+      "task": "induction",
+      "lang": "hi",
+      "direction": "denoising",
+      "seed": 0,
+      "ig_sweep": "5,10,20",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "Qwen/Qwen2.5-1.5B",
+      "task": "induction",
+      "lang": "hi",
+      "direction": "denoising",
+      "seed": 1,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "Qwen/Qwen2.5-1.5B",
+      "task": "induction",
+      "lang": "hi",
+      "direction": "denoising",
+      "seed": 2,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "Qwen/Qwen2.5-1.5B",
+      "task": "induction",
+      "lang": "hi",
+      "direction": "denoising",
+      "seed": 3,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "Qwen/Qwen2.5-1.5B",
+      "task": "induction",
+      "lang": "hi",
+      "direction": "denoising",
+      "seed": 4,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "Qwen/Qwen2.5-1.5B",
+      "task": "induction",
+      "lang": "hi",
+      "direction": "noising",
+      "seed": 0,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "meta-llama/Llama-3.2-1B",
+      "task": "ioi",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 0,
+      "ig_sweep": "5,10,20",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "meta-llama/Llama-3.2-1B",
+      "task": "ioi",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 1,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "meta-llama/Llama-3.2-1B",
+      "task": "ioi",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 2,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "meta-llama/Llama-3.2-1B",
+      "task": "ioi",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 3,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "meta-llama/Llama-3.2-1B",
+      "task": "ioi",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 4,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "meta-llama/Llama-3.2-1B",
+      "task": "ioi",
+      "lang": "en",
+      "direction": "noising",
+      "seed": 0,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "meta-llama/Llama-3.2-1B",
+      "task": "ioi",
+      "lang": "hi",
+      "direction": "denoising",
+      "seed": 0,
+      "ig_sweep": "5,10,20",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "meta-llama/Llama-3.2-1B",
+      "task": "ioi",
+      "lang": "hi",
+      "direction": "denoising",
+      "seed": 1,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "meta-llama/Llama-3.2-1B",
+      "task": "ioi",
+      "lang": "hi",
+      "direction": "denoising",
+      "seed": 2,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "meta-llama/Llama-3.2-1B",
+      "task": "ioi",
+      "lang": "hi",
+      "direction": "denoising",
+      "seed": 3,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "meta-llama/Llama-3.2-1B",
+      "task": "ioi",
+      "lang": "hi",
+      "direction": "denoising",
+      "seed": 4,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "meta-llama/Llama-3.2-1B",
+      "task": "ioi",
+      "lang": "hi",
+      "direction": "noising",
+      "seed": 0,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "meta-llama/Llama-3.2-1B",
+      "task": "capitals",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 0,
+      "ig_sweep": "5,10,20",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "meta-llama/Llama-3.2-1B",
+      "task": "capitals",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 1,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "meta-llama/Llama-3.2-1B",
+      "task": "capitals",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 2,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "meta-llama/Llama-3.2-1B",
+      "task": "capitals",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 3,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "meta-llama/Llama-3.2-1B",
+      "task": "capitals",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 4,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "meta-llama/Llama-3.2-1B",
+      "task": "capitals",
+      "lang": "en",
+      "direction": "noising",
+      "seed": 0,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "meta-llama/Llama-3.2-1B",
+      "task": "capitals",
+      "lang": "hi",
+      "direction": "denoising",
+      "seed": 0,
+      "ig_sweep": "5,10,20",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "meta-llama/Llama-3.2-1B",
+      "task": "capitals",
+      "lang": "hi",
+      "direction": "denoising",
+      "seed": 1,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "meta-llama/Llama-3.2-1B",
+      "task": "capitals",
+      "lang": "hi",
+      "direction": "denoising",
+      "seed": 2,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "meta-llama/Llama-3.2-1B",
+      "task": "capitals",
+      "lang": "hi",
+      "direction": "denoising",
+      "seed": 3,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "meta-llama/Llama-3.2-1B",
+      "task": "capitals",
+      "lang": "hi",
+      "direction": "denoising",
+      "seed": 4,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "meta-llama/Llama-3.2-1B",
+      "task": "capitals",
+      "lang": "hi",
+      "direction": "noising",
+      "seed": 0,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "meta-llama/Llama-3.2-1B",
+      "task": "agreement",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 0,
+      "ig_sweep": "5,10,20",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "meta-llama/Llama-3.2-1B",
+      "task": "agreement",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 1,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "meta-llama/Llama-3.2-1B",
+      "task": "agreement",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 2,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "meta-llama/Llama-3.2-1B",
+      "task": "agreement",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 3,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "meta-llama/Llama-3.2-1B",
+      "task": "agreement",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 4,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "meta-llama/Llama-3.2-1B",
+      "task": "agreement",
+      "lang": "en",
+      "direction": "noising",
+      "seed": 0,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "meta-llama/Llama-3.2-1B",
+      "task": "agreement",
+      "lang": "hi",
+      "direction": "denoising",
+      "seed": 0,
+      "ig_sweep": "5,10,20",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "meta-llama/Llama-3.2-1B",
+      "task": "agreement",
+      "lang": "hi",
+      "direction": "denoising",
+      "seed": 1,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "meta-llama/Llama-3.2-1B",
+      "task": "agreement",
+      "lang": "hi",
+      "direction": "denoising",
+      "seed": 2,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "meta-llama/Llama-3.2-1B",
+      "task": "agreement",
+      "lang": "hi",
+      "direction": "denoising",
+      "seed": 3,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "meta-llama/Llama-3.2-1B",
+      "task": "agreement",
+      "lang": "hi",
+      "direction": "denoising",
+      "seed": 4,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "meta-llama/Llama-3.2-1B",
+      "task": "agreement",
+      "lang": "hi",
+      "direction": "noising",
+      "seed": 0,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "meta-llama/Llama-3.2-1B",
+      "task": "induction",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 0,
+      "ig_sweep": "5,10,20",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "meta-llama/Llama-3.2-1B",
+      "task": "induction",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 1,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "meta-llama/Llama-3.2-1B",
+      "task": "induction",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 2,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "meta-llama/Llama-3.2-1B",
+      "task": "induction",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 3,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "meta-llama/Llama-3.2-1B",
+      "task": "induction",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 4,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "meta-llama/Llama-3.2-1B",
+      "task": "induction",
+      "lang": "en",
+      "direction": "noising",
+      "seed": 0,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "meta-llama/Llama-3.2-1B",
+      "task": "induction",
+      "lang": "hi",
+      "direction": "denoising",
+      "seed": 0,
+      "ig_sweep": "5,10,20",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "meta-llama/Llama-3.2-1B",
+      "task": "induction",
+      "lang": "hi",
+      "direction": "denoising",
+      "seed": 1,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "meta-llama/Llama-3.2-1B",
+      "task": "induction",
+      "lang": "hi",
+      "direction": "denoising",
+      "seed": 2,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "meta-llama/Llama-3.2-1B",
+      "task": "induction",
+      "lang": "hi",
+      "direction": "denoising",
+      "seed": 3,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "meta-llama/Llama-3.2-1B",
+      "task": "induction",
+      "lang": "hi",
+      "direction": "denoising",
+      "seed": 4,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "meta-llama/Llama-3.2-1B",
+      "task": "induction",
+      "lang": "hi",
+      "direction": "noising",
+      "seed": 0,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "google/gemma-3-1b-pt",
+      "task": "ioi",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 0,
+      "ig_sweep": "5,10,20",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "google/gemma-3-1b-pt",
+      "task": "ioi",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 1,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "google/gemma-3-1b-pt",
+      "task": "ioi",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 2,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "google/gemma-3-1b-pt",
+      "task": "ioi",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 3,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "google/gemma-3-1b-pt",
+      "task": "ioi",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 4,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "google/gemma-3-1b-pt",
+      "task": "ioi",
+      "lang": "en",
+      "direction": "noising",
+      "seed": 0,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "google/gemma-3-1b-pt",
+      "task": "ioi",
+      "lang": "hi",
+      "direction": "denoising",
+      "seed": 0,
+      "ig_sweep": "5,10,20",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "google/gemma-3-1b-pt",
+      "task": "ioi",
+      "lang": "hi",
+      "direction": "denoising",
+      "seed": 1,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "google/gemma-3-1b-pt",
+      "task": "ioi",
+      "lang": "hi",
+      "direction": "denoising",
+      "seed": 2,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "google/gemma-3-1b-pt",
+      "task": "ioi",
+      "lang": "hi",
+      "direction": "denoising",
+      "seed": 3,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "google/gemma-3-1b-pt",
+      "task": "ioi",
+      "lang": "hi",
+      "direction": "denoising",
+      "seed": 4,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "google/gemma-3-1b-pt",
+      "task": "ioi",
+      "lang": "hi",
+      "direction": "noising",
+      "seed": 0,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "google/gemma-3-1b-pt",
+      "task": "capitals",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 0,
+      "ig_sweep": "5,10,20",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "google/gemma-3-1b-pt",
+      "task": "capitals",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 1,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "google/gemma-3-1b-pt",
+      "task": "capitals",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 2,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "google/gemma-3-1b-pt",
+      "task": "capitals",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 3,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "google/gemma-3-1b-pt",
+      "task": "capitals",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 4,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "google/gemma-3-1b-pt",
+      "task": "capitals",
+      "lang": "en",
+      "direction": "noising",
+      "seed": 0,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "google/gemma-3-1b-pt",
+      "task": "capitals",
+      "lang": "hi",
+      "direction": "denoising",
+      "seed": 0,
+      "ig_sweep": "5,10,20",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "google/gemma-3-1b-pt",
+      "task": "capitals",
+      "lang": "hi",
+      "direction": "denoising",
+      "seed": 1,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "google/gemma-3-1b-pt",
+      "task": "capitals",
+      "lang": "hi",
+      "direction": "denoising",
+      "seed": 2,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "google/gemma-3-1b-pt",
+      "task": "capitals",
+      "lang": "hi",
+      "direction": "denoising",
+      "seed": 3,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "google/gemma-3-1b-pt",
+      "task": "capitals",
+      "lang": "hi",
+      "direction": "denoising",
+      "seed": 4,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "google/gemma-3-1b-pt",
+      "task": "capitals",
+      "lang": "hi",
+      "direction": "noising",
+      "seed": 0,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "google/gemma-3-1b-pt",
+      "task": "agreement",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 0,
+      "ig_sweep": "5,10,20",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "google/gemma-3-1b-pt",
+      "task": "agreement",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 1,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "google/gemma-3-1b-pt",
+      "task": "agreement",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 2,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "google/gemma-3-1b-pt",
+      "task": "agreement",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 3,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "google/gemma-3-1b-pt",
+      "task": "agreement",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 4,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "google/gemma-3-1b-pt",
+      "task": "agreement",
+      "lang": "en",
+      "direction": "noising",
+      "seed": 0,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "google/gemma-3-1b-pt",
+      "task": "agreement",
+      "lang": "hi",
+      "direction": "denoising",
+      "seed": 0,
+      "ig_sweep": "5,10,20",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "google/gemma-3-1b-pt",
+      "task": "agreement",
+      "lang": "hi",
+      "direction": "denoising",
+      "seed": 1,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "google/gemma-3-1b-pt",
+      "task": "agreement",
+      "lang": "hi",
+      "direction": "denoising",
+      "seed": 2,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "google/gemma-3-1b-pt",
+      "task": "agreement",
+      "lang": "hi",
+      "direction": "denoising",
+      "seed": 3,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "google/gemma-3-1b-pt",
+      "task": "agreement",
+      "lang": "hi",
+      "direction": "denoising",
+      "seed": 4,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "google/gemma-3-1b-pt",
+      "task": "agreement",
+      "lang": "hi",
+      "direction": "noising",
+      "seed": 0,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "google/gemma-3-1b-pt",
+      "task": "induction",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 0,
+      "ig_sweep": "5,10,20",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "google/gemma-3-1b-pt",
+      "task": "induction",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 1,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "google/gemma-3-1b-pt",
+      "task": "induction",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 2,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "google/gemma-3-1b-pt",
+      "task": "induction",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 3,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "google/gemma-3-1b-pt",
+      "task": "induction",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 4,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "google/gemma-3-1b-pt",
+      "task": "induction",
+      "lang": "en",
+      "direction": "noising",
+      "seed": 0,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "google/gemma-3-1b-pt",
+      "task": "induction",
+      "lang": "hi",
+      "direction": "denoising",
+      "seed": 0,
+      "ig_sweep": "5,10,20",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "google/gemma-3-1b-pt",
+      "task": "induction",
+      "lang": "hi",
+      "direction": "denoising",
+      "seed": 1,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "google/gemma-3-1b-pt",
+      "task": "induction",
+      "lang": "hi",
+      "direction": "denoising",
+      "seed": 2,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "google/gemma-3-1b-pt",
+      "task": "induction",
+      "lang": "hi",
+      "direction": "denoising",
+      "seed": 3,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "google/gemma-3-1b-pt",
+      "task": "induction",
+      "lang": "hi",
+      "direction": "denoising",
+      "seed": 4,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "google/gemma-3-1b-pt",
+      "task": "induction",
+      "lang": "hi",
+      "direction": "noising",
+      "seed": 0,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "sarvamai/sarvam-1",
+      "task": "ioi",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 0,
+      "ig_sweep": "5,10,20",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "sarvamai/sarvam-1",
+      "task": "ioi",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 1,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "sarvamai/sarvam-1",
+      "task": "ioi",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 2,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "sarvamai/sarvam-1",
+      "task": "ioi",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 3,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "sarvamai/sarvam-1",
+      "task": "ioi",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 4,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "sarvamai/sarvam-1",
+      "task": "ioi",
+      "lang": "en",
+      "direction": "noising",
+      "seed": 0,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "sarvamai/sarvam-1",
+      "task": "ioi",
+      "lang": "hi",
+      "direction": "denoising",
+      "seed": 0,
+      "ig_sweep": "5,10,20",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "sarvamai/sarvam-1",
+      "task": "ioi",
+      "lang": "hi",
+      "direction": "denoising",
+      "seed": 1,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "sarvamai/sarvam-1",
+      "task": "ioi",
+      "lang": "hi",
+      "direction": "denoising",
+      "seed": 2,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "sarvamai/sarvam-1",
+      "task": "ioi",
+      "lang": "hi",
+      "direction": "denoising",
+      "seed": 3,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "sarvamai/sarvam-1",
+      "task": "ioi",
+      "lang": "hi",
+      "direction": "denoising",
+      "seed": 4,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "sarvamai/sarvam-1",
+      "task": "ioi",
+      "lang": "hi",
+      "direction": "noising",
+      "seed": 0,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "sarvamai/sarvam-1",
+      "task": "capitals",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 0,
+      "ig_sweep": "5,10,20",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "sarvamai/sarvam-1",
+      "task": "capitals",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 1,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "sarvamai/sarvam-1",
+      "task": "capitals",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 2,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "sarvamai/sarvam-1",
+      "task": "capitals",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 3,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "sarvamai/sarvam-1",
+      "task": "capitals",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 4,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "sarvamai/sarvam-1",
+      "task": "capitals",
+      "lang": "en",
+      "direction": "noising",
+      "seed": 0,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "sarvamai/sarvam-1",
+      "task": "capitals",
+      "lang": "hi",
+      "direction": "denoising",
+      "seed": 0,
+      "ig_sweep": "5,10,20",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "sarvamai/sarvam-1",
+      "task": "capitals",
+      "lang": "hi",
+      "direction": "denoising",
+      "seed": 1,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "sarvamai/sarvam-1",
+      "task": "capitals",
+      "lang": "hi",
+      "direction": "denoising",
+      "seed": 2,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "sarvamai/sarvam-1",
+      "task": "capitals",
+      "lang": "hi",
+      "direction": "denoising",
+      "seed": 3,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "sarvamai/sarvam-1",
+      "task": "capitals",
+      "lang": "hi",
+      "direction": "denoising",
+      "seed": 4,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "sarvamai/sarvam-1",
+      "task": "capitals",
+      "lang": "hi",
+      "direction": "noising",
+      "seed": 0,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "sarvamai/sarvam-1",
+      "task": "agreement",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 0,
+      "ig_sweep": "5,10,20",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "sarvamai/sarvam-1",
+      "task": "agreement",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 1,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "sarvamai/sarvam-1",
+      "task": "agreement",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 2,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "sarvamai/sarvam-1",
+      "task": "agreement",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 3,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "sarvamai/sarvam-1",
+      "task": "agreement",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 4,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "sarvamai/sarvam-1",
+      "task": "agreement",
+      "lang": "en",
+      "direction": "noising",
+      "seed": 0,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "sarvamai/sarvam-1",
+      "task": "agreement",
+      "lang": "hi",
+      "direction": "denoising",
+      "seed": 0,
+      "ig_sweep": "5,10,20",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "sarvamai/sarvam-1",
+      "task": "agreement",
+      "lang": "hi",
+      "direction": "denoising",
+      "seed": 1,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "sarvamai/sarvam-1",
+      "task": "agreement",
+      "lang": "hi",
+      "direction": "denoising",
+      "seed": 2,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "sarvamai/sarvam-1",
+      "task": "agreement",
+      "lang": "hi",
+      "direction": "denoising",
+      "seed": 3,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "sarvamai/sarvam-1",
+      "task": "agreement",
+      "lang": "hi",
+      "direction": "denoising",
+      "seed": 4,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "sarvamai/sarvam-1",
+      "task": "agreement",
+      "lang": "hi",
+      "direction": "noising",
+      "seed": 0,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "sarvamai/sarvam-1",
+      "task": "induction",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 0,
+      "ig_sweep": "5,10,20",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "sarvamai/sarvam-1",
+      "task": "induction",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 1,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "sarvamai/sarvam-1",
+      "task": "induction",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 2,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "sarvamai/sarvam-1",
+      "task": "induction",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 3,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "sarvamai/sarvam-1",
+      "task": "induction",
+      "lang": "en",
+      "direction": "denoising",
+      "seed": 4,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "sarvamai/sarvam-1",
+      "task": "induction",
+      "lang": "en",
+      "direction": "noising",
+      "seed": 0,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "sarvamai/sarvam-1",
+      "task": "induction",
+      "lang": "hi",
+      "direction": "denoising",
+      "seed": 0,
+      "ig_sweep": "5,10,20",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "sarvamai/sarvam-1",
+      "task": "induction",
+      "lang": "hi",
+      "direction": "denoising",
+      "seed": 1,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "sarvamai/sarvam-1",
+      "task": "induction",
+      "lang": "hi",
+      "direction": "denoising",
+      "seed": 2,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "sarvamai/sarvam-1",
+      "task": "induction",
+      "lang": "hi",
+      "direction": "denoising",
+      "seed": 3,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "sarvamai/sarvam-1",
+      "task": "induction",
+      "lang": "hi",
+      "direction": "denoising",
+      "seed": 4,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    },
+    {
+      "model": "sarvamai/sarvam-1",
+      "task": "induction",
+      "lang": "hi",
+      "direction": "noising",
+      "seed": 0,
+      "ig_sweep": "",
+      "n_ig_steps": 5
+    }
+  ]
+}

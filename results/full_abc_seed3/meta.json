@@ -1,0 +1,27 @@
+{
+  "ap": {
+    "method": "activation_patching",
+    "clean_logit_diff": 3.5761778354644775,
+    "corrupted_logit_diff": -0.49839285016059875,
+    "denom": 4.074570655822754,
+    "wall_seconds": 8.378308221930638,
+    "n_prompts": 100
+  },
+  "attr": {
+    "method": "attribution_patching",
+    "clean_logit_diff": 3.5761778354644775,
+    "corrupted_logit_diff": -0.49839285016059875,
+    "denom": 4.074570655822754,
+    "wall_seconds": 0.3015950149856508,
+    "n_prompts": 100
+  },
+  "eap": {
+    "method": "eap_ig",
+    "n_steps": 5,
+    "clean_logit_diff": 3.5761778354644775,
+    "corrupted_logit_diff": -0.49839285016059875,
+    "denom": 4.074570655822754,
+    "wall_seconds": 0.8851933761034161,
+    "n_prompts": 100
+  }
+}
