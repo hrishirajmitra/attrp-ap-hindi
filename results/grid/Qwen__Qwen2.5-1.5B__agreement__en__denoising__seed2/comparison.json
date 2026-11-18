@@ -1,0 +1,1135 @@
+{
+  "spearman_ap_attr": 0.8663657127672363,
+  "pearson_ap_attr": 0.9561143995192316,
+  "restricted_spearman_ap_attr": {
+    "rho": NaN,
+    "n_heads": 2,
+    "abs_threshold": 0.05,
+    "labels": [
+      "L21H7",
+      "L24H0"
+    ]
+  },
+  "topk_overlap_ap_attr": {
+    "5": 0.8,
+    "10": 0.7,
+    "14": 0.7857142857142857,
+    "20": 0.75
+  },
+  "topk_overlap_signed_ap_attr": {
+    "5": 0.8,
+    "10": 0.9,
+    "14": 0.8571428571428571,
+    "20": 0.75
+  },
+  "effect_concentration_top14": 0.4364768917254273,
+  "precision_at_k": {
+    "5": {
+      "activation_patching": null,
+      "attribution_patching": null,
+      "eap_ig": null
+    },
+    "10": {
+      "activation_patching": null,
+      "attribution_patching": null,
+      "eap_ig": null
+    },
+    "14": {
+      "activation_patching": null,
+      "attribution_patching": null,
+      "eap_ig": null
+    },
+    "20": {
+      "activation_patching": null,
+      "attribution_patching": null,
+      "eap_ig": null
+    }
+  },
+  "layerwise_pearson_ap_attr": [
+    {
+      "layer": 0,
+      "pearson_r": 0.42658540869233513,
+      "p_value": 0.16668678345411406,
+      "flag_r_lt_0.5": true
+    },
+    {
+      "layer": 1,
+      "pearson_r": 0.3181725319792478,
+      "p_value": 0.31351144337081727,
+      "flag_r_lt_0.5": true
+    },
+    {
+      "layer": 2,
+      "pearson_r": 0.7618488312830538,
+      "p_value": 0.003980031246297561,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 3,
+      "pearson_r": 0.8775256160014121,
+      "p_value": 0.0001760766600448222,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 4,
+      "pearson_r": 0.8069506690808147,
+      "p_value": 0.0015117974740872613,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 5,
+      "pearson_r": 0.9658495061094993,
+      "p_value": 3.454256183220107e-07,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 6,
+      "pearson_r": 0.9691495821783753,
+      "p_value": 2.0897456041402205e-07,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 7,
+      "pearson_r": 0.9404896601507362,
+      "p_value": 5.316709710857961e-06,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 8,
+      "pearson_r": 0.9561680419821983,
+      "p_value": 1.1836159967692819e-06,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 9,
+      "pearson_r": 0.9449286271519887,
+      "p_value": 3.6357567208701414e-06,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 10,
+      "pearson_r": 0.9751499960790766,
+      "p_value": 7.158305523192215e-08,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 11,
+      "pearson_r": 0.9486890829145832,
+      "p_value": 2.569166392816698e-06,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 12,
+      "pearson_r": 0.9366498677964838,
+      "p_value": 7.220590341087374e-06,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 13,
+      "pearson_r": 0.9875564808496028,
+      "p_value": 2.3011150806075567e-09,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 14,
+      "pearson_r": 0.9758405409194824,
+      "p_value": 6.224700949391485e-08,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 15,
+      "pearson_r": 0.9768018830878041,
+      "p_value": 5.089185636269661e-08,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 16,
+      "pearson_r": 0.9637586394603557,
+      "p_value": 4.6329553544135184e-07,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 17,
+      "pearson_r": 0.9906204077279662,
+      "p_value": 5.628193668899133e-10,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 18,
+      "pearson_r": 0.95241414372245,
+      "p_value": 1.773702230038749e-06,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 19,
+      "pearson_r": 0.9725075846228224,
+      "p_value": 1.1811648947643841e-07,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 20,
+      "pearson_r": 0.918202914613711,
+      "p_value": 2.51069322688366e-05,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 21,
+      "pearson_r": 0.9992358674184715,
+      "p_value": 2.0489953519746967e-15,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 22,
+      "pearson_r": 0.9841332141598957,
+      "p_value": 7.712155329921351e-09,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 23,
+      "pearson_r": 0.9983775746757619,
+      "p_value": 8.828754316387832e-14,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 24,
+      "pearson_r": 0.9991144317862847,
+      "p_value": 4.282718774715143e-15,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 25,
+      "pearson_r": 0.9853819103776211,
+      "p_value": 5.129714333594284e-09,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 26,
+      "pearson_r": 0.9985003043804296,
+      "p_value": 5.959095578207273e-14,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 27,
+      "pearson_r": 0.9919300709911871,
+      "p_value": 2.659187310121103e-10,
+      "flag_r_lt_0.5": false
+    }
+  ],
+  "mlp_pearson_ap_attr": {
+    "pearson_r": 0.8563450327923471,
+    "p_value": 6.164256314727024e-09,
+    "flag_r_lt_0.5": false
+  },
+  "wall_seconds": {
+    "activation_patching": 127.44999209884554,
+    "attribution_patching": 2.593007375020534,
+    "eap_ig": 9.616235110908747
+  },
+  "logit_diffs": {
+    "clean": 3.2881573104858397,
+    "corrupted": 0.8027461957931519
+  },
+  "top14": {
+    "activation_patching": [
+      "L24H0",
+      "L21H7",
+      "L0H6",
+      "L23H11",
+      "L19H8",
+      "L24H4",
+      "L17H8",
+      "L8H11",
+      "L0H1",
+      "L5H1",
+      "L0H3",
+      "L11H8",
+      "L0H7",
+      "L15H9"
+    ],
+    "attribution_patching": [
+      "L24H0",
+      "L21H7",
+      "L23H11",
+      "L19H8",
+      "L24H4",
+      "L5H1",
+      "L0H7",
+      "L17H8",
+      "L8H11",
+      "L0H1",
+      "L0H3",
+      "L15H9",
+      "L0H5",
+      "L2H7"
+    ],
+    "eap_ig": [
+      "L24H0",
+      "L0H6",
+      "L0H10",
+      "L0H3",
+      "L21H7",
+      "L0H7",
+      "L0H8",
+      "L23H11",
+      "L0H1",
+      "L0H5",
+      "L19H8",
+      "L24H4",
+      "L11H4",
+      "L17H8"
+    ]
+  },
+  "direction": "denoising",
+  "task": "agreement",
+  "known_positives": [],
+  "spearman_ap_eap_ig": 0.5331796928878288,
+  "pearson_ap_eap_ig": 0.7365423469682552,
+  "restricted_spearman_ap_eap_ig": {
+    "rho": NaN,
+    "n_heads": 2,
+    "abs_threshold": 0.05,
+    "labels": [
+      "L21H7",
+      "L24H0"
+    ]
+  },
+  "topk_overlap_ap_eap_ig": {
+    "5": 0.6,
+    "10": 0.5,
+    "14": 0.7142857142857143,
+    "20": 0.7
+  },
+  "topk_overlap_signed_ap_eap_ig": {
+    "5": 0.6,
+    "10": 0.5,
+    "14": 0.7142857142857143,
+    "20": 0.7
+  },
+  "layerwise_pearson_ap_eap_ig": [
+    {
+      "layer": 0,
+      "pearson_r": 0.6806662767151317,
+      "p_value": 0.01483289600999846,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 1,
+      "pearson_r": 0.4336397823136885,
+      "p_value": 0.15902730143320237,
+      "flag_r_lt_0.5": true
+    },
+    {
+      "layer": 2,
+      "pearson_r": 0.84861355072964,
+      "p_value": 0.0004828811829901235,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 3,
+      "pearson_r": -0.02574483401228258,
+      "p_value": 0.9366995290488526,
+      "flag_r_lt_0.5": true
+    },
+    {
+      "layer": 4,
+      "pearson_r": 0.7486246029815401,
+      "p_value": 0.005089740092158898,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 5,
+      "pearson_r": -0.44840635794770684,
+      "p_value": 0.14372850608958665,
+      "flag_r_lt_0.5": true
+    },
+    {
+      "layer": 6,
+      "pearson_r": 0.15095746373944213,
+      "p_value": 0.6395617540803183,
+      "flag_r_lt_0.5": true
+    },
+    {
+      "layer": 7,
+      "pearson_r": 0.10972934569703836,
+      "p_value": 0.7342514144506962,
+      "flag_r_lt_0.5": true
+    },
+    {
+      "layer": 8,
+      "pearson_r": 0.8420052766778328,
+      "p_value": 0.0005909328140014782,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 9,
+      "pearson_r": 0.25889890728739806,
+      "p_value": 0.4164807740128558,
+      "flag_r_lt_0.5": true
+    },
+    {
+      "layer": 10,
+      "pearson_r": 0.8512490531931509,
+      "p_value": 0.00044435111315001415,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 11,
+      "pearson_r": -0.4394624856121668,
+      "p_value": 0.1528765221742776,
+      "flag_r_lt_0.5": true
+    },
+    {
+      "layer": 12,
+      "pearson_r": 0.9416192338677778,
+      "p_value": 4.840230924585236e-06,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 13,
+      "pearson_r": 0.7123072679409993,
+      "p_value": 0.009342923565394479,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 14,
+      "pearson_r": 0.010837639156895902,
+      "p_value": 0.9733334237429538,
+      "flag_r_lt_0.5": true
+    },
+    {
+      "layer": 15,
+      "pearson_r": 0.8118758629148795,
+      "p_value": 0.0013403419264882569,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 16,
+      "pearson_r": 0.7571492376853839,
+      "p_value": 0.004350915636283911,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 17,
+      "pearson_r": 0.9528411453521682,
+      "p_value": 1.6967671730255688e-06,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 18,
+      "pearson_r": 0.6158309963740188,
+      "p_value": 0.03300650246088492,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 19,
+      "pearson_r": 0.9549552021033108,
+      "p_value": 1.3539004017254993e-06,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 20,
+      "pearson_r": 0.7206671160805735,
+      "p_value": 0.008188772248366609,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 21,
+      "pearson_r": 0.9965900787038107,
+      "p_value": 3.609961340070707e-12,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 22,
+      "pearson_r": 0.8050920194177926,
+      "p_value": 0.0015806975774621944,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 23,
+      "pearson_r": 0.9897632449117019,
+      "p_value": 8.702379869054177e-10,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 24,
+      "pearson_r": 0.999301176417556,
+      "p_value": 1.310938840303726e-15,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 25,
+      "pearson_r": 0.923923885311569,
+      "p_value": 1.7644727028527864e-05,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 26,
+      "pearson_r": 0.6928134767234745,
+      "p_value": 0.012501770294148206,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 27,
+      "pearson_r": 0.8230096751990532,
+      "p_value": 0.00100784880030141,
+      "flag_r_lt_0.5": false
+    }
+  ],
+  "mlp_pearson_ap_eap_ig": {
+    "pearson_r": 0.48644902059760453,
+    "p_value": 0.008669089485734366,
+    "flag_r_lt_0.5": true
+  },
+  "eap_n_steps": 5,
+  "eap_ig_delta_precision14_heads": null,
+  "eap_ig_delta_spearman": -0.33318601987940744,
+  "verdict": {
+    "primary": "PARTIAL",
+    "attrp_safe_proxy": false,
+    "attrp_recovers_topk": true,
+    "spearman_ap_attr": 0.8663657127672363,
+    "topk_overlap14_attr": 0.7857142857142857,
+    "restricted_rho": NaN,
+    "eap_ig_helps": false,
+    "thresholds": {
+      "spearman_ge": 0.9,
+      "topk_overlap14_ge": 0.5,
+      "restricted_ap_abs": 0.05,
+      "eap_delta_spearman_ge": 0.05
+    },
+    "precision_at_14_attr": null
+  },
+  "cell": {
+    "model": "Qwen/Qwen2.5-1.5B",
+    "task": "agreement",
+    "lang": "en",
+    "seed": 2,
+    "direction": "denoising",
+    "corruption": "prefix_swap",
+    "batch_meta": {
+      "source": "multiblimp",
+      "single_token_answer_rate": 1.0,
+      "n_pool": 265,
+      "n_candidates": 529,
+      "window_tokens": 8,
+      "pool_single_token_rate": 0.9338374291115312,
+      "pool_filtered_to_single_token": true,
+      "phenomenon_counts": {
+        "SV-#": 67,
+        "SV-P": 33
+      },
+      "metric": "single_token_logit_diff",
+      "items": [
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "SG",
+          "verb": "clashes",
+          "swap": "clash"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "SG",
+          "verb": "blames",
+          "swap": "blame"
+        },
+        {
+          "phenomenon": "SV-P",
+          "grammatical_feature": "3",
+          "verb": "remains",
+          "swap": "remain"
+        },
+        {
+          "phenomenon": "SV-P",
+          "grammatical_feature": "3",
+          "verb": "searches",
+          "swap": "search"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "PL",
+          "verb": "understand",
+          "swap": "understands"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "PL",
+          "verb": "progress",
+          "swap": "progresses"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "PL",
+          "verb": "show",
+          "swap": "shows"
+        },
+        {
+          "phenomenon": "SV-P",
+          "grammatical_feature": "3",
+          "verb": "is",
+          "swap": "am"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "SG",
+          "verb": "prevents",
+          "swap": "prevent"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "PL",
+          "verb": "suggest",
+          "swap": "suggests"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "PL",
+          "verb": "are",
+          "swap": "is"
+        },
+        {
+          "phenomenon": "SV-P",
+          "grammatical_feature": "3",
+          "verb": "is",
+          "swap": "am"
+        },
+        {
+          "phenomenon": "SV-P",
+          "grammatical_feature": "3",
+          "verb": "presses",
+          "swap": "press"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "SG",
+          "verb": "strengthens",
+          "swap": "strengthen"
+        },
+        {
+          "phenomenon": "SV-P",
+          "grammatical_feature": "3",
+          "verb": "is",
+          "swap": "am"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "PL",
+          "verb": "experience",
+          "swap": "experiences"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "PL",
+          "verb": "name",
+          "swap": "names"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "PL",
+          "verb": "seem",
+          "swap": "seems"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "PL",
+          "verb": "have",
+          "swap": "has"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "PL",
+          "verb": "have",
+          "swap": "has"
+        },
+        {
+          "phenomenon": "SV-P",
+          "grammatical_feature": "3",
+          "verb": "recommends",
+          "swap": "recommend"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "PL",
+          "verb": "include",
+          "swap": "includes"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "PL",
+          "verb": "include",
+          "swap": "includes"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "PL",
+          "verb": "turn",
+          "swap": "turns"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "PL",
+          "verb": "know",
+          "swap": "knows"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "PL",
+          "verb": "do",
+          "swap": "does"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "PL",
+          "verb": "suck",
+          "swap": "sucks"
+        },
+        {
+          "phenomenon": "SV-P",
+          "grammatical_feature": "3",
+          "verb": "is",
+          "swap": "am"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "PL",
+          "verb": "cover",
+          "swap": "covers"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "PL",
+          "verb": "have",
+          "swap": "has"
+        },
+        {
+          "phenomenon": "SV-P",
+          "grammatical_feature": "3",
+          "verb": "is",
+          "swap": "am"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "PL",
+          "verb": "throw",
+          "swap": "throws"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "SG",
+          "verb": "reports",
+          "swap": "report"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "PL",
+          "verb": "are",
+          "swap": "is"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "SG",
+          "verb": "accounts",
+          "swap": "account"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "SG",
+          "verb": "aims",
+          "swap": "aim"
+        },
+        {
+          "phenomenon": "SV-P",
+          "grammatical_feature": "3",
+          "verb": "requests",
+          "swap": "request"
+        },
+        {
+          "phenomenon": "SV-P",
+          "grammatical_feature": "3",
+          "verb": "crosses",
+          "swap": "cross"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "SG",
+          "verb": "aims",
+          "swap": "aim"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "SG",
+          "verb": "fades",
+          "swap": "fade"
+        },
+        {
+          "phenomenon": "SV-P",
+          "grammatical_feature": "3",
+          "verb": "is",
+          "swap": "am"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "SG",
+          "verb": "smells",
+          "swap": "smell"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "SG",
+          "verb": "points",
+          "swap": "point"
+        },
+        {
+          "phenomenon": "SV-P",
+          "grammatical_feature": "3",
+          "verb": "touches",
+          "swap": "touch"
+        },
+        {
+          "phenomenon": "SV-P",
+          "grammatical_feature": "3",
+          "verb": "remains",
+          "swap": "remain"
+        },
+        {
+          "phenomenon": "SV-P",
+          "grammatical_feature": "3",
+          "verb": "is",
+          "swap": "am"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "SG",
+          "verb": "signals",
+          "swap": "signal"
+        },
+        {
+          "phenomenon": "SV-P",
+          "grammatical_feature": "3",
+          "verb": "sticks",
+          "swap": "stick"
+        },
+        {
+          "phenomenon": "SV-P",
+          "grammatical_feature": "3",
+          "verb": "is",
+          "swap": "am"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "SG",
+          "verb": "crashes",
+          "swap": "crash"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "PL",
+          "verb": "have",
+          "swap": "has"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "SG",
+          "verb": "generates",
+          "swap": "generate"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "PL",
+          "verb": "live",
+          "swap": "lives"
+        },
+        {
+          "phenomenon": "SV-P",
+          "grammatical_feature": "3",
+          "verb": "kills",
+          "swap": "kill"
+        },
+        {
+          "phenomenon": "SV-P",
+          "grammatical_feature": "3",
+          "verb": "is",
+          "swap": "am"
+        },
+        {
+          "phenomenon": "SV-P",
+          "grammatical_feature": "3",
+          "verb": "buys",
+          "swap": "buy"
+        },
+        {
+          "phenomenon": "SV-P",
+          "grammatical_feature": "3",
+          "verb": "is",
+          "swap": "am"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "SG",
+          "verb": "flies",
+          "swap": "fly"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "PL",
+          "verb": "have",
+          "swap": "has"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "PL",
+          "verb": "have",
+          "swap": "has"
+        },
+        {
+          "phenomenon": "SV-P",
+          "grammatical_feature": "3",
+          "verb": "seeks",
+          "swap": "seek"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "PL",
+          "verb": "do",
+          "swap": "does"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "SG",
+          "verb": "benefits",
+          "swap": "benefit"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "SG",
+          "verb": "demonstrates",
+          "swap": "demonstrate"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "SG",
+          "verb": "resides",
+          "swap": "reside"
+        },
+        {
+          "phenomenon": "SV-P",
+          "grammatical_feature": "3",
+          "verb": "figures",
+          "swap": "figure"
+        },
+        {
+          "phenomenon": "SV-P",
+          "grammatical_feature": "3",
+          "verb": "acts",
+          "swap": "act"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "SG",
+          "verb": "remains",
+          "swap": "remain"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "SG",
+          "verb": "demonstrates",
+          "swap": "demonstrate"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "PL",
+          "verb": "are",
+          "swap": "is"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "PL",
+          "verb": "have",
+          "swap": "has"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "SG",
+          "verb": "remains",
+          "swap": "remain"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "PL",
+          "verb": "do",
+          "swap": "does"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "SG",
+          "verb": "clouds",
+          "swap": "cloud"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "SG",
+          "verb": "survives",
+          "swap": "survive"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "PL",
+          "verb": "agree",
+          "swap": "agrees"
+        },
+        {
+          "phenomenon": "SV-P",
+          "grammatical_feature": "3",
+          "verb": "is",
+          "swap": "am"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "PL",
+          "verb": "operate",
+          "swap": "operates"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "SG",
+          "verb": "produces",
+          "swap": "produce"
+        },
+        {
+          "phenomenon": "SV-P",
+          "grammatical_feature": "3",
+          "verb": "is",
+          "swap": "am"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "PL",
+          "verb": "represent",
+          "swap": "represents"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "PL",
+          "verb": "have",
+          "swap": "has"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "PL",
+          "verb": "do",
+          "swap": "does"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "SG",
+          "verb": "leaks",
+          "swap": "leak"
+        },
+        {
+          "phenomenon": "SV-P",
+          "grammatical_feature": "3",
+          "verb": "is",
+          "swap": "am"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "PL",
+          "verb": "do",
+          "swap": "does"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "PL",
+          "verb": "have",
+          "swap": "has"
+        },
+        {
+          "phenomenon": "SV-P",
+          "grammatical_feature": "3",
+          "verb": "names",
+          "swap": "name"
+        },
+        {
+          "phenomenon": "SV-P",
+          "grammatical_feature": "3",
+          "verb": "handles",
+          "swap": "handle"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "PL",
+          "verb": "do",
+          "swap": "does"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "SG",
+          "verb": "saves",
+          "swap": "save"
+        },
+        {
+          "phenomenon": "SV-P",
+          "grammatical_feature": "3",
+          "verb": "is",
+          "swap": "am"
+        },
+        {
+          "phenomenon": "SV-P",
+          "grammatical_feature": "3",
+          "verb": "is",
+          "swap": "am"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "PL",
+          "verb": "cook",
+          "swap": "cooks"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "PL",
+          "verb": "have",
+          "swap": "has"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "PL",
+          "verb": "tell",
+          "swap": "tells"
+        },
+        {
+          "phenomenon": "SV-P",
+          "grammatical_feature": "3",
+          "verb": "is",
+          "swap": "am"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "PL",
+          "verb": "indicate",
+          "swap": "indicates"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "PL",
+          "verb": "have",
+          "swap": "has"
+        },
+        {
+          "phenomenon": "SV-P",
+          "grammatical_feature": "3",
+          "verb": "is",
+          "swap": "am"
+        }
+      ]
+    },
+    "descriptors": {
+      "tokens_per_word": 1.1764705882352942,
+      "mean_prompt_tokens": 7.0,
+      "mean_prompt_words": 5.95,
+      "seq_len": 8,
+      "pool_single_token_rate": 0.9338374291115312
+    },
+    "micro_batch": 10,
+    "ap_fast_mode": true
+  }
+}

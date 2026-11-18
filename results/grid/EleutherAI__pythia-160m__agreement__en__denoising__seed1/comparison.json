@@ -1,0 +1,943 @@
+{
+  "spearman_ap_attr": 0.879302306888514,
+  "pearson_ap_attr": 0.9566769220409069,
+  "restricted_spearman_ap_attr": {
+    "rho": NaN,
+    "n_heads": 2,
+    "abs_threshold": 0.05,
+    "labels": [
+      "L5H8",
+      "L6H4"
+    ]
+  },
+  "topk_overlap_ap_attr": {
+    "5": 0.8,
+    "10": 0.8,
+    "14": 0.8571428571428571,
+    "20": 0.85
+  },
+  "topk_overlap_signed_ap_attr": {
+    "5": 1.0,
+    "10": 0.8,
+    "14": 0.8571428571428571,
+    "20": 0.85
+  },
+  "effect_concentration_top14": 0.5827379022593467,
+  "precision_at_k": {
+    "5": {
+      "activation_patching": null,
+      "attribution_patching": null,
+      "eap_ig": null
+    },
+    "10": {
+      "activation_patching": null,
+      "attribution_patching": null,
+      "eap_ig": null
+    },
+    "14": {
+      "activation_patching": null,
+      "attribution_patching": null,
+      "eap_ig": null
+    },
+    "20": {
+      "activation_patching": null,
+      "attribution_patching": null,
+      "eap_ig": null
+    }
+  },
+  "layerwise_pearson_ap_attr": [
+    {
+      "layer": 0,
+      "pearson_r": 0.9124762890320709,
+      "p_value": 3.486988736234494e-05,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 1,
+      "pearson_r": 0.9154790070359411,
+      "p_value": 2.943686896895578e-05,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 2,
+      "pearson_r": 0.7518046498857653,
+      "p_value": 0.004803856072815693,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 3,
+      "pearson_r": 0.938138462274735,
+      "p_value": 6.427503969357009e-06,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 4,
+      "pearson_r": 0.9517708241928186,
+      "p_value": 1.8948122589291395e-06,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 5,
+      "pearson_r": 0.9864707937132334,
+      "p_value": 3.4897480943506865e-09,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 6,
+      "pearson_r": 0.9984663075645247,
+      "p_value": 6.665480959237116e-14,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 7,
+      "pearson_r": 0.9768662980702308,
+      "p_value": 5.019464026358624e-08,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 8,
+      "pearson_r": 0.878494706526354,
+      "p_value": 0.0001695067004464845,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 9,
+      "pearson_r": 0.999940661066326,
+      "p_value": 5.793036965152502e-21,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 10,
+      "pearson_r": 0.9987371364199445,
+      "p_value": 2.5241690947903818e-14,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 11,
+      "pearson_r": 0.9999969435804297,
+      "p_value": 2.1004541659927855e-27,
+      "flag_r_lt_0.5": false
+    }
+  ],
+  "mlp_pearson_ap_attr": {
+    "pearson_r": 0.5930485948464242,
+    "p_value": 0.042108454385429,
+    "flag_r_lt_0.5": false
+  },
+  "wall_seconds": {
+    "activation_patching": 5.23021000996232,
+    "attribution_patching": 0.22817533276975155,
+    "eap_ig": 0.863761069253087
+  },
+  "logit_diffs": {
+    "clean": 2.562670135498047,
+    "corrupted": -0.2920928192138672
+  },
+  "top14": {
+    "activation_patching": [
+      "L6H4",
+      "L5H8",
+      "L5H1",
+      "L9H3",
+      "L11H11",
+      "L3H1",
+      "L11H7",
+      "L3H2",
+      "L4H5",
+      "L4H2",
+      "L1H2",
+      "L11H0",
+      "L0H7",
+      "L3H6"
+    ],
+    "attribution_patching": [
+      "L6H4",
+      "L5H8",
+      "L9H3",
+      "L5H1",
+      "L11H11",
+      "L0H2",
+      "L11H7",
+      "L3H1",
+      "L11H0",
+      "L3H2",
+      "L0H7",
+      "L4H5",
+      "L1H2",
+      "L7H1"
+    ],
+    "eap_ig": [
+      "L5H8",
+      "L6H4",
+      "L3H1",
+      "L5H1",
+      "L9H3",
+      "L11H11",
+      "L4H5",
+      "L1H2",
+      "L11H7",
+      "L11H0",
+      "L3H5",
+      "L2H6",
+      "L2H11",
+      "L2H1"
+    ]
+  },
+  "direction": "denoising",
+  "task": "agreement",
+  "known_positives": [],
+  "spearman_ap_eap_ig": 0.5329877019532192,
+  "pearson_ap_eap_ig": 0.8686056707573084,
+  "restricted_spearman_ap_eap_ig": {
+    "rho": NaN,
+    "n_heads": 2,
+    "abs_threshold": 0.05,
+    "labels": [
+      "L5H8",
+      "L6H4"
+    ]
+  },
+  "topk_overlap_ap_eap_ig": {
+    "5": 0.8,
+    "10": 0.8,
+    "14": 0.7142857142857143,
+    "20": 0.55
+  },
+  "topk_overlap_signed_ap_eap_ig": {
+    "5": 0.8,
+    "10": 0.8,
+    "14": 0.7142857142857143,
+    "20": 0.55
+  },
+  "layerwise_pearson_ap_eap_ig": [
+    {
+      "layer": 0,
+      "pearson_r": 0.029680686054960853,
+      "p_value": 0.9270434134994827,
+      "flag_r_lt_0.5": true
+    },
+    {
+      "layer": 1,
+      "pearson_r": 0.610208445329893,
+      "p_value": 0.035107217694416284,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 2,
+      "pearson_r": 0.15776054962832398,
+      "p_value": 0.6243594864567548,
+      "flag_r_lt_0.5": true
+    },
+    {
+      "layer": 3,
+      "pearson_r": 0.6902778365322703,
+      "p_value": 0.012964252145280903,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 4,
+      "pearson_r": 0.7046770627341089,
+      "p_value": 0.010498437262496316,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 5,
+      "pearson_r": 0.9920531409889264,
+      "p_value": 2.463016108612523e-10,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 6,
+      "pearson_r": 0.9867171648404743,
+      "p_value": 3.1846788565109113e-09,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 7,
+      "pearson_r": 0.948332998271944,
+      "p_value": 2.657949723139105e-06,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 8,
+      "pearson_r": 0.5925386165354077,
+      "p_value": 0.04233055450452711,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 9,
+      "pearson_r": 0.9989523804525696,
+      "p_value": 9.91996375216932e-15,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 10,
+      "pearson_r": 0.9891572655831303,
+      "p_value": 1.1589913193202838e-09,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 11,
+      "pearson_r": 0.9993291338403103,
+      "p_value": 1.0689178721263505e-15,
+      "flag_r_lt_0.5": false
+    }
+  ],
+  "mlp_pearson_ap_eap_ig": {
+    "pearson_r": 0.9934481375398668,
+    "p_value": 9.404291861703956e-11,
+    "flag_r_lt_0.5": false
+  },
+  "eap_n_steps": 5,
+  "eap_ig_delta_precision14_heads": null,
+  "eap_ig_delta_spearman": -0.34631460493529476,
+  "verdict": {
+    "primary": "PARTIAL",
+    "attrp_safe_proxy": false,
+    "attrp_recovers_topk": true,
+    "spearman_ap_attr": 0.879302306888514,
+    "topk_overlap14_attr": 0.8571428571428571,
+    "restricted_rho": NaN,
+    "eap_ig_helps": false,
+    "thresholds": {
+      "spearman_ge": 0.9,
+      "topk_overlap14_ge": 0.5,
+      "restricted_ap_abs": 0.05,
+      "eap_delta_spearman_ge": 0.05
+    },
+    "precision_at_14_attr": null
+  },
+  "cell": {
+    "model": "EleutherAI/pythia-160m",
+    "task": "agreement",
+    "lang": "en",
+    "seed": 1,
+    "direction": "denoising",
+    "corruption": "prefix_swap",
+    "batch_meta": {
+      "source": "multiblimp",
+      "single_token_answer_rate": 1.0,
+      "n_pool": 294,
+      "n_candidates": 529,
+      "window_tokens": 8,
+      "pool_single_token_rate": 0.8998109640831758,
+      "pool_filtered_to_single_token": true,
+      "phenomenon_counts": {
+        "SV-#": 68,
+        "SV-P": 32
+      },
+      "metric": "single_token_logit_diff",
+      "items": [
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "SG",
+          "verb": "flies",
+          "swap": "fly"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "SG",
+          "verb": "relies",
+          "swap": "rely"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "SG",
+          "verb": "smells",
+          "swap": "smell"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "PL",
+          "verb": "do",
+          "swap": "does"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "PL",
+          "verb": "have",
+          "swap": "has"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "SG",
+          "verb": "owes",
+          "swap": "owe"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "SG",
+          "verb": "generates",
+          "swap": "generate"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "PL",
+          "verb": "have",
+          "swap": "has"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "PL",
+          "verb": "do",
+          "swap": "does"
+        },
+        {
+          "phenomenon": "SV-P",
+          "grammatical_feature": "3",
+          "verb": "is",
+          "swap": "am"
+        },
+        {
+          "phenomenon": "SV-P",
+          "grammatical_feature": "3",
+          "verb": "is",
+          "swap": "am"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "SG",
+          "verb": "proceeds",
+          "swap": "proceed"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "PL",
+          "verb": "have",
+          "swap": "has"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "PL",
+          "verb": "do",
+          "swap": "does"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "PL",
+          "verb": "do",
+          "swap": "does"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "PL",
+          "verb": "represent",
+          "swap": "represents"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "PL",
+          "verb": "are",
+          "swap": "is"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "PL",
+          "verb": "turn",
+          "swap": "turns"
+        },
+        {
+          "phenomenon": "SV-P",
+          "grammatical_feature": "3",
+          "verb": "seeks",
+          "swap": "seek"
+        },
+        {
+          "phenomenon": "SV-P",
+          "grammatical_feature": "3",
+          "verb": "is",
+          "swap": "am"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "PL",
+          "verb": "are",
+          "swap": "is"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "SG",
+          "verb": "exists",
+          "swap": "exist"
+        },
+        {
+          "phenomenon": "SV-P",
+          "grammatical_feature": "3",
+          "verb": "is",
+          "swap": "am"
+        },
+        {
+          "phenomenon": "SV-P",
+          "grammatical_feature": "3",
+          "verb": "is",
+          "swap": "am"
+        },
+        {
+          "phenomenon": "SV-P",
+          "grammatical_feature": "3",
+          "verb": "holds",
+          "swap": "hold"
+        },
+        {
+          "phenomenon": "SV-P",
+          "grammatical_feature": "3",
+          "verb": "seeks",
+          "swap": "seek"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "PL",
+          "verb": "cook",
+          "swap": "cooks"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "SG",
+          "verb": "persists",
+          "swap": "persist"
+        },
+        {
+          "phenomenon": "SV-P",
+          "grammatical_feature": "3",
+          "verb": "mentions",
+          "swap": "mention"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "PL",
+          "verb": "have",
+          "swap": "has"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "PL",
+          "verb": "have",
+          "swap": "has"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "PL",
+          "verb": "have",
+          "swap": "has"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "SG",
+          "verb": "determines",
+          "swap": "determine"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "PL",
+          "verb": "require",
+          "swap": "requires"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "PL",
+          "verb": "have",
+          "swap": "has"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "SG",
+          "verb": "demonstrates",
+          "swap": "demonstrate"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "SG",
+          "verb": "extends",
+          "swap": "extend"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "PL",
+          "verb": "have",
+          "swap": "has"
+        },
+        {
+          "phenomenon": "SV-P",
+          "grammatical_feature": "3",
+          "verb": "remains",
+          "swap": "remain"
+        },
+        {
+          "phenomenon": "SV-P",
+          "grammatical_feature": "3",
+          "verb": "remains",
+          "swap": "remain"
+        },
+        {
+          "phenomenon": "SV-P",
+          "grammatical_feature": "3",
+          "verb": "treats",
+          "swap": "treat"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "PL",
+          "verb": "grow",
+          "swap": "grows"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "PL",
+          "verb": "are",
+          "swap": "is"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "PL",
+          "verb": "do",
+          "swap": "does"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "PL",
+          "verb": "have",
+          "swap": "has"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "PL",
+          "verb": "do",
+          "swap": "does"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "PL",
+          "verb": "have",
+          "swap": "has"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "PL",
+          "verb": "mean",
+          "swap": "means"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "PL",
+          "verb": "throw",
+          "swap": "throws"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "PL",
+          "verb": "are",
+          "swap": "is"
+        },
+        {
+          "phenomenon": "SV-P",
+          "grammatical_feature": "3",
+          "verb": "is",
+          "swap": "am"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "PL",
+          "verb": "suck",
+          "swap": "sucks"
+        },
+        {
+          "phenomenon": "SV-P",
+          "grammatical_feature": "3",
+          "verb": "is",
+          "swap": "am"
+        },
+        {
+          "phenomenon": "SV-P",
+          "grammatical_feature": "3",
+          "verb": "requests",
+          "swap": "request"
+        },
+        {
+          "phenomenon": "SV-P",
+          "grammatical_feature": "3",
+          "verb": "remains",
+          "swap": "remain"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "PL",
+          "verb": "have",
+          "swap": "has"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "SG",
+          "verb": "entails",
+          "swap": "entail"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "PL",
+          "verb": "have",
+          "swap": "has"
+        },
+        {
+          "phenomenon": "SV-P",
+          "grammatical_feature": "3",
+          "verb": "searches",
+          "swap": "search"
+        },
+        {
+          "phenomenon": "SV-P",
+          "grammatical_feature": "3",
+          "verb": "attacks",
+          "swap": "attack"
+        },
+        {
+          "phenomenon": "SV-P",
+          "grammatical_feature": "3",
+          "verb": "remains",
+          "swap": "remain"
+        },
+        {
+          "phenomenon": "SV-P",
+          "grammatical_feature": "3",
+          "verb": "acts",
+          "swap": "act"
+        },
+        {
+          "phenomenon": "SV-P",
+          "grammatical_feature": "3",
+          "verb": "is",
+          "swap": "am"
+        },
+        {
+          "phenomenon": "SV-P",
+          "grammatical_feature": "3",
+          "verb": "is",
+          "swap": "am"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "PL",
+          "verb": "engage",
+          "swap": "engages"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "SG",
+          "verb": "troubles",
+          "swap": "trouble"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "PL",
+          "verb": "are",
+          "swap": "is"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "PL",
+          "verb": "are",
+          "swap": "is"
+        },
+        {
+          "phenomenon": "SV-P",
+          "grammatical_feature": "3",
+          "verb": "demands",
+          "swap": "demand"
+        },
+        {
+          "phenomenon": "SV-P",
+          "grammatical_feature": "3",
+          "verb": "figures",
+          "swap": "figure"
+        },
+        {
+          "phenomenon": "SV-P",
+          "grammatical_feature": "3",
+          "verb": "remains",
+          "swap": "remain"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "SG",
+          "verb": "points",
+          "swap": "point"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "PL",
+          "verb": "do",
+          "swap": "does"
+        },
+        {
+          "phenomenon": "SV-P",
+          "grammatical_feature": "3",
+          "verb": "sticks",
+          "swap": "stick"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "PL",
+          "verb": "sink",
+          "swap": "sinks"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "PL",
+          "verb": "fit",
+          "swap": "fits"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "PL",
+          "verb": "say",
+          "swap": "says"
+        },
+        {
+          "phenomenon": "SV-P",
+          "grammatical_feature": "3",
+          "verb": "buys",
+          "swap": "buy"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "SG",
+          "verb": "shapes",
+          "swap": "shape"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "SG",
+          "verb": "prepares",
+          "swap": "prepare"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "SG",
+          "verb": "aims",
+          "swap": "aim"
+        },
+        {
+          "phenomenon": "SV-P",
+          "grammatical_feature": "3",
+          "verb": "recommends",
+          "swap": "recommend"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "PL",
+          "verb": "remove",
+          "swap": "removes"
+        },
+        {
+          "phenomenon": "SV-P",
+          "grammatical_feature": "3",
+          "verb": "recommends",
+          "swap": "recommend"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "PL",
+          "verb": "include",
+          "swap": "includes"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "PL",
+          "verb": "have",
+          "swap": "has"
+        },
+        {
+          "phenomenon": "SV-P",
+          "grammatical_feature": "3",
+          "verb": "is",
+          "swap": "am"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "PL",
+          "verb": "seem",
+          "swap": "seems"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "PL",
+          "verb": "have",
+          "swap": "has"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "PL",
+          "verb": "do",
+          "swap": "does"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "PL",
+          "verb": "are",
+          "swap": "is"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "PL",
+          "verb": "progress",
+          "swap": "progresses"
+        },
+        {
+          "phenomenon": "SV-P",
+          "grammatical_feature": "3",
+          "verb": "is",
+          "swap": "am"
+        },
+        {
+          "phenomenon": "SV-P",
+          "grammatical_feature": "3",
+          "verb": "holds",
+          "swap": "hold"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "SG",
+          "verb": "names",
+          "swap": "name"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "PL",
+          "verb": "join",
+          "swap": "joins"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "PL",
+          "verb": "tell",
+          "swap": "tells"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "SG",
+          "verb": "derives",
+          "swap": "derive"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "SG",
+          "verb": "demonstrates",
+          "swap": "demonstrate"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "PL",
+          "verb": "have",
+          "swap": "has"
+        }
+      ]
+    },
+    "descriptors": {
+      "tokens_per_word": 1.1965811965811965,
+      "mean_prompt_tokens": 7.0,
+      "mean_prompt_words": 5.85,
+      "seq_len": 8,
+      "pool_single_token_rate": 0.8998109640831758
+    },
+    "micro_batch": 50,
+    "ap_fast_mode": true
+  }
+}

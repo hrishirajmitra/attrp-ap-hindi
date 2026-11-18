@@ -1,0 +1,75 @@
+{
+  "ap": {
+    "method": "activation_patching",
+    "direction": "denoising",
+    "clean_logit_diff": 3.513189659118652,
+    "corrupted_logit_diff": 0.011157019138336182,
+    "denom": 3.502032639980316,
+    "wall_seconds": 187.91279211896472,
+    "n_prompts": 100,
+    "micro_batch": 10,
+    "fast_mode": false,
+    "fast_check_max_diff": 0.0012598037719726562
+  },
+  "attr": {
+    "method": "attribution_patching",
+    "direction": "denoising",
+    "clean_logit_diff": 3.5130903053283693,
+    "corrupted_logit_diff": 0.011265897750854492,
+    "denom": 3.501824407577515,
+    "wall_seconds": 1.5623105489648879,
+    "n_prompts": 100,
+    "micro_batch": 10
+  },
+  "eap": {
+    "method": "eap_ig",
+    "direction": "denoising",
+    "n_steps": 5,
+    "clean_logit_diff": 3.5131235694885254,
+    "corrupted_logit_diff": 0.011195812225341797,
+    "denom": 3.5019277572631835,
+    "wall_seconds": 5.666222798987292,
+    "n_prompts": 100,
+    "micro_batch": 10
+  },
+  "eap_sweep_steps": [
+    5,
+    10,
+    20
+  ],
+  "eap_sweep": {
+    "5": {
+      "method": "eap_ig",
+      "direction": "denoising",
+      "n_steps": 5,
+      "clean_logit_diff": 3.5131235694885254,
+      "corrupted_logit_diff": 0.011195812225341797,
+      "denom": 3.5019277572631835,
+      "wall_seconds": 5.666222798987292,
+      "n_prompts": 100,
+      "micro_batch": 10
+    },
+    "10": {
+      "method": "eap_ig",
+      "direction": "denoising",
+      "n_steps": 10,
+      "clean_logit_diff": 3.5130438232421874,
+      "corrupted_logit_diff": 0.011239290237426758,
+      "denom": 3.5018045330047607,
+      "wall_seconds": 10.27550978900399,
+      "n_prompts": 100,
+      "micro_batch": 10
+    },
+    "20": {
+      "method": "eap_ig",
+      "direction": "denoising",
+      "n_steps": 20,
+      "clean_logit_diff": 3.5130513191223147,
+      "corrupted_logit_diff": 0.011195235252380371,
+      "denom": 3.501856083869934,
+      "wall_seconds": 19.52744811400771,
+      "n_prompts": 100,
+      "micro_batch": 10
+    }
+  }
+}

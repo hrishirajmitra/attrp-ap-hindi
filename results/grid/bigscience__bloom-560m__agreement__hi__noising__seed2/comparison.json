@@ -1,0 +1,1090 @@
+{
+  "spearman_ap_attr": 0.9262645238306045,
+  "pearson_ap_attr": 0.9570162985116819,
+  "restricted_spearman_ap_attr": {
+    "rho": NaN,
+    "n_heads": 2,
+    "abs_threshold": 0.05,
+    "labels": [
+      "L19H3",
+      "L20H2"
+    ]
+  },
+  "topk_overlap_ap_attr": {
+    "5": 0.6,
+    "10": 1.0,
+    "14": 0.8571428571428571,
+    "20": 0.8
+  },
+  "topk_overlap_signed_ap_attr": {
+    "5": 0.6,
+    "10": 1.0,
+    "14": 0.8571428571428571,
+    "20": 0.9
+  },
+  "effect_concentration_top14": 0.3241638869799759,
+  "precision_at_k": {
+    "5": {
+      "activation_patching": null,
+      "attribution_patching": null,
+      "eap_ig": null
+    },
+    "10": {
+      "activation_patching": null,
+      "attribution_patching": null,
+      "eap_ig": null
+    },
+    "14": {
+      "activation_patching": null,
+      "attribution_patching": null,
+      "eap_ig": null
+    },
+    "20": {
+      "activation_patching": null,
+      "attribution_patching": null,
+      "eap_ig": null
+    }
+  },
+  "layerwise_pearson_ap_attr": [
+    {
+      "layer": 0,
+      "pearson_r": 0.9378292889466342,
+      "p_value": 8.159465589839315e-08,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 1,
+      "pearson_r": 0.840233203571707,
+      "p_value": 4.618707058859851e-05,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 2,
+      "pearson_r": 0.9647218116440226,
+      "p_value": 1.6610212551560522e-09,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 3,
+      "pearson_r": 0.9647757741030939,
+      "p_value": 1.6435536056334768e-09,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 4,
+      "pearson_r": 0.9840784991274005,
+      "p_value": 6.6683141471294085e-12,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 5,
+      "pearson_r": 0.7509408127221664,
+      "p_value": 0.0008006027354608875,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 6,
+      "pearson_r": 0.7919645143826058,
+      "p_value": 0.00025568074158999134,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 7,
+      "pearson_r": 0.8368904403592263,
+      "p_value": 5.289291332919742e-05,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 8,
+      "pearson_r": 0.9586286322173808,
+      "p_value": 4.985117278217977e-09,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 9,
+      "pearson_r": 0.8888739630156204,
+      "p_value": 4.163435259978049e-06,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 10,
+      "pearson_r": 0.6049733483146091,
+      "p_value": 0.01303253541227249,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 11,
+      "pearson_r": 0.920136067663232,
+      "p_value": 4.490073205210809e-07,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 12,
+      "pearson_r": 0.9508705810138933,
+      "p_value": 1.6261458161888014e-08,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 13,
+      "pearson_r": 0.9753215448277892,
+      "p_value": 1.4005172478680542e-10,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 14,
+      "pearson_r": 0.9670645811797611,
+      "p_value": 1.0331932084960585e-09,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 15,
+      "pearson_r": 0.9335284212451752,
+      "p_value": 1.2881896856257152e-07,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 16,
+      "pearson_r": 0.9885628907056927,
+      "p_value": 6.660127278373785e-13,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 17,
+      "pearson_r": 0.9879437851046751,
+      "p_value": 9.61692756868347e-13,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 18,
+      "pearson_r": 0.9781561211515278,
+      "p_value": 6.006659181592714e-11,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 19,
+      "pearson_r": 0.9921776215949316,
+      "p_value": 4.70735868087099e-14,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 20,
+      "pearson_r": 0.9995073989228465,
+      "p_value": 1.884704108881482e-22,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 21,
+      "pearson_r": 0.9951881467941335,
+      "p_value": 1.5813680276685773e-15,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 22,
+      "pearson_r": 0.9998238881994409,
+      "p_value": 1.4081720890716944e-25,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 23,
+      "pearson_r": 0.9971183246420194,
+      "p_value": 4.3910218154657416e-17,
+      "flag_r_lt_0.5": false
+    }
+  ],
+  "mlp_pearson_ap_attr": {
+    "pearson_r": 0.49065201516226054,
+    "p_value": 0.014918459296675094,
+    "flag_r_lt_0.5": true
+  },
+  "wall_seconds": {
+    "activation_patching": 60.95839789882302,
+    "attribution_patching": 1.0726931598037481,
+    "eap_ig": 3.8273074692115188
+  },
+  "logit_diffs": {
+    "clean": 5.232281799316406,
+    "corrupted": 1.2138573265075683
+  },
+  "top14": {
+    "activation_patching": [
+      "L20H2",
+      "L19H3",
+      "L18H0",
+      "L20H5",
+      "L17H10",
+      "L22H2",
+      "L20H3",
+      "L21H3",
+      "L19H2",
+      "L16H4",
+      "L13H6",
+      "L21H0",
+      "L13H5",
+      "L17H3"
+    ],
+    "attribution_patching": [
+      "L20H2",
+      "L19H3",
+      "L22H2",
+      "L20H5",
+      "L21H3",
+      "L17H10",
+      "L20H3",
+      "L18H0",
+      "L19H2",
+      "L16H4",
+      "L13H6",
+      "L21H0",
+      "L21H1",
+      "L23H4"
+    ],
+    "eap_ig": [
+      "L20H2",
+      "L19H3",
+      "L18H0",
+      "L22H2",
+      "L21H3",
+      "L20H3",
+      "L20H5",
+      "L17H10",
+      "L21H0",
+      "L19H2",
+      "L16H4",
+      "L4H12",
+      "L17H3",
+      "L23H4"
+    ]
+  },
+  "direction": "noising",
+  "task": "agreement",
+  "known_positives": [],
+  "spearman_ap_eap_ig": 0.7526838035695119,
+  "pearson_ap_eap_ig": 0.9403330488060886,
+  "restricted_spearman_ap_eap_ig": {
+    "rho": NaN,
+    "n_heads": 2,
+    "abs_threshold": 0.05,
+    "labels": [
+      "L19H3",
+      "L20H2"
+    ]
+  },
+  "topk_overlap_ap_eap_ig": {
+    "5": 0.6,
+    "10": 0.9,
+    "14": 0.8571428571428571,
+    "20": 0.8
+  },
+  "topk_overlap_signed_ap_eap_ig": {
+    "5": 0.6,
+    "10": 0.9,
+    "14": 0.8571428571428571,
+    "20": 0.8
+  },
+  "layerwise_pearson_ap_eap_ig": [
+    {
+      "layer": 0,
+      "pearson_r": 0.5189221577713546,
+      "p_value": 0.03942944145653167,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 1,
+      "pearson_r": 0.5329768228295197,
+      "p_value": 0.03352155770057638,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 2,
+      "pearson_r": 0.6324420475467787,
+      "p_value": 0.008565383243213584,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 3,
+      "pearson_r": 0.491006736452843,
+      "p_value": 0.0534454716961576,
+      "flag_r_lt_0.5": true
+    },
+    {
+      "layer": 4,
+      "pearson_r": 0.2580519189883139,
+      "p_value": 0.33456692242148406,
+      "flag_r_lt_0.5": true
+    },
+    {
+      "layer": 5,
+      "pearson_r": 0.19638189177111523,
+      "p_value": 0.46603080660506296,
+      "flag_r_lt_0.5": true
+    },
+    {
+      "layer": 6,
+      "pearson_r": 0.2480879955378745,
+      "p_value": 0.3542100193150722,
+      "flag_r_lt_0.5": true
+    },
+    {
+      "layer": 7,
+      "pearson_r": 0.145136136539936,
+      "p_value": 0.5917472389851021,
+      "flag_r_lt_0.5": true
+    },
+    {
+      "layer": 8,
+      "pearson_r": 0.9034605596760323,
+      "p_value": 1.6181727509025008e-06,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 9,
+      "pearson_r": 0.8777394064914501,
+      "p_value": 7.878276558938434e-06,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 10,
+      "pearson_r": 0.8423672320949377,
+      "p_value": 4.2289986414885186e-05,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 11,
+      "pearson_r": 0.9037110311892487,
+      "p_value": 1.5900991700716376e-06,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 12,
+      "pearson_r": 0.8315030019918581,
+      "p_value": 6.540486756992524e-05,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 13,
+      "pearson_r": 0.8975832929838004,
+      "p_value": 2.4082904474929165e-06,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 14,
+      "pearson_r": 0.8378741131441143,
+      "p_value": 5.084020981004447e-05,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 15,
+      "pearson_r": 0.7615498264432645,
+      "p_value": 0.0006087957902113749,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 16,
+      "pearson_r": 0.8597338352004074,
+      "p_value": 1.9607973966221937e-05,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 17,
+      "pearson_r": 0.975413109886883,
+      "p_value": 1.364876333057825e-10,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 18,
+      "pearson_r": 0.9932334540725152,
+      "p_value": 1.7107320833006965e-14,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 19,
+      "pearson_r": 0.998286090774531,
+      "p_value": 1.1595712902495e-18,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 20,
+      "pearson_r": 0.9930981977983672,
+      "p_value": 1.9642452119223568e-14,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 21,
+      "pearson_r": 0.9867726103257026,
+      "p_value": 1.8345794421035325e-12,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 22,
+      "pearson_r": 0.9973889522623255,
+      "p_value": 2.203244899531341e-17,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 23,
+      "pearson_r": 0.9769328191603771,
+      "p_value": 8.76756539326647e-11,
+      "flag_r_lt_0.5": false
+    }
+  ],
+  "mlp_pearson_ap_eap_ig": {
+    "pearson_r": 0.9052035851847671,
+    "p_value": 1.2280240805862089e-09,
+    "flag_r_lt_0.5": false
+  },
+  "eap_n_steps": 5,
+  "eap_ig_delta_precision14_heads": null,
+  "eap_ig_delta_spearman": -0.1735807202610926,
+  "verdict": {
+    "primary": "GO",
+    "attrp_safe_proxy": true,
+    "attrp_recovers_topk": true,
+    "spearman_ap_attr": 0.9262645238306045,
+    "topk_overlap14_attr": 0.8571428571428571,
+    "restricted_rho": NaN,
+    "eap_ig_helps": false,
+    "thresholds": {
+      "spearman_ge": 0.9,
+      "topk_overlap14_ge": 0.5,
+      "restricted_ap_abs": 0.05,
+      "eap_delta_spearman_ge": 0.05
+    },
+    "precision_at_14_attr": null
+  },
+  "cell": {
+    "model": "bigscience/bloom-560m",
+    "task": "agreement",
+    "lang": "hi",
+    "seed": 2,
+    "direction": "noising",
+    "corruption": "prefix_swap",
+    "batch_meta": {
+      "source": "multiblimp",
+      "single_token_answer_rate": 1.0,
+      "n_pool": 732,
+      "n_candidates": 1439,
+      "window_tokens": 14,
+      "pool_single_token_rate": 0.7136900625434329,
+      "pool_filtered_to_single_token": true,
+      "phenomenon_counts": {
+        "SV-#": 38,
+        "SV-G": 34,
+        "SV-P": 18,
+        "SP-G": 5,
+        "SP-#": 5
+      },
+      "metric": "single_token_logit_diff",
+      "items": [
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "SG",
+          "verb": "\u0930\u0939\u093e",
+          "swap": "\u0930\u0939\u0947\u0902"
+        },
+        {
+          "phenomenon": "SV-G",
+          "grammatical_feature": "FEM",
+          "verb": "\u092a\u0921\u093c\u0924\u0940",
+          "swap": "\u092a\u0921\u093c\u0924\u093e"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "SG",
+          "verb": "\u0926\u0947\u0917\u093e",
+          "swap": "\u0926\u093f\u090f"
+        },
+        {
+          "phenomenon": "SV-P",
+          "grammatical_feature": "3",
+          "verb": "\u0926\u0947",
+          "swap": "\u0926\u0940\u091c\u093f\u090f"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "PL",
+          "verb": "\u0925\u0940\u0902",
+          "swap": "\u0925\u0940"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "PL",
+          "verb": "\u0925\u0940\u0902",
+          "swap": "\u0925\u0940"
+        },
+        {
+          "phenomenon": "SV-G",
+          "grammatical_feature": "MASC",
+          "verb": "\u091a\u093e\u0939\u0924\u093e",
+          "swap": "\u091a\u093e\u0939\u0924\u0940"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "SG",
+          "verb": "\u0930\u0939\u0940",
+          "swap": "\u0930\u0939\u0947\u0902"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "PL",
+          "verb": "\u0917\u0908",
+          "swap": "\u091c\u093e\u090f"
+        },
+        {
+          "phenomenon": "SV-G",
+          "grammatical_feature": "MASC",
+          "verb": "\u0917\u090f",
+          "swap": "\u0917\u0908"
+        },
+        {
+          "phenomenon": "SV-G",
+          "grammatical_feature": "MASC",
+          "verb": "\u0930\u0939\u0924\u0947",
+          "swap": "\u0930\u0939\u0924\u0940"
+        },
+        {
+          "phenomenon": "SV-G",
+          "grammatical_feature": "MASC",
+          "verb": "\u091c\u093e\u0924\u0947",
+          "swap": "\u091c\u093e\u0924\u0940"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "SG",
+          "verb": "\u0938\u0915\u093e",
+          "swap": "\u0938\u0915\u0947\u0902"
+        },
+        {
+          "phenomenon": "SV-P",
+          "grammatical_feature": "3",
+          "verb": "\u0930\u0939\u093e",
+          "swap": "\u0930\u0939\u094b"
+        },
+        {
+          "phenomenon": "SV-P",
+          "grammatical_feature": "3",
+          "verb": "\u0926\u0947\u0902",
+          "swap": "\u0926\u0940\u091c\u093f\u090f"
+        },
+        {
+          "phenomenon": "SP-G",
+          "grammatical_feature": "MASC",
+          "verb": "\u0932\u093f\u090f",
+          "swap": "\u0932\u0940"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "SG",
+          "verb": "\u092c\u0924\u093e\u0928\u0947",
+          "swap": "\u092c\u0924\u093e\u090f"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "SG",
+          "verb": "\u0939\u094b\u0917\u0940",
+          "swap": "\u0939\u094b\u0902"
+        },
+        {
+          "phenomenon": "SP-#",
+          "grammatical_feature": "SG",
+          "verb": "\u092c\u0928\u093e\u0908",
+          "swap": "\u092c\u0928\u093e\u092f\u0947"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "SG",
+          "verb": "\u0939\u094b\u0924\u093e",
+          "swap": "\u0939\u094b\u0902"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "SG",
+          "verb": "\u091a\u0932\u0928\u0947",
+          "swap": "\u091a\u0932\u0940"
+        },
+        {
+          "phenomenon": "SV-G",
+          "grammatical_feature": "MASC",
+          "verb": "\u0917\u090f",
+          "swap": "\u0917\u0908"
+        },
+        {
+          "phenomenon": "SV-G",
+          "grammatical_feature": "MASC",
+          "verb": "\u0938\u0915\u0924\u093e",
+          "swap": "\u0938\u0915\u0924\u0940"
+        },
+        {
+          "phenomenon": "SV-G",
+          "grammatical_feature": "MASC",
+          "verb": "\u0930\u0939\u093e",
+          "swap": "\u0930\u0939\u0940"
+        },
+        {
+          "phenomenon": "SP-G",
+          "grammatical_feature": "MASC",
+          "verb": "\u0915\u0930\u0924\u093e",
+          "swap": "\u0915\u0930\u0924\u0940"
+        },
+        {
+          "phenomenon": "SV-G",
+          "grammatical_feature": "MASC",
+          "verb": "\u0925\u093e",
+          "swap": "\u0925\u0940"
+        },
+        {
+          "phenomenon": "SV-G",
+          "grammatical_feature": "MASC",
+          "verb": "\u0926\u0947\u0916\u093e",
+          "swap": "\u0926\u0947\u0916\u0940"
+        },
+        {
+          "phenomenon": "SV-P",
+          "grammatical_feature": "3",
+          "verb": "\u0930\u0939\u0940\u0902",
+          "swap": "\u0930\u0939\u094b"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "SG",
+          "verb": "\u0925\u0940\u0902",
+          "swap": "\u0925\u0947"
+        },
+        {
+          "phenomenon": "SV-P",
+          "grammatical_feature": "3",
+          "verb": "\u0939\u0948",
+          "swap": "\u0939\u0942\u0902"
+        },
+        {
+          "phenomenon": "SV-G",
+          "grammatical_feature": "MASC",
+          "verb": "\u0925\u0947",
+          "swap": "\u0925\u0940"
+        },
+        {
+          "phenomenon": "SP-G",
+          "grammatical_feature": "MASC",
+          "verb": "\u0932\u0917\u0924\u093e",
+          "swap": "\u0932\u0917\u0924\u0940"
+        },
+        {
+          "phenomenon": "SV-G",
+          "grammatical_feature": "MASC",
+          "verb": "\u092a\u0921\u093c\u0924\u093e",
+          "swap": "\u092a\u0921\u093c\u0924\u0940"
+        },
+        {
+          "phenomenon": "SV-G",
+          "grammatical_feature": "MASC",
+          "verb": "\u0939\u094b",
+          "swap": "\u0939\u0941\u0908"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "PL",
+          "verb": "\u0938\u0915\u0924\u0947",
+          "swap": "\u0938\u0915\u0924\u093e"
+        },
+        {
+          "phenomenon": "SV-G",
+          "grammatical_feature": "MASC",
+          "verb": "\u0916\u094b\u0932\u0947",
+          "swap": "\u0916\u094b\u0932\u0940"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "PL",
+          "verb": "\u0939\u0948\u0902",
+          "swap": "\u0939\u0948"
+        },
+        {
+          "phenomenon": "SV-P",
+          "grammatical_feature": "3",
+          "verb": "\u0930\u0939\u0940\u0902",
+          "swap": "\u0930\u0939\u094b"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "SG",
+          "verb": "\u0939\u094b\u0928\u093e",
+          "swap": "\u0939\u094b\u0902"
+        },
+        {
+          "phenomenon": "SV-P",
+          "grammatical_feature": "3",
+          "verb": "\u0930\u0939\u0928\u0947",
+          "swap": "\u0930\u0939\u094b"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "PL",
+          "verb": "\u0926\u0947\u0928\u0947",
+          "swap": "\u0926\u093f\u092f\u093e"
+        },
+        {
+          "phenomenon": "SV-G",
+          "grammatical_feature": "MASC",
+          "verb": "\u091c\u0924\u093e\u092f\u093e",
+          "swap": "\u091c\u0924\u093e\u0908"
+        },
+        {
+          "phenomenon": "SV-G",
+          "grammatical_feature": "MASC",
+          "verb": "\u091c\u093e\u0924\u093e",
+          "swap": "\u091c\u093e\u0924\u0940"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "PL",
+          "verb": "\u0925\u0947",
+          "swap": "\u0925\u093e"
+        },
+        {
+          "phenomenon": "SV-P",
+          "grammatical_feature": "3",
+          "verb": "\u0930\u0939\u0947\u0917\u0940",
+          "swap": "\u0930\u0939\u094b"
+        },
+        {
+          "phenomenon": "SV-G",
+          "grammatical_feature": "FEM",
+          "verb": "\u0930\u0939\u0940",
+          "swap": "\u0930\u0939\u093e"
+        },
+        {
+          "phenomenon": "SV-G",
+          "grammatical_feature": "MASC",
+          "verb": "\u092a\u0921\u093c\u093e",
+          "swap": "\u092a\u0921\u093c\u0940"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "PL",
+          "verb": "\u0939\u094b\u0924\u0947",
+          "swap": "\u0939\u094b\u0924\u093e"
+        },
+        {
+          "phenomenon": "SV-G",
+          "grammatical_feature": "FEM",
+          "verb": "\u0938\u0915\u0940",
+          "swap": "\u0938\u0915\u093e"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "SG",
+          "verb": "\u092a\u093e\u0924\u0940",
+          "swap": "\u092a\u093e\u090f"
+        },
+        {
+          "phenomenon": "SV-G",
+          "grammatical_feature": "FEM",
+          "verb": "\u0925\u0940",
+          "swap": "\u0925\u093e"
+        },
+        {
+          "phenomenon": "SV-G",
+          "grammatical_feature": "MASC",
+          "verb": "\u091a\u093e\u0939\u0924\u093e",
+          "swap": "\u091a\u093e\u0939\u0924\u0940"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "SG",
+          "verb": "\u0939\u0941\u0908",
+          "swap": "\u0939\u094b\u0902"
+        },
+        {
+          "phenomenon": "SV-G",
+          "grammatical_feature": "MASC",
+          "verb": "\u092a\u0939\u0941\u0902\u091a\u0947",
+          "swap": "\u092a\u0939\u0941\u0902\u091a\u093e"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "PL",
+          "verb": "\u0939\u094b\u0902\u0917\u0940",
+          "swap": "\u0939\u094b\u0917\u0940"
+        },
+        {
+          "phenomenon": "SV-G",
+          "grammatical_feature": "MASC",
+          "verb": "\u0925\u0947",
+          "swap": "\u0925\u0940\u0902"
+        },
+        {
+          "phenomenon": "SV-P",
+          "grammatical_feature": "3",
+          "verb": "\u0915\u0930\u0947\u0917\u093e",
+          "swap": "\u0915\u0930\u0942\u0902\u0917\u093e"
+        },
+        {
+          "phenomenon": "SV-G",
+          "grammatical_feature": "FEM",
+          "verb": "\u0932\u0917\u093e",
+          "swap": "\u0932\u0917\u093e\u0924\u0947"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "SG",
+          "verb": "\u0930\u0939",
+          "swap": "\u0930\u0939\u0947\u0902"
+        },
+        {
+          "phenomenon": "SV-P",
+          "grammatical_feature": "3",
+          "verb": "\u0930\u0939\u0924\u0940",
+          "swap": "\u0930\u0939\u094b"
+        },
+        {
+          "phenomenon": "SP-#",
+          "grammatical_feature": "SG",
+          "verb": "\u0915\u0940",
+          "swap": "\u0915\u0940\u0902"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "SG",
+          "verb": "\u0939\u0941\u0906",
+          "swap": "\u0939\u094b\u0902"
+        },
+        {
+          "phenomenon": "SV-G",
+          "grammatical_feature": "FEM",
+          "verb": "\u0917\u0908",
+          "swap": "\u0917\u092f\u093e"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "SG",
+          "verb": "\u0925\u093e",
+          "swap": "\u0925\u0947"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "SG",
+          "verb": "\u091c\u093e\u0928\u0947",
+          "swap": "\u0917\u090f"
+        },
+        {
+          "phenomenon": "SV-P",
+          "grammatical_feature": "3",
+          "verb": "\u0926\u0947\u0902\u0917\u0947",
+          "swap": "\u0926\u0947\u0902"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "SG",
+          "verb": "\u0930\u0939\u0924\u0947",
+          "swap": "\u0930\u0939\u093e"
+        },
+        {
+          "phenomenon": "SV-G",
+          "grammatical_feature": "MASC",
+          "verb": "\u0930\u0939\u0924\u093e",
+          "swap": "\u0930\u0939\u0924\u0940"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "SG",
+          "verb": "\u0939\u094b\u0917\u093e",
+          "swap": "\u0939\u094b\u0902"
+        },
+        {
+          "phenomenon": "SV-G",
+          "grammatical_feature": "MASC",
+          "verb": "\u092e\u093f\u0932\u0947",
+          "swap": "\u092e\u093f\u0932\u0940"
+        },
+        {
+          "phenomenon": "SP-#",
+          "grammatical_feature": "SG",
+          "verb": "\u0915\u0939\u0940",
+          "swap": "\u0915\u0939\u0940\u0902"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "SG",
+          "verb": "\u0925\u0940",
+          "swap": "\u0925\u0940\u0902"
+        },
+        {
+          "phenomenon": "SV-P",
+          "grammatical_feature": "3",
+          "verb": "\u0917\u090f",
+          "swap": "\u091c\u093e\u0913"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "PL",
+          "verb": "\u0925\u0947",
+          "swap": "\u0925\u093e"
+        },
+        {
+          "phenomenon": "SV-P",
+          "grammatical_feature": "3",
+          "verb": "\u0939\u0948",
+          "swap": "\u0939\u0942\u0902"
+        },
+        {
+          "phenomenon": "SV-P",
+          "grammatical_feature": "3",
+          "verb": "\u0939\u0948",
+          "swap": "\u0939\u0942\u0902"
+        },
+        {
+          "phenomenon": "SV-G",
+          "grammatical_feature": "MASC",
+          "verb": "\u091c\u093e\u0928\u093e",
+          "swap": "\u091c\u093e\u0928\u0940"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "SG",
+          "verb": "\u0930\u0939\u0940",
+          "swap": "\u0930\u0939\u0947\u0902"
+        },
+        {
+          "phenomenon": "SV-P",
+          "grammatical_feature": "3",
+          "verb": "\u0930\u0939\u0940",
+          "swap": "\u0930\u0939\u094b"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "PL",
+          "verb": "\u0932\u0917\u093e\u0928\u0947",
+          "swap": "\u0932\u0917\u093e\u090f"
+        },
+        {
+          "phenomenon": "SV-P",
+          "grammatical_feature": "3",
+          "verb": "\u0939\u0948\u0902",
+          "swap": "\u0939\u0948"
+        },
+        {
+          "phenomenon": "SV-G",
+          "grammatical_feature": "FEM",
+          "verb": "\u0917\u0908",
+          "swap": "\u0917\u092f\u093e"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "PL",
+          "verb": "\u0932\u0947\u0928\u0947",
+          "swap": "\u0932\u093f\u092f\u093e"
+        },
+        {
+          "phenomenon": "SV-G",
+          "grammatical_feature": "FEM",
+          "verb": "\u0939\u0948\u0902",
+          "swap": "\u0939\u094b\u0902"
+        },
+        {
+          "phenomenon": "SP-G",
+          "grammatical_feature": "MASC",
+          "verb": "\u092d\u0947\u091c\u093e",
+          "swap": "\u092d\u0947\u091c\u0940"
+        },
+        {
+          "phenomenon": "SV-G",
+          "grammatical_feature": "MASC",
+          "verb": "\u0938\u0915\u093e",
+          "swap": "\u0938\u0915\u0940"
+        },
+        {
+          "phenomenon": "SV-P",
+          "grammatical_feature": "3",
+          "verb": "\u0917\u0908",
+          "swap": "\u091c\u093e\u0913"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "SG",
+          "verb": "\u091a\u093e\u0939\u0924\u093e",
+          "swap": "\u091a\u093e\u0939\u0924\u0947"
+        },
+        {
+          "phenomenon": "SV-P",
+          "grammatical_feature": "3",
+          "verb": "\u0939\u0948\u0902",
+          "swap": "\u0939\u0948"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "PL",
+          "verb": "\u0939\u0941\u090f",
+          "swap": "\u0939\u094b\u0928\u0940"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "PL",
+          "verb": "\u0939\u0941\u0908",
+          "swap": "\u0939\u094b\u0928\u0940"
+        },
+        {
+          "phenomenon": "SV-G",
+          "grammatical_feature": "FEM",
+          "verb": "\u092a\u093e\u0908",
+          "swap": "\u092a\u093e\u092f\u093e"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "SG",
+          "verb": "\u0938\u0915\u0940",
+          "swap": "\u0938\u0915\u0947"
+        },
+        {
+          "phenomenon": "SV-G",
+          "grammatical_feature": "FEM",
+          "verb": "\u0939\u0941\u0908",
+          "swap": "\u0939\u094b\u0924\u093e"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "PL",
+          "verb": "\u091c\u093e",
+          "swap": "\u091c\u093e\u0928\u0940"
+        },
+        {
+          "phenomenon": "SV-G",
+          "grammatical_feature": "MASC",
+          "verb": "\u0925\u0947",
+          "swap": "\u0925\u0940\u0902"
+        },
+        {
+          "phenomenon": "SV-#",
+          "grammatical_feature": "SG",
+          "verb": "\u0939\u0948",
+          "swap": "\u0939\u094b\u0902"
+        },
+        {
+          "phenomenon": "SP-#",
+          "grammatical_feature": "SG",
+          "verb": "\u0915\u0939\u0940",
+          "swap": "\u0915\u0939\u0940\u0902"
+        },
+        {
+          "phenomenon": "SP-G",
+          "grammatical_feature": "MASC",
+          "verb": "\u0939\u094b\u0924\u093e",
+          "swap": "\u0939\u094b\u0924\u0940"
+        },
+        {
+          "phenomenon": "SP-#",
+          "grammatical_feature": "SG",
+          "verb": "\u092c\u0928\u0924\u093e",
+          "swap": "\u092c\u0928\u0924\u0947"
+        }
+      ]
+    },
+    "descriptors": {
+      "tokens_per_word": 1.1839708561020037,
+      "mean_prompt_tokens": 13.0,
+      "mean_prompt_words": 10.98,
+      "seq_len": 14,
+      "pool_single_token_rate": 0.7136900625434329
+    },
+    "micro_batch": 25,
+    "ap_fast_mode": true
+  }
+}

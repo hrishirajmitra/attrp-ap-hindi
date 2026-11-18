@@ -71,42 +71,53 @@ python scripts/exploratory_rank.py results       # post-hoc restricted-rank anal
 
 ---
 
-# Extension (v2): Hindi, more tasks, more models (+ stage-2 language profiles)
+# Extension (v2): Hindi, more tasks, more models
 
-**Protocol:** [PREREGISTRATION_v2.md](PREREGISTRATION_v2.md). Formal proposal: [proposal/proposal.pdf](proposal/proposal.pdf).
+**Protocol:** [PREREGISTRATION_v2.md](PREREGISTRATION_v2.md) (Amendments 1-2 record every deviation, all made before any AP/AttrP/EAP-IG comparison existed). Formal proposal: [proposal/proposal.pdf](proposal/proposal.pdf). Full analysis: [results/analysis/ANALYSIS.md](results/analysis/ANALYSIS.md); raw per-run table: `results/analysis/cells.csv`; every run: `results/grid/<model>__<task>__<lang>__<direction>__seed<k>/`.
 
-**Two stages, one study.** Stage 1: does AttrP reproduce AP per gated `(model, task, language)` cell? Stage 2: on cells where stage 1 is trustworthy, do English and Hindi **important-head profiles** (AP scores) overlap near a within-language ceiling and above a different-task floor? Without stage 1, an en–hi difference could just be the cheap localiser failing in Hindi.
+## What was run
 
-**Reuse.** Patching engine: ours (primary), optional cross-check with [hannamw/EAP-IG](https://github.com/hannamw/EAP-IG) — see [results/ENGINE_DECISION.md](results/ENGINE_DECISION.md). Agreement data: MultiBLiMP (`data/multiblimp/`). Logit lens / romanization ideas from llm-latent-language and RomanLens.
+- 9 models: GPT-2, Pythia-160m/410m (English controls), Qwen2.5-0.5B/1.5B, Llama-3.2-1B, **BLOOM-560m/1b1/1b7** (Gemma-3-1B was dropped: TransformerLens 2.15 cannot load it; BLOOM has Hindi in its pretraining data). Llama weights come from the ungated `unsloth/Llama-3.2-1B` mirror because the official repo refused the token.
+- 4 tasks (IOI, capitals, MultiBLiMP subject-verb agreement, induction) x English/Hindi, plus romanised-Hindi IOI: 66 candidate cells, all gated first (`results/gate_coverage.md`).
+- Every gated cell: AP, first-order AttrP and EAP-IG, both directions (denoising, noising), 5 seeds x 100 prompts, fp32, EAP-IG step sweep {5,10,20} on seed 0. **440 runs, 0 failures.** Compute: Ada 2080 Ti, about 4 h wall on up to 12 GPUs across the `irel` and `research` accounts.
+- Correctness checks that ran on the cluster: the new engine reproduces the v1 GPT-2 IOI scores to 1e-6 (`results/validate_v1.json`); EAP-IG at alpha=0 equals AttrP exactly, and EAP-IG at 5 steps matches 50 steps (`scripts/test_eap_equiv.py`); the fast AP path is self-checked against the full forward pass in every run.
+- Bugs found *by* those checks and fixed before the grid: noising-direction AttrP/EAP-IG had the opposite sign to AP; MultiBLiMP contrasts were polluted by contractions and glued punctuation; capitals used a multi-token answer pool.
 
-## Design summary
+## Results (seed means over 5 seeds; "core" = strict-gate cells, excluding Pythia and induction)
 
-- **Models (≤2B / 11GB):** GPT-2, Pythia-160m/410m (English controls), Qwen2.5-0.5B/1.5B, Llama-3.2-1B, Gemma-3-1B, optional Sarvam-1.
-- **Tasks:** IOI, capitals (factual recall), gender/number agreement, induction copy. Each with parallel English and Hindi templates (`src/data_*.py`).
-- **Matching:** competence gate (`scripts/gate.py`) — clean acc ≥ 0.80, clean LD ≥ 0.50, corrupted LD ≤ 0.25, single-token rate ≥ 0.90. Failed cells stay in the coverage table.
-- **Metrics:** Spearman ρ; restricted ρ on heads with |AP| > 0.05 (a priori); top-k overlap with AP (replaces checklist Precision@k except for GPT-2 IOI); MLP Pearson; EAP-IG step sweep {5,10,20}; denoising + noising.
-- **Hypotheses:** H1 ρ≥0.90 on all gated cells; H2 MLP AttrP failure recurs; H3 Hindi ρ < English ρ (paired); H4 EAP-IG repairs MLP.
+**Gate coverage (a result in itself).** 43 of 66 cells pass the strict gate, 1 passes only as a first-token contrast, 22 fail. **English passes almost everywhere. Hindi passes in only two settings: agreement on BLOOM (3 sizes) and induction on BLOOM/Llama.** Hindi IOI, Hindi capitals and romanised-Hindi IOI fail the competence gate in every model (accuracy 0.27-0.64, i.e. the models cannot do the task, so there is nothing to localise). Qwen2.5 and Llama cannot form a single-token Hindi agreement contrast at all (byte-level BPE: the first token of a correct and an incorrect verb form coincide).
 
-## Coverage (offline expectations — lock on Ada)
+| Hypothesis | Verdict | Evidence |
+|---|---|---|
+| **H1**: head rho(AP, AttrP) >= 0.90 in every core cell | **Almost** (22 / 24 cells) | Misses: Qwen2.5-0.5B agreement/en (0.858) and Qwen2.5-1.5B agreement/en (0.884). Range of the other cells 0.91-0.995. Noising direction is lower (mean 0.93; Qwen/Llama agreement 0.76-0.86). |
+| **H2**: MLP outputs anti-correlate (r < 0) in most cells | **Rejected** (2 / 24 cells) | The v1 GPT-2 IOI failure (r = -0.93) reproduces, and also appears in Qwen2.5-0.5B IOI (-0.87) and in Pythia IOI/induction, but in most cells MLP r is strongly positive (BLOOM: 0.89-0.998). The MLP failure is circuit-specific (IOI-type name-mover MLP structure), not general. |
+| **H3**: AttrP is worse in Hindi than English | **Not supported; equivalent within +/-0.05** | Hindi-minus-English rho on agreement, BLOOM 560m/1b1/1b7: -0.008, -0.007, +0.041; pooled +0.009, 95% CI [-0.017, +0.040]. **Scope: one task, one model family, 3 pairs.** |
+| **H4**: rho falls with tokenizer fertility, rises with clean logit difference | Supported, **but observational** | Across the 24 core cells, Spearman(rho, tokens/word) = -0.51 [-0.73, -0.15]; Spearman(rho, clean LD) = +0.45 [0.07, 0.72]. Fertility and model/task are entangled (no Hindi cells with high fertility passed the gate), so this does not establish a causal effect of Hindi. |
+| **H5**: EAP-IG repairs MLP agreement and is worth its cost | **Rejected** | MLP r gain over AttrP -0.05 (95% CI [-0.21, +0.10]); head rho *drops* by 0.36 (CI [-0.39, -0.32]); cost 3.5x AttrP. Convergence is not the issue (5, 10, 20 steps give the same numbers; EAP at alpha=0 reproduces AttrP exactly). Node-level IG along the embedding path is a worse proxy for AP than plain first-order AttrP here. |
 
-Until `scripts/gate.py` runs on Ada, `results/gate_coverage.json` holds **expected** pass/fail only (not locked). Offline draft: **52 / 64** cells expected to pass; Hindi fails for GPT-2 and Pythia by design. See `results/gate_coverage.md` and `results/tokenizer_audit.md`.
+Other numbers: AP costs ~49x AttrP in wall time; first-token-tier cell Llama-3.2-1B capitals/hi: rho = 0.895, top-14 overlap 0.86 (sensitivity only). Pythia (English appendix) behaves like GPT-2: rho 0.84-0.98, IOI MLP r about -0.85.
 
-## Grid results
+## Answer to the question
 
-_Pending Ada runs._ After `slurm/run_grid.sbatch` + `scripts/aggregate_seeds.py`:
+**Cheap first-order attribution patching reproduces activation patching for head ranking in all but two (Qwen agreement/English) of the 24 core cells and gives the same answer in Hindi as in English wherever a Hindi cell is testable. It fails for MLP outputs in IOI-type circuits (GPT-2, Qwen-0.5B, Pythia), not in general. EAP-IG with integrated gradients does not fix this and is worse for heads.**
 
-| Artifact | Content |
-|----------|---------|
-| `results/grid_summary.md` | ρ / top-14 overlap / MLP r by cell |
-| `results/h3_language_paired.md` | Paired Hindi vs English bootstrap |
-| `results/grid_rho.png` | Heatmap of mean ρ |
+## Limits (read before citing)
 
-## Closing v1 open limits
+1. **Hindi evidence is narrow**: the only strict-gate Hindi cells with a testable AP/AttrP comparison are agreement and induction on the BLOOM family (plus Llama induction). We cannot say anything about Hindi IOI, factual recall or the script-vs-language question: no model passed the competence gate. This is a limit on the *models*, which is itself the headline finding about Hindi.
+2. English agreement windows are shorter (about 7 tokens of context) than Hindi (about 23 tokens), because the window is set per language from prefix lengths; sequence length is a confound for H3 and H4 and is logged per cell (`seq_len`).
+3. H3 has only 3 pairs, all from one family; the equivalence margin (+/-0.05) was fixed before the results.
+4. "Seeds" resample prompts from the same templates / MultiBLiMP pool with the same model weights; CIs reflect prompt sampling, not variation across trained models.
+5. Agreement uses the single-token pool of MultiBLiMP pairs (the logit difference is then a clean one-token contrast); this selects frequent verbs.
+6. The Hindi templates have **not** been reviewed by a native speaker (`data/NATIVE_REVIEW.md`).
+7. Llama-3.2-1B weights are from the `unsloth` mirror; Gemma-3 was replaced by BLOOM (Amendment 2).
+8. Competence-gate rule changes (corrupted-LD criterion, first-token tier, extra BLOOM models) were made after seeing gate numbers but before any patching result; they are listed in Amendment 2.
 
-| v1 limit | v2 action |
-|----------|-----------|
-| One model / one task | Multi-model × multi-task × en/hi grid |
-| Post-hoc \|AP\| thresholds | Restricted ρ threshold **0.05 locked a priori** |
-| Checklist Precision@14 | Top-k overlap with AP (checklist only for GPT-2 IOI) |
-| EAP-IG step count untested | Sweep 5, 10, 20 on seed 0 |
-| Denoising only | Noising secondary (seed 0) |
+## Reproduce (Ada)
+
+```bash
+sbatch -A irel --qos=normal --export=ALL,GATE_MODEL=<model> slurm/gate_model.sbatch   # per model
+python scripts/merge_gate.py                                                         # results/gate_coverage.*, gated_cells.json
+python scripts/queue_init.py --queue-dir ~/mp/queue
+sbatch -A irel --qos=normal --array=0-7 slurm/worker.sbatch                          # also: -A research --qos=medium
+sbatch -A irel --qos=normal slurm/analyze.sbatch                                     # results/analysis/
+```

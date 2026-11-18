@@ -24,6 +24,7 @@ def eap_ig_heads_and_mlps(
     n_steps: int = 5,
     direction: str = "denoising",
     micro_batch: int | None = None,
+    alphas: list[float] | None = None,
 ) -> dict[str, Any]:
     """
     Path-integrated attribution.
@@ -48,7 +49,9 @@ def eap_ig_heads_and_mlps(
     clean_sum = torch.zeros((), dtype=torch.float64, device=device)
     corr_sum = torch.zeros((), dtype=torch.float64, device=device)
 
-    alphas = [(k + 0.5) / n_steps for k in range(n_steps)]
+    if alphas is None:
+        alphas = [(k + 0.5) / n_steps for k in range(n_steps)]
+    n_steps = len(alphas)
 
     for ct, rt, pos, neg in iter_chunks(batch, micro_batch):
         with torch.no_grad():

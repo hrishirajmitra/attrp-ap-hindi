@@ -1,9 +1,0 @@
-{
-  "direction": "denoising",
-  "n_pairs": 0,
-  "pairs": [],
-  "cross_task_floors": [],
-  "status": "skipped",
-  "reason": "numpy/scipy not installed (run on Ada venv)",
-  "note": "Important-head profiles under AP, not full circuits."
-}

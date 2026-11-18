@@ -1,0 +1,386 @@
+{
+  "spearman_ap_attr": 0.9821396993810787,
+  "pearson_ap_attr": 0.9992104677431781,
+  "restricted_spearman_ap_attr": {
+    "rho": 1.0,
+    "n_heads": 13,
+    "abs_threshold": 0.05,
+    "labels": [
+      "L0H1",
+      "L0H4",
+      "L7H9",
+      "L8H10",
+      "L9H6",
+      "L9H9",
+      "L10H0",
+      "L10H1",
+      "L10H6",
+      "L10H7",
+      "L10H10",
+      "L11H2",
+      "L11H10"
+    ]
+  },
+  "topk_overlap_ap_attr": {
+    "5": 1.0,
+    "10": 1.0,
+    "14": 1.0,
+    "20": 1.0
+  },
+  "topk_overlap_signed_ap_attr": {
+    "5": 1.0,
+    "10": 1.0,
+    "14": 0.9285714285714286,
+    "20": 0.95
+  },
+  "effect_concentration_top14": 0.8685792678411227,
+  "precision_at_k": {
+    "5": {
+      "activation_patching": 0.6,
+      "attribution_patching": 0.6,
+      "eap_ig": 1.0
+    },
+    "10": {
+      "activation_patching": 0.6,
+      "attribution_patching": 0.6,
+      "eap_ig": 0.9
+    },
+    "14": {
+      "activation_patching": 0.42857142857142855,
+      "attribution_patching": 0.42857142857142855,
+      "eap_ig": 0.8571428571428571
+    },
+    "20": {
+      "activation_patching": 0.35,
+      "attribution_patching": 0.35,
+      "eap_ig": 0.65
+    }
+  },
+  "layerwise_pearson_ap_attr": [
+    {
+      "layer": 0,
+      "pearson_r": 0.9989072841567975,
+      "p_value": 1.2246039708296712e-14,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 1,
+      "pearson_r": 0.9990307265598423,
+      "p_value": 6.726364712282027e-15,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 2,
+      "pearson_r": 0.9971337312636186,
+      "p_value": 1.5162097599841832e-12,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 3,
+      "pearson_r": 0.9920561482371245,
+      "p_value": 2.4583717238851045e-10,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 4,
+      "pearson_r": 0.8998770716637805,
+      "p_value": 6.683957907929107e-05,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 5,
+      "pearson_r": 0.9957000119741894,
+      "p_value": 1.1494016247450987e-11,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 6,
+      "pearson_r": 0.9819786152819783,
+      "p_value": 1.4524529880144163e-08,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 7,
+      "pearson_r": 0.9998597631839481,
+      "p_value": 4.2703086647444265e-19,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 8,
+      "pearson_r": 0.9998511330931492,
+      "p_value": 5.756170236084765e-19,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 9,
+      "pearson_r": 0.9999437647944455,
+      "p_value": 4.428445378224472e-21,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 10,
+      "pearson_r": 0.9998599475518475,
+      "p_value": 4.2423130254647805e-19,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 11,
+      "pearson_r": 0.9999607553354873,
+      "p_value": 7.330359264106195e-22,
+      "flag_r_lt_0.5": false
+    }
+  ],
+  "mlp_pearson_ap_attr": {
+    "pearson_r": -0.9160839745392277,
+    "p_value": 2.842794919552907e-05,
+    "flag_r_lt_0.5": true
+  },
+  "wall_seconds": {
+    "activation_patching": 5.19182979199104,
+    "attribution_patching": 0.2398354309843853,
+    "eap_ig": 0.771235010935925
+  },
+  "logit_diffs": {
+    "clean": 3.1466914367675782,
+    "corrupted": -0.11957214832305908
+  },
+  "top14": {
+    "activation_patching": [
+      "L9H9",
+      "L9H6",
+      "L10H0",
+      "L10H10",
+      "L10H6",
+      "L8H10",
+      "L10H1",
+      "L7H9",
+      "L7H3",
+      "L9H7",
+      "L9H0",
+      "L9H5",
+      "L10H3",
+      "L5H11"
+    ],
+    "attribution_patching": [
+      "L9H9",
+      "L9H6",
+      "L10H0",
+      "L10H10",
+      "L10H6",
+      "L8H10",
+      "L10H1",
+      "L7H9",
+      "L7H3",
+      "L9H7",
+      "L9H0",
+      "L9H5",
+      "L10H3",
+      "L9H2"
+    ],
+    "eap_ig": [
+      "L9H9",
+      "L8H10",
+      "L8H6",
+      "L5H5",
+      "L7H9",
+      "L10H0",
+      "L0H1",
+      "L3H0",
+      "L9H6",
+      "L10H10",
+      "L6H9",
+      "L7H3",
+      "L10H6",
+      "L4H11"
+    ]
+  },
+  "direction": "denoising",
+  "task": "ioi",
+  "known_positives": [
+    "L0H1",
+    "L2H2",
+    "L3H0",
+    "L4H11",
+    "L5H5",
+    "L5H8",
+    "L6H9",
+    "L7H3",
+    "L7H9",
+    "L8H6",
+    "L8H10",
+    "L9H6",
+    "L9H9",
+    "L10H0"
+  ],
+  "spearman_ap_eap_ig": 0.37339844063982,
+  "pearson_ap_eap_ig": 0.8630220013493499,
+  "restricted_spearman_ap_eap_ig": {
+    "rho": 0.7362637362637362,
+    "n_heads": 13,
+    "abs_threshold": 0.05,
+    "labels": [
+      "L0H1",
+      "L0H4",
+      "L7H9",
+      "L8H10",
+      "L9H6",
+      "L9H9",
+      "L10H0",
+      "L10H1",
+      "L10H6",
+      "L10H7",
+      "L10H10",
+      "L11H2",
+      "L11H10"
+    ]
+  },
+  "topk_overlap_ap_eap_ig": {
+    "5": 0.6,
+    "10": 0.5,
+    "14": 0.7142857142857143,
+    "20": 0.7
+  },
+  "topk_overlap_signed_ap_eap_ig": {
+    "5": 0.2,
+    "10": 0.6,
+    "14": 0.5714285714285714,
+    "20": 0.6
+  },
+  "layerwise_pearson_ap_eap_ig": [
+    {
+      "layer": 0,
+      "pearson_r": -0.5468652784067185,
+      "p_value": 0.065770147847047,
+      "flag_r_lt_0.5": true
+    },
+    {
+      "layer": 1,
+      "pearson_r": -0.29839938621919837,
+      "p_value": 0.3461454431773918,
+      "flag_r_lt_0.5": true
+    },
+    {
+      "layer": 2,
+      "pearson_r": -0.05792577876269106,
+      "p_value": 0.858084112572129,
+      "flag_r_lt_0.5": true
+    },
+    {
+      "layer": 3,
+      "pearson_r": -0.8545552063357724,
+      "p_value": 0.0003994407913477271,
+      "flag_r_lt_0.5": true
+    },
+    {
+      "layer": 4,
+      "pearson_r": 0.49727477307970624,
+      "p_value": 0.09999207771136165,
+      "flag_r_lt_0.5": true
+    },
+    {
+      "layer": 5,
+      "pearson_r": 0.3979236723609066,
+      "p_value": 0.20017136317484455,
+      "flag_r_lt_0.5": true
+    },
+    {
+      "layer": 6,
+      "pearson_r": 0.24793972828536096,
+      "p_value": 0.43716123446543514,
+      "flag_r_lt_0.5": true
+    },
+    {
+      "layer": 7,
+      "pearson_r": 0.9807270572312662,
+      "p_value": 2.0276316887071064e-08,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 8,
+      "pearson_r": 0.6331337412447284,
+      "p_value": 0.027107231734891504,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 9,
+      "pearson_r": 0.982561249431578,
+      "p_value": 1.2335669169658458e-08,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 10,
+      "pearson_r": 0.9983989892396027,
+      "p_value": 8.261570491774033e-14,
+      "flag_r_lt_0.5": false
+    },
+    {
+      "layer": 11,
+      "pearson_r": 0.9999116876078582,
+      "p_value": 4.2295570047885595e-20,
+      "flag_r_lt_0.5": false
+    }
+  ],
+  "mlp_pearson_ap_eap_ig": {
+    "pearson_r": 0.940478099966646,
+    "p_value": 5.321770799459894e-06,
+    "flag_r_lt_0.5": false
+  },
+  "eap_n_steps": 5,
+  "eap_ig_delta_precision14_heads": 6.0,
+  "eap_ig_delta_spearman": -0.6087412587412587,
+  "verdict": {
+    "primary": "GO",
+    "attrp_safe_proxy": true,
+    "attrp_recovers_topk": true,
+    "spearman_ap_attr": 0.9821396993810787,
+    "topk_overlap14_attr": 1.0,
+    "restricted_rho": 1.0,
+    "eap_ig_helps": true,
+    "thresholds": {
+      "spearman_ge": 0.9,
+      "topk_overlap14_ge": 0.5,
+      "restricted_ap_abs": 0.05,
+      "eap_delta_spearman_ge": 0.05
+    },
+    "precision_at_14_attr": 0.42857142857142855
+  },
+  "cell": {
+    "model": "gpt2",
+    "task": "ioi",
+    "lang": "en",
+    "seed": 0,
+    "direction": "denoising",
+    "corruption": "abc",
+    "batch_meta": {
+      "single_token_answer_rate": 1.0,
+      "metric": "single_token_logit_diff",
+      "n_names": 38
+    },
+    "descriptors": {
+      "tokens_per_word": 1.0769230769230769,
+      "mean_prompt_tokens": 14.0,
+      "mean_prompt_words": 13.0,
+      "seq_len": 15,
+      "pool_single_token_rate": null
+    },
+    "micro_batch": 50,
+    "ap_fast_mode": true
+  },
+  "eap_sweep": {
+    "5": {
+      "spearman_ap_eap_ig": 0.37339844063982,
+      "mlp_pearson_r": 0.940478099966646,
+      "wall_seconds": 0.771235010935925
+    },
+    "10": {
+      "spearman_ap_eap_ig": 0.3694035849208263,
+      "mlp_pearson_r": 0.9435642258752384,
+      "wall_seconds": 1.3626296139555052
+    },
+    "20": {
+      "spearman_ap_eap_ig": 0.3681577043646009,
+      "mlp_pearson_r": 0.9442384105027549,
+      "wall_seconds": 2.5512443819316104
+    }
+  }
+}

@@ -1,0 +1,92 @@
+{
+  "n_runs": 440,
+  "gate_passed": 43,
+  "gate_first_token": 1,
+  "gate_total": 66,
+  "H1": {
+    "fraction_cells_rho_ge_0.90": 0.9166666666666666,
+    "n_cells": 24,
+    "failing": [
+      {
+        "model": "Qwen/Qwen2.5-0.5B",
+        "task": "agreement",
+        "lang": "en"
+      },
+      {
+        "model": "Qwen/Qwen2.5-1.5B",
+        "task": "agreement",
+        "lang": "en"
+      }
+    ],
+    "holds": false
+  },
+  "H2": {
+    "fraction_cells_mlp_r_lt_0": 0.08333333333333333,
+    "holds": false
+  },
+  "H3": {
+    "pooled_mean_diff": 0.00887382308726956,
+    "ci90": [
+      -0.014416529619205906,
+      0.033814400297265804
+    ],
+    "ci95": [
+      -0.017248258296316425,
+      0.04032476292202137
+    ],
+    "margin": 0.05,
+    "verdict": "EQUIVALENT within +/-0.05",
+    "n_pairs": 3,
+    "hindi_lower_ci95_upper_lt_0": false
+  },
+  "H4": {
+    "rho_vs_tokens_per_word": {
+      "rho": -0.5086569257267163,
+      "ci_lo": -0.7303777152460472,
+      "ci_hi": -0.15072175268014715,
+      "n": 24
+    },
+    "rho_vs_clean_ld": {
+      "rho": 0.4452173913043478,
+      "ci_lo": 0.0722647370726422,
+      "ci_hi": 0.7201957303585109,
+      "n": 24
+    }
+  },
+  "script_vs_language": {},
+  "H5": {
+    "mean_mlp_r_attrp": 0.6859025976343348,
+    "mean_mlp_r_eap": 0.6324930251335259,
+    "mlp_r_gain_mean": -0.05340957250080883,
+    "mlp_r_gain_ci95": [
+      -0.20870985156209093,
+      0.1045514867148733
+    ],
+    "head_rho_gain_mean": -0.35584381599494946,
+    "head_rho_gain_ci95": [
+      -0.38859672312573645,
+      -0.32224896984744966
+    ],
+    "time_ratio_eap_over_attrp": 3.4640429289700085,
+    "time_ratio_ap_over_attrp": 48.70011210711196,
+    "holds": false,
+    "step_sweep_seed0": {
+      "5": {
+        "mean_head_rho": 0.5864222393626731,
+        "mean_mlp_r": 0.6409826070630681,
+        "n": 24
+      },
+      "10": {
+        "mean_head_rho": 0.5832068352682388,
+        "mean_mlp_r": 0.6616232621766891,
+        "n": 24
+      },
+      "20": {
+        "mean_head_rho": 0.58685849944201,
+        "mean_mlp_r": 0.6476692046300757,
+        "n": 24
+      }
+    }
+  },
+  "noising_mean_rho": 0.9290379100487379
+}

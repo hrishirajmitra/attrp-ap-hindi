@@ -1,0 +1,51 @@
+{
+  "ap": {
+    "method": "activation_patching",
+    "direction": "noising",
+    "clean_logit_diff": 10.135419893264771,
+    "corrupted_logit_diff": -9.753050470352173,
+    "denom": 19.888470363616946,
+    "wall_seconds": 499.10615548864007,
+    "n_prompts": 100,
+    "micro_batch": 2,
+    "fast_mode": true,
+    "fast_check_max_diff": 0.0
+  },
+  "attr": {
+    "method": "attribution_patching",
+    "direction": "noising",
+    "clean_logit_diff": 10.135419893264771,
+    "corrupted_logit_diff": -9.753050470352173,
+    "denom": 19.888470363616946,
+    "wall_seconds": 10.842849466018379,
+    "n_prompts": 100,
+    "micro_batch": 2
+  },
+  "eap": {
+    "method": "eap_ig",
+    "direction": "noising",
+    "n_steps": 5,
+    "clean_logit_diff": 10.135419893264771,
+    "corrupted_logit_diff": -9.753050470352173,
+    "denom": 19.888470363616946,
+    "wall_seconds": 35.513105052988976,
+    "n_prompts": 100,
+    "micro_batch": 2
+  },
+  "eap_sweep_steps": [
+    5
+  ],
+  "eap_sweep": {
+    "5": {
+      "method": "eap_ig",
+      "direction": "noising",
+      "n_steps": 5,
+      "clean_logit_diff": 10.135419893264771,
+      "corrupted_logit_diff": -9.753050470352173,
+      "denom": 19.888470363616946,
+      "wall_seconds": 35.513105052988976,
+      "n_prompts": 100,
+      "micro_batch": 2
+    }
+  }
+}
