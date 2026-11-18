@@ -30,6 +30,24 @@ Thresholds: clean_acc>=0.8, clean_ld>=0.5, corr_ld<=max(0.25, 0.5*clean_ld), sin
 | `Qwen/Qwen2.5-1.5B` | induction | en | strict | 0.940 | 3.911 | -0.203 | 1.000 | 1.000 | ok |
 | `Qwen/Qwen2.5-1.5B` | induction | hi | fail | 0.750 | 1.210 | 0.492 | 1.000 | 1.800 | clean_acc 0.750 < 0.8 |
 | `Qwen/Qwen2.5-1.5B` | ioi | hi_roman | fail | 0.450 | -0.024 | -0.152 | 0.000 | 1.815 | clean_acc 0.450 < 0.8; clean_ld -0.024 < 0.5; single_tok_rate 0.000 < 0.9 |
+| `bigscience/bloom-1b1` | ioi | en | strict | 1.000 | 4.070 | -0.076 | 1.000 | 1.077 | ok |
+| `bigscience/bloom-1b1` | ioi | hi | fail | 0.560 | 0.272 | 0.214 | 1.000 | 1.320 | clean_acc 0.560 < 0.8; clean_ld 0.272 < 0.5 |
+| `bigscience/bloom-1b1` | capitals | en | strict | 1.000 | 10.216 | -9.350 | 1.000 | 1.037 | ok |
+| `bigscience/bloom-1b1` | capitals | hi | fail | 0.630 | 0.731 | -0.143 | 0.000 | 1.274 | clean_acc 0.630 < 0.8; single_tok_rate 0.000 < 0.9 |
+| `bigscience/bloom-1b1` | agreement | en | strict | 0.830 | 3.335 | 1.187 | 1.000 | 1.178 | ok |
+| `bigscience/bloom-1b1` | agreement | hi | strict | 0.900 | 4.779 | 1.085 | 1.000 | 1.203 | ok |
+| `bigscience/bloom-1b1` | induction | en | strict | 0.970 | 3.927 | 0.590 | 1.000 | 1.000 | ok |
+| `bigscience/bloom-1b1` | induction | hi | strict | 0.920 | 2.018 | 0.430 | 1.000 | 1.000 | ok |
+| `bigscience/bloom-1b1` | ioi | hi_roman | fail | 0.300 | -0.935 | 0.013 | 0.000 | 1.801 | clean_acc 0.300 < 0.8; clean_ld -0.935 < 0.5; single_tok_rate 0.000 < 0.9 |
+| `bigscience/bloom-1b7` | ioi | en | strict | 1.000 | 3.119 | -0.145 | 1.000 | 1.077 | ok |
+| `bigscience/bloom-1b7` | ioi | hi | fail | 0.640 | 0.558 | 0.352 | 1.000 | 1.320 | clean_acc 0.640 < 0.8; corr_ld 0.352 > max(0.25, 0.5*clean_ld) |
+| `bigscience/bloom-1b7` | capitals | en | strict | 1.000 | 10.136 | -9.841 | 1.000 | 1.037 | ok |
+| `bigscience/bloom-1b7` | capitals | hi | fail | 0.580 | 0.328 | -0.686 | 0.000 | 1.274 | clean_acc 0.580 < 0.8; clean_ld 0.328 < 0.5; single_tok_rate 0.000 < 0.9 |
+| `bigscience/bloom-1b7` | agreement | en | strict | 0.840 | 3.360 | 1.196 | 1.000 | 1.178 | ok |
+| `bigscience/bloom-1b7` | agreement | hi | strict | 0.910 | 5.169 | 1.133 | 1.000 | 1.203 | ok |
+| `bigscience/bloom-1b7` | induction | en | strict | 0.980 | 4.210 | 0.428 | 1.000 | 1.000 | ok |
+| `bigscience/bloom-1b7` | induction | hi | strict | 0.910 | 2.158 | 0.240 | 1.000 | 1.000 | ok |
+| `bigscience/bloom-1b7` | ioi | hi_roman | fail | 0.330 | -0.702 | -0.088 | 0.000 | 1.801 | clean_acc 0.330 < 0.8; clean_ld -0.702 < 0.5; single_tok_rate 0.000 < 0.9 |
 | `bigscience/bloom-560m` | ioi | en | strict | 1.000 | 4.725 | -0.258 | 1.000 | 1.077 | ok |
 | `bigscience/bloom-560m` | ioi | hi | fail | 0.540 | 0.343 | 0.387 | 1.000 | 1.320 | clean_acc 0.540 < 0.8; clean_ld 0.343 < 0.5; corr_ld 0.387 > max(0.25, 0.5*clean_ld) |
 | `bigscience/bloom-560m` | capitals | en | strict | 0.940 | 7.704 | -7.725 | 1.000 | 1.037 | ok |
@@ -53,4 +71,4 @@ Thresholds: clean_acc>=0.8, clean_ld>=0.5, corr_ld<=max(0.25, 0.5*clean_ld), sin
 | `meta-llama/Llama-3.2-1B` | induction | hi | strict | 0.990 | 3.776 | 0.422 | 1.000 | 1.000 | ok |
 | `meta-llama/Llama-3.2-1B` | ioi | hi_roman | fail | 0.600 | 0.432 | -0.091 | 0.000 | 1.815 | clean_acc 0.600 < 0.8; clean_ld 0.432 < 0.5; single_tok_rate 0.000 < 0.9 |
 
-Strict: 31; first_token tier: 1; failed: 16; total 48
+Strict: 43; first_token tier: 1; failed: 22; total 66
