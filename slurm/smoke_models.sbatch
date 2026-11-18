@@ -1,5 +1,5 @@
 #!/bin/bash
-# sbatch -A research --qos=medium --export=ALL,SMOKE_MODELS="meta-llama/Llama-3.2-1B google/gemma-3-1b-pt" slurm/smoke_models.sbatch
+# sbatch -A research --qos=medium --export=ALL,SMOKE_MODELS="meta-llama/Llama-3.2-1B bigscience/bloom-560m" slurm/smoke_models.sbatch
 #SBATCH -p u22
 #SBATCH -J mp-smokem
 #SBATCH --gres=gpu:1

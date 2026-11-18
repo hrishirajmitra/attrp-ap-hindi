@@ -13,7 +13,6 @@ from transformer_lens import HookedTransformer
 
 MIRRORS = {
     "meta-llama/Llama-3.2-1B": "unsloth/Llama-3.2-1B",
-    "google/gemma-3-1b-pt": "unsloth/gemma-3-1b-pt",
 }
 
 

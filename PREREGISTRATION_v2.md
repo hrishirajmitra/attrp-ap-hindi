@@ -24,7 +24,7 @@ A **cell** = `(model, task, lang)` under a fixed direction (`denoising` primary;
 | `EleutherAI/pythia-160m`, `EleutherAI/pythia-410m` | English-only controls | en |
 | `Qwen/Qwen2.5-0.5B`, `Qwen/Qwen2.5-1.5B` | Multilingual | en, hi |
 | `meta-llama/Llama-3.2-1B` | Multilingual | en, hi |
-| `google/gemma-3-1b-pt` | Multilingual (TL support TBD) | en, hi |
+| `bigscience/bloom-560m` | Multilingual (replaces Gemma-3-1B: TransformerLens 2.15 has no Gemma-3 support; deviation logged in Amendment 2) | en, hi |
 | `sarvamai/sarvam-1` | Indic-focused, optional (drop if VRAM/TL fails) | en, hi |
 
 Load via TransformerLens `<4`. Unsupported models: document failure in tokenizer audit; do not silently substitute.
@@ -145,3 +145,10 @@ is also stored (`topk_overlap_signed_*`). The GO/PARTIAL/NO-GO rule uses the |sc
 **Script vs language.** Devanagari Hindi IOI vs romanised Hindi IOI vs English IOI, same models: reported as paired differences in head rho with bootstrap CIs. No directional claim is preregistered.
 
 **Reporting rules.** The gate coverage table is reported first, before any agreement number. Cells that fail the gate make no contribution to agreement claims and are not rerun with changed prompts. Pythia and induction appear only in the appendix.
+
+
+## Amendment 2 (during gate phase, before any grid result)
+
+1. **Model substitution.** `google/gemma-3-1b-pt` cannot be loaded by TransformerLens 2.15 (not in its model table; TL>=2.16 needs torch>=2.6, unavailable on the cluster build). It is replaced by `bigscience/bloom-560m` (Hindi in pretraining corpus, TL-supported). Decided before any grid result.
+2. **Sign convention fix.** In the noising direction AttrP/EAP-IG scores had the opposite sign to AP (delta.grad estimates -(effect)); fixed to the AP convention. Found by the smoke test (rho = -0.92); no study results existed.
+3. **MultiBLiMP agreement cleaning.** (a) clause punctuation stripped from the contrast words, (b) English contractions ("is" vs "'m") dropped, (c) pairs whose first tokens coincide dropped, (d) if >=100 pairs have single-token contrast words on both sides the pool is restricted to them (otherwise the single-token rate fails the gate), (e) prompts are a fixed window: first token + last K-1 prefix tokens, K = clamp(30th percentile of prefix lengths, 8, 24), so no padding is needed. Window size, pool size and pool single-token rate are logged per cell.
