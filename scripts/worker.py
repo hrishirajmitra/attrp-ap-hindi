@@ -125,6 +125,9 @@ def main() -> None:
         if time.time() - t_start > args.time_limit_s - args.stop_margin_s:
             print(f"[{wid}] time budget reached; exiting", flush=True)
             break
+        tasks = json.loads((q / "tasks.json").read_text())["tasks"]  # re-read: queue can grow
+        if args.only_models:
+            tasks = [t for t in tasks if t["model"] in args.only_models]
         t, n_pending = pick_task(q, tasks, wid, model_name)
         if t is None:
             if n_pending == 0:
