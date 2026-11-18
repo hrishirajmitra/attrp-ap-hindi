@@ -22,3 +22,4 @@ protobuf>=4.25.0
 datasets>=2.16.0
 # sae-lens: install separately if needed (Project A does not require SAEs)
 # sae-lens>=3.0.0
+pyarrow==21.0.0

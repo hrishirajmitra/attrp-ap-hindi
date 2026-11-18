@@ -80,7 +80,7 @@ _mpb_health() {
   [[ -x "$VENV/bin/python" ]] || return 1
   local want_gpu=0
   _mpb_gpu_visible && want_gpu=1
-  "$VENV/bin/python" - "$want_gpu" 2>/dev/null <<'PY'
+  "$VENV/bin/python" - "$want_gpu" <<'PY'
 import sys
 want_gpu = sys.argv[1] == "1"
 try:
