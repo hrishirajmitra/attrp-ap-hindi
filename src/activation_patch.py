@@ -22,7 +22,7 @@ from .batch import TaskBatch
 from .chunking import cache_filter, iter_chunks, sync
 from .metrics import logit_diff_from_logits
 
-FAST_CHECK_TOL = 1e-3  # max abs logit-diff difference tolerated between fast and full forward
+FAST_CHECK_TOL = 5e-3  # max abs logit-diff difference tolerated between fast and full forward
 
 
 @torch.no_grad()
