@@ -3,7 +3,7 @@
 #   sbatch -A irel --qos=normal ~/mp/slurm/build_wheelhouse.sbatch
 #SBATCH -p u22
 #SBATCH -J mp-wheelhouse
-#SBATCH --exclude=gnode069,gnode077
+#SBATCH --exclude=gnode069,gnode077,gnode046
 #SBATCH -c 4
 #SBATCH --mem=8G
 #SBATCH -t 01:00:00

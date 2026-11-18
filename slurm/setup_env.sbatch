@@ -5,7 +5,7 @@
 #SBATCH -J mp-setup
 #SBATCH --gres=gpu:1
 #SBATCH --constraint=2080ti
-#SBATCH --exclude=gnode069,gnode077
+#SBATCH --exclude=gnode069,gnode077,gnode046
 #SBATCH -c 4
 #SBATCH --mem=16G
 #SBATCH -t 02:00:00

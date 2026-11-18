@@ -128,7 +128,8 @@ GATE = {
     "n_prompts": 100,
     "min_clean_accuracy": 0.80,
     "min_clean_logit_diff": 0.5,
-    "max_corrupted_logit_diff": 0.25,  # near zero or negative
+    "max_corrupted_logit_diff": 0.25,  # near zero or negative ...
+    "max_corrupted_fraction": 0.5,  # ... or corruption removes >= half of the clean LD (Amend. 2)
     "min_single_token_rate": 0.90,
 }
 

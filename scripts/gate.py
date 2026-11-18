@@ -108,19 +108,31 @@ def evaluate_model(
                 reasons.append(f"clean_acc {clean_acc:.3f} < {GATE['min_clean_accuracy']}")
             if clean_ld < GATE["min_clean_logit_diff"]:
                 reasons.append(f"clean_ld {clean_ld:.3f} < {GATE['min_clean_logit_diff']}")
-            if corr_ld > GATE["max_corrupted_logit_diff"]:
-                reasons.append(f"corr_ld {corr_ld:.3f} > {GATE['max_corrupted_logit_diff']}")
-            if single_rate < GATE["min_single_token_rate"]:
+            # corruption must remove the behaviour: corr_ld <= 0.25 OR corruption removes at
+            # least half of the clean logit difference (Amendment 2; agreement/induction
+            # corruptions leave a residual grammatical prior)
+            if corr_ld > GATE["max_corrupted_logit_diff"] and corr_ld > GATE["max_corrupted_fraction"] * clean_ld:
+                reasons.append(
+                    f"corr_ld {corr_ld:.3f} > max({GATE['max_corrupted_logit_diff']}, "
+                    f"{GATE['max_corrupted_fraction']}*clean_ld)"
+                )
+            single_ok = single_rate >= GATE["min_single_token_rate"]
+            core_ok = len(reasons) == 0
+            if not single_ok:
                 reasons.append(
                     f"single_tok_rate {single_rate:.3f} < {GATE['min_single_token_rate']}"
                 )
             row["reasons"] = reasons
             row["pass"] = len(reasons) == 0
+            # tier: strict = all criteria; first_token = everything except single-token answers
+            # (logit difference is then a first-token contrast; analysed as a sensitivity set)
+            row["tier"] = "strict" if row["pass"] else ("first_token" if core_ok else "fail")
         except Exception as e:
             row["error"] = f"{type(e).__name__}: {e}"
             row["traceback"] = traceback.format_exc()[-2000:]
             row["reasons"] = [f"exception: {row['error']}"]
             row["pass"] = False
+            row["tier"] = "fail"
         print(
             f"  gate {model_name} {task}/{lang}: pass={row['pass']} "
             f"acc={row.get('clean_accuracy')} cld={row.get('clean_logit_diff')} "

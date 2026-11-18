@@ -52,7 +52,8 @@ PAIRS_EN = [
 # Fix Australia → Canberra (more correct)
 PAIRS_EN = [(c, cap) if c != "Australia" else ("Australia", "Canberra") for c, cap in PAIRS_EN]
 # Fix Mexico → use a short name that models often treat as capital cue; skip if multi-token later
-PAIRS_EN = [(c, cap) if c != "Mexico" else ("Mexico", "Mexico") for c, cap in PAIRS_EN]
+# Mexico City is not a single clean answer word; drop the pair
+PAIRS_EN = [(c, cap) for c, cap in PAIRS_EN if c != "Mexico"]
 
 PAIRS_HI = [
     ("फ़्रांस", "पेरिस"),
@@ -86,6 +87,8 @@ PAIRS_HI = [
     ("पाकिस्तान", "इस्लामाबाद"),
     ("नेपाल", "काठमांडू"),
 ]
+
+MIN_SINGLE_CAPITALS = 8
 
 TEMPLATES_EN = [
     "The capital of {COUNTRY} is",
@@ -127,11 +130,31 @@ def generate_capitals_batch(
             continue
     if len(usable) < 4:
         raise RuntimeError(f"Too few usable capital tokens for lang={lang}")
+    # Prefer capitals that are a single token for this tokenizer (clean one-token contrast).
+    pool_single_rate = sum(1 for u in usable if u[3] == 1) / len(usable)
+    single = [u for u in usable if u[3] == 1]
+    pool_filtered = len(single) >= MIN_SINGLE_CAPITALS
+    if pool_filtered:
+        usable = single
+    # Equal-length prompts: pick the most common prompt token length over (country, template)
+    # so the pool of admissible countries is as large as possible (deterministic, seed-free).
+    from collections import Counter
+
+    len_count: Counter = Counter()
+    for country, *_ in usable:
+        for t in templates:
+            len_count[model.to_tokens(t.format(COUNTRY=country))[0].numel()] += 1
+    target_len = min(L for L, c in len_count.items() if c == max(len_count.values()))
+    usable = [
+        u for u in usable
+        if any(model.to_tokens(t.format(COUNTRY=u[0]))[0].numel() == target_len for t in templates)
+    ]
+    if len(usable) < 4:
+        raise RuntimeError(f"Too few equal-length capital prompts for lang={lang}")
 
     clean_s, corr_s, pos_ids, neg_ids = [], [], [], []
     clean_t, corr_t = [], []
     n_toks = []
-    target_len = None
     tries = 0
     while len(clean_s) < n:
         tries += 1
@@ -147,8 +170,6 @@ def generate_capitals_batch(
         rt = model.to_tokens(corr)[0]
         if ct.numel() != rt.numel():
             continue
-        if target_len is None:
-            target_len = ct.numel()
         if ct.numel() != target_len:
             continue
         clean_s.append(clean)
@@ -173,6 +194,9 @@ def generate_capitals_batch(
         meta={
             "single_token_answer_rate": single_rate,
             "n_pairs": len(usable),
+            "pool_single_token_rate": pool_single_rate,
+            "pool_filtered_to_single_token": pool_filtered,
+            "target_len": target_len,
             "metric": "first_token_logit_diff" if single_rate < 1.0 else "single_token_logit_diff",
         },
     )

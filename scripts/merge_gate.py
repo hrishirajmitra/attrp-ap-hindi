@@ -40,12 +40,13 @@ def main() -> None:
     if missing:
         print(f"WARNING: {len(missing)} expected cells have no gate result: {missing[:6]}...")
 
-    passed = [r for r in rows if r.get("pass") is True]
+    passed = [r for r in rows if r.get("tier") in ("strict", "first_token")]
     payload = {
         "thresholds": GATE,
         "rows": rows,
         "passed_cells": [
-            {"model": r["model"], "task": r["task"], "lang": r["lang"]} for r in passed
+            {"model": r["model"], "task": r["task"], "lang": r["lang"], "tier": r["tier"]}
+            for r in passed
         ],
         "missing_cells": [{"model": m, "task": t, "lang": l} for m, t, l in missing],
         "offline": False,
@@ -56,21 +57,22 @@ def main() -> None:
         "# Competence gate coverage",
         "",
         f"Thresholds: clean_acc>={GATE['min_clean_accuracy']}, clean_ld>={GATE['min_clean_logit_diff']}, "
-        f"corr_ld<={GATE['max_corrupted_logit_diff']}, single_tok>={GATE['min_single_token_rate']}, "
+        f"corr_ld<=max({GATE['max_corrupted_logit_diff']}, {GATE['max_corrupted_fraction']}*clean_ld), single_tok>={GATE['min_single_token_rate']}, "
         f"N={GATE['n_prompts']}.",
         "",
-        "| Model | Task | Lang | Pass | Clean acc | Clean LD | Corr LD | Single-tok | Tok/word | Reasons |",
+        "| Model | Task | Lang | Tier | Clean acc | Clean LD | Corr LD | Single-tok | Tok/word | Reasons |",
         "|---|---|:---:|:---:|---:|---:|---:|---:|---:|---|",
     ]
     for r in rows:
         tpw = (r.get("descriptors") or {}).get("tokens_per_word")
         lines.append(
-            f"| `{r['model']}` | {r['task']} | {r['lang']} | {r['pass']} | {fmt(r.get('clean_accuracy'))} | "
+            f"| `{r['model']}` | {r['task']} | {r['lang']} | {r.get('tier')} | {fmt(r.get('clean_accuracy'))} | "
             f"{fmt(r.get('clean_logit_diff'))} | {fmt(r.get('corrupted_logit_diff'))} | "
             f"{fmt(r.get('single_token_answer_rate'))} | {fmt(tpw)} | "
             f"{'; '.join(r.get('reasons') or []) or 'ok'} |"
         )
-    lines += ["", f"Passed cells: {len(passed)} / {len(rows)}", ""]
+    n_strict = sum(1 for r in rows if r.get("tier") == "strict")
+    lines += ["", f"Strict: {n_strict}; first_token tier: {len(passed) - n_strict}; failed: {len(rows) - len(passed)}; total {len(rows)}", ""]
     (args.out_dir / "gate_coverage.md").write_text("\n".join(lines))
 
     # Task list for the queue: one task per (cell, direction, seed); sweep on seed 0 denoising.

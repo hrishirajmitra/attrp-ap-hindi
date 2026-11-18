@@ -176,7 +176,7 @@ def main() -> None:
         gt = pd.DataFrame(
             [
                 {
-                    "model": r["model"], "task": r["task"], "lang": r["lang"], "pass": r["pass"],
+                    "model": r["model"], "task": r["task"], "lang": r["lang"], "tier": r.get("tier"),
                     "acc": r.get("clean_accuracy"), "clean_ld": r.get("clean_logit_diff"),
                     "single_tok": r.get("single_token_answer_rate"),
                     "tok/word": (r.get("descriptors") or {}).get("tokens_per_word"),
@@ -186,12 +186,24 @@ def main() -> None:
             ]
         )
         md.append("## 0. Competence gate coverage\n")
-        md.append(f"{int(gt['pass'].sum())} of {len(gt)} cells passed.\n")
+        md.append(
+            f"{int((gt['tier'] == 'strict').sum())} strict-pass, "
+            f"{int((gt['tier'] == 'first_token').sum())} first-token tier (single-token criterion waived), "
+            f"{int((gt['tier'] == 'fail').sum())} failed, of {len(gt)} cells.\n"
+        )
         md.append(md_table(gt))
-        summary["gate_passed"] = int(gt["pass"].sum())
+        summary["gate_passed"] = int((gt["tier"] == "strict").sum())
+        summary["gate_first_token"] = int((gt["tier"] == "first_token").sum())
         summary["gate_total"] = int(len(gt))
 
-    core = df[~df.appendix]
+    tier_map = {(r["model"], r["task"], r["lang"]): r.get("tier", "strict") for r in (g["rows"] if args.gate.exists() else [])}
+    df["tier"] = [tier_map.get((m, t, l), "strict") for m, t, l in zip(df.model, df.task, df.lang)]
+    # Main tests: strict-tier core cells only. First-token-tier cells enter a sensitivity table.
+    core = df[~df.appendix & (df.tier == "strict")]
+    ft = df[~df.appendix & (df.tier == "first_token") & (df.direction == "denoising")]
+    if len(ft):
+        md.append("## 0b. First-token-tier cells (sensitivity set, not in main tests)\n")
+        md.append(md_table(seed_mean(ft, ["rho", "top14", "mlp_r", "clean_ld", "tokens_per_word"])))
     den = core[core.direction == "denoising"]
     cm = seed_mean(den, ["rho", "rho_restricted", "top14", "mlp_r", "clean_ld", "tokens_per_word", "concentration"])
     sd = den.groupby(["model", "task", "lang"])["rho"].std().reset_index().rename(columns={"rho": "rho_sd"})
