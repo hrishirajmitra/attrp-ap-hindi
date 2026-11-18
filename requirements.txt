@@ -1,10 +1,12 @@
-# torch installed separately from ~/pipcache on Ada (see slurm/setup_env.sh)
-torch>=2.1.0
-# TL 4.x removed HookedTransformer; Project A uses the classic TL 2/3 API
-transformer-lens>=2.0.0,<4.0.0
+# torch: CUDA 12.1 build (download.pytorch.org/whl/cu121); slurm/node_bootstrap.sh installs it first.
+torch>=2.1,<2.5
+# TL 4.x removed HookedTransformer; Project A uses the classic TL 2/3 API.
+# TL >=2.16 requires torch>=2.6 (verified from PyPI metadata), so with torch<2.5 pip can only
+# resolve TL 2.15.4. To use TL 2.16-2.18 you must move to torch>=2.6 (cu124+) AND transformers>=4.57.
+transformer-lens>=2.15,<2.16
 transformers>=4.40.0,<5.0.0
 accelerate>=0.27.0
-numpy>=1.24.0
+numpy>=1.26,<2
 scipy>=1.10.0
 pandas>=2.0.0
 matplotlib>=3.7.0

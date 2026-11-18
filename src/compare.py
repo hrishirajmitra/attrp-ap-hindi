@@ -33,17 +33,30 @@ def precision_at_k(scores: np.ndarray, k: int, positives: set[str] | None = None
     return len(top & positives) / float(k)
 
 
-def top_k_labels(scores: np.ndarray, k: int) -> list[str]:
+def top_k_labels(scores: np.ndarray, k: int, by_abs: bool = False) -> list[str]:
     flat, labels = flatten_heads(scores)
-    order = np.argsort(-flat)
+    key = np.abs(flat) if by_abs else flat
+    order = np.argsort(-key, kind="stable")
     return [labels[i] for i in order[:k]]
 
 
-def top_k_overlap(a: np.ndarray, b: np.ndarray, k: int) -> float:
-    """Fraction of top-k labels of a that also appear in top-k of b."""
-    top_a = set(top_k_labels(a, k))
-    top_b = set(top_k_labels(b, k))
+def top_k_overlap(a: np.ndarray, b: np.ndarray, k: int, by_abs: bool = True) -> float:
+    """Fraction of top-k labels of a that also appear in top-k of b.
+
+    by_abs=True (primary, matches the proposal): rank by |score|; False: rank by signed score.
+    """
+    top_a = set(top_k_labels(a, k, by_abs))
+    top_b = set(top_k_labels(b, k, by_abs))
     return len(top_a & top_b) / float(k)
+
+
+def effect_concentration(ap_heads: np.ndarray, k: int = 14) -> float:
+    """Share of total |AP| head effect carried by the k largest-|AP| heads."""
+    flat = np.abs(ap_heads.ravel())
+    tot = float(flat.sum())
+    if tot <= 0:
+        return float("nan")
+    return float(np.sort(flat)[::-1][:k].sum() / tot)
 
 
 def spearman_heads(a: np.ndarray, b: np.ndarray) -> float:
@@ -113,6 +126,10 @@ def compare_all(
         "pearson_ap_attr": pearson_heads(ap_h, attr_h),
         "restricted_spearman_ap_attr": spearman_restricted(ap_h, attr_h),
         "topk_overlap_ap_attr": {str(k): top_k_overlap(ap_h, attr_h, k) for k in ks},
+        "topk_overlap_signed_ap_attr": {
+            str(k): top_k_overlap(ap_h, attr_h, k, by_abs=False) for k in ks
+        },
+        "effect_concentration_top14": effect_concentration(ap_h, 14),
         "precision_at_k": {},
         "layerwise_pearson_ap_attr": layerwise_pearson(ap_h, attr_h),
         "mlp_pearson_ap_attr": mlp_pearson(ap["mlp_scores"], attr["mlp_scores"]),
@@ -154,6 +171,9 @@ def compare_all(
         out["pearson_ap_eap_ig"] = pearson_heads(ap_h, eap_h)
         out["restricted_spearman_ap_eap_ig"] = spearman_restricted(ap_h, eap_h)
         out["topk_overlap_ap_eap_ig"] = {str(k): top_k_overlap(ap_h, eap_h, k) for k in ks}
+        out["topk_overlap_signed_ap_eap_ig"] = {
+            str(k): top_k_overlap(ap_h, eap_h, k, by_abs=False) for k in ks
+        }
         out["layerwise_pearson_ap_eap_ig"] = layerwise_pearson(ap_h, eap_h)
         out["mlp_pearson_ap_eap_ig"] = mlp_pearson(ap["mlp_scores"], eap["mlp_scores"])
         out["wall_seconds"]["eap_ig"] = eap["wall_seconds"]

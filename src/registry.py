@@ -8,6 +8,9 @@ from typing import Any
 # where available; HF hub ids noted in comments for fallbacks.
 MODELS: dict[str, dict[str, Any]] = {
     "gpt2": {
+        "n_layers": 12,
+        "n_heads": 12,
+        "micro_batch": 50,
         "hf_id": "gpt2",
         "family": "gpt2",
         "n_params_m": 124,
@@ -15,6 +18,9 @@ MODELS: dict[str, dict[str, Any]] = {
         "role": "anchor",
     },
     "EleutherAI/pythia-160m": {
+        "n_layers": 12,
+        "n_heads": 12,
+        "micro_batch": 50,
         "hf_id": "EleutherAI/pythia-160m",
         "family": "pythia",
         "n_params_m": 160,
@@ -22,6 +28,9 @@ MODELS: dict[str, dict[str, Any]] = {
         "role": "en_control",
     },
     "EleutherAI/pythia-410m": {
+        "n_layers": 24,
+        "n_heads": 16,
+        "micro_batch": 25,
         "hf_id": "EleutherAI/pythia-410m",
         "family": "pythia",
         "n_params_m": 410,
@@ -29,6 +38,9 @@ MODELS: dict[str, dict[str, Any]] = {
         "role": "en_control",
     },
     "Qwen/Qwen2.5-0.5B": {
+        "n_layers": 24,
+        "n_heads": 14,
+        "micro_batch": 25,
         "hf_id": "Qwen/Qwen2.5-0.5B",
         "family": "qwen2.5",
         "n_params_m": 500,
@@ -36,6 +48,9 @@ MODELS: dict[str, dict[str, Any]] = {
         "role": "multilingual",
     },
     "Qwen/Qwen2.5-1.5B": {
+        "n_layers": 28,
+        "n_heads": 12,
+        "micro_batch": 10,
         "hf_id": "Qwen/Qwen2.5-1.5B",
         "family": "qwen2.5",
         "n_params_m": 1500,
@@ -43,6 +58,9 @@ MODELS: dict[str, dict[str, Any]] = {
         "role": "multilingual",
     },
     "meta-llama/Llama-3.2-1B": {
+        "n_layers": 16,
+        "n_heads": 32,
+        "micro_batch": 10,
         "hf_id": "meta-llama/Llama-3.2-1B",
         "family": "llama3.2",
         "n_params_m": 1000,
@@ -50,6 +68,9 @@ MODELS: dict[str, dict[str, Any]] = {
         "role": "multilingual",
     },
     "google/gemma-3-1b-pt": {
+        "n_layers": 26,
+        "n_heads": 4,
+        "micro_batch": 10,
         "hf_id": "google/gemma-3-1b-pt",
         "family": "gemma3",
         "n_params_m": 1000,
@@ -58,6 +79,9 @@ MODELS: dict[str, dict[str, Any]] = {
         "tl_note": "May need nnsight fallback if TransformerLens lacks support",
     },
     "sarvamai/sarvam-1": {
+        "n_layers": 28,
+        "n_heads": 16,
+        "micro_batch": 5,
         "hf_id": "sarvamai/sarvam-1",
         "family": "sarvam",
         "n_params_m": 2000,
@@ -69,11 +93,35 @@ MODELS: dict[str, dict[str, Any]] = {
 }
 
 TASKS = ("ioi", "capitals", "agreement", "induction")
-# agreement_ne and hi_roman are stretch (H7); not in the default gate grid
+# agreement_ne is a stretch task, not in the default grid
 STRETCH_TASKS = ("agreement_ne",)
 LANGS = ("en", "hi")
-STRETCH_LANGS = ("hi_roman",)
+# Romanised Hindi IOI is a CORE condition (script vs language test); other tasks have no
+# romanised variant. It is gated/run for models that are expected to handle Hindi.
+CORE_ROMAN_TASKS = ("ioi",)
+STRETCH_LANGS = ()
 DIRECTIONS = ("denoising", "noising")
+
+# Main tables use core models and core tasks; the rest is the English robustness appendix.
+APPENDIX_TASKS = ("induction",)
+
+
+def is_appendix(model: str, task: str) -> bool:
+    return MODELS[model].get("role") == "en_control" or task in APPENDIX_TASKS
+
+
+def grid_models() -> list[str]:
+    """All non-optional models (Sarvam-1 is dropped: no TransformerLens support)."""
+    return [m for m, meta in MODELS.items() if not meta.get("optional")]
+
+
+def gate_cells(model: str) -> list[tuple[str, str]]:
+    """(task, lang) cells to gate / run for a model."""
+    langs = [l for l in LANGS if l in MODELS[model]["expected_langs"]]
+    cells = [(t, l) for t in TASKS for l in langs]
+    if "hi" in langs:
+        cells += [(t, "hi_roman") for t in CORE_ROMAN_TASKS]
+    return cells
 
 # Competence gate thresholds (preregistered in PREREGISTRATION_v2.md)
 GATE = {
