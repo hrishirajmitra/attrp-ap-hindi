@@ -81,7 +81,7 @@ MODELS: dict[str, dict[str, Any]] = {
     "bigscience/bloom-1b1": {
         "n_layers": 24,
         "n_heads": 16,
-        "micro_batch": 10,
+        "micro_batch": 4,
         "hf_id": "bigscience/bloom-1b1",
         "family": "bloom",
         "n_params_m": 1100,
@@ -92,7 +92,7 @@ MODELS: dict[str, dict[str, Any]] = {
     "bigscience/bloom-1b7": {
         "n_layers": 24,
         "n_heads": 16,
-        "micro_batch": 5,
+        "micro_batch": 2,
         "hf_id": "bigscience/bloom-1b7",
         "family": "bloom",
         "n_params_m": 1700,
