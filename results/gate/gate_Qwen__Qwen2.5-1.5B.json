@@ -1,0 +1,901 @@
+{
+  "model": "Qwen/Qwen2.5-1.5B",
+  "thresholds": {
+    "n_prompts": 100,
+    "min_clean_accuracy": 0.8,
+    "min_clean_logit_diff": 0.5,
+    "max_corrupted_logit_diff": 0.25,
+    "max_corrupted_fraction": 0.5,
+    "min_single_token_rate": 0.9
+  },
+  "rows": [
+    {
+      "model": "Qwen/Qwen2.5-1.5B",
+      "task": "ioi",
+      "lang": "en",
+      "n": 100,
+      "seed": 0,
+      "source_repo": "Qwen/Qwen2.5-1.5B",
+      "pass": true,
+      "error": null,
+      "reasons": [],
+      "clean_logit_diff": 5.176026344299316,
+      "corrupted_logit_diff": -0.055350977927446365,
+      "clean_accuracy": 0.9699999690055847,
+      "single_token_answer_rate": 1.0,
+      "batch_meta": {
+        "single_token_answer_rate": 1.0,
+        "metric": "single_token_logit_diff",
+        "n_names": 38
+      },
+      "descriptors": {
+        "tokens_per_word": 1.0769230769230769,
+        "mean_prompt_tokens": 14.0,
+        "mean_prompt_words": 13.0,
+        "seq_len": 14,
+        "pool_single_token_rate": null
+      },
+      "seq_len": 14,
+      "n_prompts_used": 100,
+      "tier": "strict"
+    },
+    {
+      "model": "Qwen/Qwen2.5-1.5B",
+      "task": "ioi",
+      "lang": "hi",
+      "n": 100,
+      "seed": 0,
+      "source_repo": "Qwen/Qwen2.5-1.5B",
+      "pass": false,
+      "error": null,
+      "reasons": [
+        "clean_acc 0.270 < 0.8",
+        "clean_ld -0.006 < 0.5",
+        "single_tok_rate 0.000 < 0.9"
+      ],
+      "clean_logit_diff": -0.005900163669139147,
+      "corrupted_logit_diff": -0.04215869680047035,
+      "clean_accuracy": 0.26999998092651367,
+      "single_token_answer_rate": 0.0,
+      "batch_meta": {
+        "single_token_answer_rate": 0.0,
+        "metric": "first_token_logit_diff",
+        "n_names": 32
+      },
+      "descriptors": {
+        "tokens_per_word": 4.385964912280702,
+        "mean_prompt_tokens": 40.0,
+        "mean_prompt_words": 9.12,
+        "seq_len": 40,
+        "pool_single_token_rate": null
+      },
+      "seq_len": 40,
+      "n_prompts_used": 100,
+      "tier": "fail"
+    },
+    {
+      "model": "Qwen/Qwen2.5-1.5B",
+      "task": "capitals",
+      "lang": "en",
+      "n": 100,
+      "seed": 0,
+      "source_repo": "Qwen/Qwen2.5-1.5B",
+      "pass": true,
+      "error": null,
+      "reasons": [],
+      "clean_logit_diff": 10.783203125,
+      "corrupted_logit_diff": -10.299494743347168,
+      "clean_accuracy": 1.0,
+      "single_token_answer_rate": 1.0,
+      "batch_meta": {
+        "single_token_answer_rate": 1.0,
+        "n_pairs": 26,
+        "pool_single_token_rate": 0.896551724137931,
+        "pool_filtered_to_single_token": true,
+        "target_len": 5,
+        "metric": "single_token_logit_diff"
+      },
+      "descriptors": {
+        "tokens_per_word": 1.0683760683760684,
+        "mean_prompt_tokens": 5.0,
+        "mean_prompt_words": 4.68,
+        "seq_len": 5,
+        "pool_single_token_rate": 0.896551724137931
+      },
+      "seq_len": 5,
+      "n_prompts_used": 100,
+      "tier": "strict"
+    },
+    {
+      "model": "Qwen/Qwen2.5-1.5B",
+      "task": "capitals",
+      "lang": "hi",
+      "n": 100,
+      "seed": 0,
+      "source_repo": "Qwen/Qwen2.5-1.5B",
+      "pass": false,
+      "error": null,
+      "reasons": [
+        "clean_acc 0.460 < 0.8",
+        "clean_ld -0.149 < 0.5",
+        "single_tok_rate 0.000 < 0.9"
+      ],
+      "clean_logit_diff": -0.14897046983242035,
+      "corrupted_logit_diff": 0.03997053951025009,
+      "clean_accuracy": 0.4599999785423279,
+      "single_token_answer_rate": 0.0,
+      "batch_meta": {
+        "single_token_answer_rate": 0.0,
+        "n_pairs": 12,
+        "pool_single_token_rate": 0.0,
+        "pool_filtered_to_single_token": false,
+        "target_len": 21,
+        "metric": "first_token_logit_diff"
+      },
+      "descriptors": {
+        "tokens_per_word": 4.384133611691023,
+        "mean_prompt_tokens": 21.0,
+        "mean_prompt_words": 4.79,
+        "seq_len": 21,
+        "pool_single_token_rate": 0.0
+      },
+      "seq_len": 21,
+      "n_prompts_used": 100,
+      "tier": "fail"
+    },
+    {
+      "model": "Qwen/Qwen2.5-1.5B",
+      "task": "agreement",
+      "lang": "en",
+      "n": 100,
+      "seed": 0,
+      "source_repo": "Qwen/Qwen2.5-1.5B",
+      "pass": true,
+      "error": null,
+      "reasons": [],
+      "clean_logit_diff": 3.8523805141448975,
+      "corrupted_logit_diff": 1.0815472602844238,
+      "clean_accuracy": 0.8700000047683716,
+      "single_token_answer_rate": 1.0,
+      "batch_meta": {
+        "source": "multiblimp",
+        "single_token_answer_rate": 1.0,
+        "n_pool": 265,
+        "n_candidates": 529,
+        "window_tokens": 8,
+        "pool_single_token_rate": 0.9338374291115312,
+        "pool_filtered_to_single_token": true,
+        "phenomenon_counts": {
+          "SV-#": 61,
+          "SV-P": 39
+        },
+        "metric": "single_token_logit_diff",
+        "items": [
+          {
+            "phenomenon": "SV-#",
+            "grammatical_feature": "SG",
+            "verb": "approaches",
+            "swap": "approach"
+          },
+          {
+            "phenomenon": "SV-#",
+            "grammatical_feature": "PL",
+            "verb": "experience",
+            "swap": "experiences"
+          },
+          {
+            "phenomenon": "SV-#",
+            "grammatical_feature": "PL",
+            "verb": "do",
+            "swap": "does"
+          },
+          {
+            "phenomenon": "SV-#",
+            "grammatical_feature": "PL",
+            "verb": "show",
+            "swap": "shows"
+          },
+          {
+            "phenomenon": "SV-P",
+            "grammatical_feature": "3",
+            "verb": "prevents",
+            "swap": "prevent"
+          },
+          {
+            "phenomenon": "SV-P",
+            "grammatical_feature": "3",
+            "verb": "extends",
+            "swap": "extend"
+          },
+          {
+            "phenomenon": "SV-P",
+            "grammatical_feature": "3",
+            "verb": "searches",
+            "swap": "search"
+          },
+          {
+            "phenomenon": "SV-P",
+            "grammatical_feature": "3",
+            "verb": "is",
+            "swap": "am"
+          },
+          {
+            "phenomenon": "SV-#",
+            "grammatical_feature": "SG",
+            "verb": "remains",
+            "swap": "remain"
+          },
+          {
+            "phenomenon": "SV-#",
+            "grammatical_feature": "PL",
+            "verb": "require",
+            "swap": "requires"
+          },
+          {
+            "phenomenon": "SV-#",
+            "grammatical_feature": "PL",
+            "verb": "are",
+            "swap": "is"
+          },
+          {
+            "phenomenon": "SV-P",
+            "grammatical_feature": "3",
+            "verb": "is",
+            "swap": "am"
+          },
+          {
+            "phenomenon": "SV-P",
+            "grammatical_feature": "3",
+            "verb": "seeks",
+            "swap": "seek"
+          },
+          {
+            "phenomenon": "SV-#",
+            "grammatical_feature": "PL",
+            "verb": "do",
+            "swap": "does"
+          },
+          {
+            "phenomenon": "SV-#",
+            "grammatical_feature": "PL",
+            "verb": "have",
+            "swap": "has"
+          },
+          {
+            "phenomenon": "SV-#",
+            "grammatical_feature": "PL",
+            "verb": "have",
+            "swap": "has"
+          },
+          {
+            "phenomenon": "SV-P",
+            "grammatical_feature": "3",
+            "verb": "prevents",
+            "swap": "prevent"
+          },
+          {
+            "phenomenon": "SV-#",
+            "grammatical_feature": "SG",
+            "verb": "states",
+            "swap": "state"
+          },
+          {
+            "phenomenon": "SV-P",
+            "grammatical_feature": "3",
+            "verb": "mentions",
+            "swap": "mention"
+          },
+          {
+            "phenomenon": "SV-P",
+            "grammatical_feature": "3",
+            "verb": "reveals",
+            "swap": "reveal"
+          },
+          {
+            "phenomenon": "SV-P",
+            "grammatical_feature": "3",
+            "verb": "is",
+            "swap": "am"
+          },
+          {
+            "phenomenon": "SV-#",
+            "grammatical_feature": "PL",
+            "verb": "include",
+            "swap": "includes"
+          },
+          {
+            "phenomenon": "SV-P",
+            "grammatical_feature": "3",
+            "verb": "costs",
+            "swap": "cost"
+          },
+          {
+            "phenomenon": "SV-#",
+            "grammatical_feature": "PL",
+            "verb": "show",
+            "swap": "shows"
+          },
+          {
+            "phenomenon": "SV-#",
+            "grammatical_feature": "PL",
+            "verb": "do",
+            "swap": "does"
+          },
+          {
+            "phenomenon": "SV-P",
+            "grammatical_feature": "3",
+            "verb": "requires",
+            "swap": "require"
+          },
+          {
+            "phenomenon": "SV-P",
+            "grammatical_feature": "3",
+            "verb": "promises",
+            "swap": "promise"
+          },
+          {
+            "phenomenon": "SV-P",
+            "grammatical_feature": "3",
+            "verb": "treats",
+            "swap": "treat"
+          },
+          {
+            "phenomenon": "SV-#",
+            "grammatical_feature": "SG",
+            "verb": "remains",
+            "swap": "remain"
+          },
+          {
+            "phenomenon": "SV-#",
+            "grammatical_feature": "SG",
+            "verb": "marks",
+            "swap": "mark"
+          },
+          {
+            "phenomenon": "SV-#",
+            "grammatical_feature": "SG",
+            "verb": "persists",
+            "swap": "persist"
+          },
+          {
+            "phenomenon": "SV-#",
+            "grammatical_feature": "PL",
+            "verb": "have",
+            "swap": "has"
+          },
+          {
+            "phenomenon": "SV-P",
+            "grammatical_feature": "3",
+            "verb": "presses",
+            "swap": "press"
+          },
+          {
+            "phenomenon": "SV-#",
+            "grammatical_feature": "PL",
+            "verb": "have",
+            "swap": "has"
+          },
+          {
+            "phenomenon": "SV-#",
+            "grammatical_feature": "PL",
+            "verb": "sink",
+            "swap": "sinks"
+          },
+          {
+            "phenomenon": "SV-#",
+            "grammatical_feature": "PL",
+            "verb": "have",
+            "swap": "has"
+          },
+          {
+            "phenomenon": "SV-P",
+            "grammatical_feature": "3",
+            "verb": "is",
+            "swap": "am"
+          },
+          {
+            "phenomenon": "SV-#",
+            "grammatical_feature": "PL",
+            "verb": "suck",
+            "swap": "sucks"
+          },
+          {
+            "phenomenon": "SV-P",
+            "grammatical_feature": "3",
+            "verb": "figures",
+            "swap": "figure"
+          },
+          {
+            "phenomenon": "SV-#",
+            "grammatical_feature": "PL",
+            "verb": "do",
+            "swap": "does"
+          },
+          {
+            "phenomenon": "SV-#",
+            "grammatical_feature": "SG",
+            "verb": "contracts",
+            "swap": "contract"
+          },
+          {
+            "phenomenon": "SV-#",
+            "grammatical_feature": "PL",
+            "verb": "do",
+            "swap": "does"
+          },
+          {
+            "phenomenon": "SV-#",
+            "grammatical_feature": "PL",
+            "verb": "are",
+            "swap": "is"
+          },
+          {
+            "phenomenon": "SV-#",
+            "grammatical_feature": "SG",
+            "verb": "shapes",
+            "swap": "shape"
+          },
+          {
+            "phenomenon": "SV-P",
+            "grammatical_feature": "3",
+            "verb": "is",
+            "swap": "am"
+          },
+          {
+            "phenomenon": "SV-#",
+            "grammatical_feature": "SG",
+            "verb": "troubles",
+            "swap": "trouble"
+          },
+          {
+            "phenomenon": "SV-P",
+            "grammatical_feature": "3",
+            "verb": "is",
+            "swap": "am"
+          },
+          {
+            "phenomenon": "SV-#",
+            "grammatical_feature": "PL",
+            "verb": "are",
+            "swap": "is"
+          },
+          {
+            "phenomenon": "SV-#",
+            "grammatical_feature": "SG",
+            "verb": "remains",
+            "swap": "remain"
+          },
+          {
+            "phenomenon": "SV-P",
+            "grammatical_feature": "3",
+            "verb": "remains",
+            "swap": "remain"
+          },
+          {
+            "phenomenon": "SV-P",
+            "grammatical_feature": "3",
+            "verb": "is",
+            "swap": "am"
+          },
+          {
+            "phenomenon": "SV-#",
+            "grammatical_feature": "SG",
+            "verb": "proceeds",
+            "swap": "proceed"
+          },
+          {
+            "phenomenon": "SV-#",
+            "grammatical_feature": "SG",
+            "verb": "leaks",
+            "swap": "leak"
+          },
+          {
+            "phenomenon": "SV-#",
+            "grammatical_feature": "PL",
+            "verb": "do",
+            "swap": "does"
+          },
+          {
+            "phenomenon": "SV-P",
+            "grammatical_feature": "3",
+            "verb": "is",
+            "swap": "am"
+          },
+          {
+            "phenomenon": "SV-#",
+            "grammatical_feature": "PL",
+            "verb": "exist",
+            "swap": "exists"
+          },
+          {
+            "phenomenon": "SV-#",
+            "grammatical_feature": "PL",
+            "verb": "remain",
+            "swap": "remains"
+          },
+          {
+            "phenomenon": "SV-#",
+            "grammatical_feature": "PL",
+            "verb": "have",
+            "swap": "has"
+          },
+          {
+            "phenomenon": "SV-#",
+            "grammatical_feature": "SG",
+            "verb": "compares",
+            "swap": "compare"
+          },
+          {
+            "phenomenon": "SV-P",
+            "grammatical_feature": "3",
+            "verb": "assumes",
+            "swap": "assume"
+          },
+          {
+            "phenomenon": "SV-#",
+            "grammatical_feature": "PL",
+            "verb": "progress",
+            "swap": "progresses"
+          },
+          {
+            "phenomenon": "SV-#",
+            "grammatical_feature": "PL",
+            "verb": "do",
+            "swap": "does"
+          },
+          {
+            "phenomenon": "SV-#",
+            "grammatical_feature": "SG",
+            "verb": "entails",
+            "swap": "entail"
+          },
+          {
+            "phenomenon": "SV-P",
+            "grammatical_feature": "3",
+            "verb": "is",
+            "swap": "am"
+          },
+          {
+            "phenomenon": "SV-P",
+            "grammatical_feature": "3",
+            "verb": "is",
+            "swap": "am"
+          },
+          {
+            "phenomenon": "SV-#",
+            "grammatical_feature": "PL",
+            "verb": "are",
+            "swap": "is"
+          },
+          {
+            "phenomenon": "SV-#",
+            "grammatical_feature": "PL",
+            "verb": "are",
+            "swap": "is"
+          },
+          {
+            "phenomenon": "SV-#",
+            "grammatical_feature": "SG",
+            "verb": "demonstrates",
+            "swap": "demonstrate"
+          },
+          {
+            "phenomenon": "SV-P",
+            "grammatical_feature": "3",
+            "verb": "handles",
+            "swap": "handle"
+          },
+          {
+            "phenomenon": "SV-P",
+            "grammatical_feature": "3",
+            "verb": "blames",
+            "swap": "blame"
+          },
+          {
+            "phenomenon": "SV-#",
+            "grammatical_feature": "SG",
+            "verb": "fades",
+            "swap": "fade"
+          },
+          {
+            "phenomenon": "SV-P",
+            "grammatical_feature": "3",
+            "verb": "is",
+            "swap": "am"
+          },
+          {
+            "phenomenon": "SV-#",
+            "grammatical_feature": "PL",
+            "verb": "create",
+            "swap": "creates"
+          },
+          {
+            "phenomenon": "SV-#",
+            "grammatical_feature": "PL",
+            "verb": "have",
+            "swap": "has"
+          },
+          {
+            "phenomenon": "SV-#",
+            "grammatical_feature": "SG",
+            "verb": "reinforces",
+            "swap": "reinforce"
+          },
+          {
+            "phenomenon": "SV-#",
+            "grammatical_feature": "PL",
+            "verb": "have",
+            "swap": "has"
+          },
+          {
+            "phenomenon": "SV-#",
+            "grammatical_feature": "SG",
+            "verb": "exists",
+            "swap": "exist"
+          },
+          {
+            "phenomenon": "SV-P",
+            "grammatical_feature": "3",
+            "verb": "costs",
+            "swap": "cost"
+          },
+          {
+            "phenomenon": "SV-#",
+            "grammatical_feature": "PL",
+            "verb": "generate",
+            "swap": "generates"
+          },
+          {
+            "phenomenon": "SV-P",
+            "grammatical_feature": "3",
+            "verb": "is",
+            "swap": "am"
+          },
+          {
+            "phenomenon": "SV-#",
+            "grammatical_feature": "SG",
+            "verb": "smells",
+            "swap": "smell"
+          },
+          {
+            "phenomenon": "SV-P",
+            "grammatical_feature": "3",
+            "verb": "is",
+            "swap": "am"
+          },
+          {
+            "phenomenon": "SV-#",
+            "grammatical_feature": "SG",
+            "verb": "determines",
+            "swap": "determine"
+          },
+          {
+            "phenomenon": "SV-P",
+            "grammatical_feature": "3",
+            "verb": "buys",
+            "swap": "buy"
+          },
+          {
+            "phenomenon": "SV-#",
+            "grammatical_feature": "PL",
+            "verb": "cook",
+            "swap": "cooks"
+          },
+          {
+            "phenomenon": "SV-P",
+            "grammatical_feature": "3",
+            "verb": "is",
+            "swap": "am"
+          },
+          {
+            "phenomenon": "SV-P",
+            "grammatical_feature": "3",
+            "verb": "is",
+            "swap": "am"
+          },
+          {
+            "phenomenon": "SV-P",
+            "grammatical_feature": "3",
+            "verb": "is",
+            "swap": "am"
+          },
+          {
+            "phenomenon": "SV-#",
+            "grammatical_feature": "PL",
+            "verb": "have",
+            "swap": "has"
+          },
+          {
+            "phenomenon": "SV-#",
+            "grammatical_feature": "SG",
+            "verb": "owes",
+            "swap": "owe"
+          },
+          {
+            "phenomenon": "SV-P",
+            "grammatical_feature": "3",
+            "verb": "recommends",
+            "swap": "recommend"
+          },
+          {
+            "phenomenon": "SV-#",
+            "grammatical_feature": "PL",
+            "verb": "are",
+            "swap": "is"
+          },
+          {
+            "phenomenon": "SV-P",
+            "grammatical_feature": "3",
+            "verb": "is",
+            "swap": "am"
+          },
+          {
+            "phenomenon": "SV-#",
+            "grammatical_feature": "PL",
+            "verb": "are",
+            "swap": "is"
+          },
+          {
+            "phenomenon": "SV-P",
+            "grammatical_feature": "3",
+            "verb": "is",
+            "swap": "am"
+          },
+          {
+            "phenomenon": "SV-#",
+            "grammatical_feature": "SG",
+            "verb": "originates",
+            "swap": "originate"
+          },
+          {
+            "phenomenon": "SV-#",
+            "grammatical_feature": "PL",
+            "verb": "have",
+            "swap": "has"
+          },
+          {
+            "phenomenon": "SV-#",
+            "grammatical_feature": "PL",
+            "verb": "indicate",
+            "swap": "indicates"
+          },
+          {
+            "phenomenon": "SV-P",
+            "grammatical_feature": "3",
+            "verb": "is",
+            "swap": "am"
+          },
+          {
+            "phenomenon": "SV-#",
+            "grammatical_feature": "PL",
+            "verb": "are",
+            "swap": "is"
+          }
+        ]
+      },
+      "descriptors": {
+        "tokens_per_word": 1.1705685618729098,
+        "mean_prompt_tokens": 7.0,
+        "mean_prompt_words": 5.98,
+        "seq_len": 8,
+        "pool_single_token_rate": 0.9338374291115312
+      },
+      "seq_len": 8,
+      "n_prompts_used": 100,
+      "tier": "strict"
+    },
+    {
+      "model": "Qwen/Qwen2.5-1.5B",
+      "task": "agreement",
+      "lang": "hi",
+      "n": 100,
+      "seed": 0,
+      "source_repo": "Qwen/Qwen2.5-1.5B",
+      "pass": false,
+      "error": "RuntimeError: Too few usable MultiBLiMP items for lang=hi (got 0 of 1439)",
+      "reasons": [
+        "exception: RuntimeError: Too few usable MultiBLiMP items for lang=hi (got 0 of 1439)"
+      ],
+      "traceback": "Traceback (most recent call last):\n  File \"/home2/hrishiraj.mitra/mp/scripts/gate.py\", line 74, in evaluate_model\n    batch = generate_batch(model, task=task, lang=lang, n=n, seed=seed, device=device)\n            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home2/hrishiraj.mitra/mp/src/data.py\", line 66, in generate_batch\n    return generate_multiblimp_batch(\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home2/hrishiraj.mitra/mp/src/data_multiblimp.py\", line 133, in generate_multiblimp_batch\n    raise RuntimeError(\nRuntimeError: Too few usable MultiBLiMP items for lang=hi (got 0 of 1439)\n",
+      "tier": "fail"
+    },
+    {
+      "model": "Qwen/Qwen2.5-1.5B",
+      "task": "induction",
+      "lang": "en",
+      "n": 100,
+      "seed": 0,
+      "source_repo": "Qwen/Qwen2.5-1.5B",
+      "pass": true,
+      "error": null,
+      "reasons": [],
+      "clean_logit_diff": 3.911064863204956,
+      "corrupted_logit_diff": -0.20334018766880035,
+      "clean_accuracy": 0.9399999976158142,
+      "single_token_answer_rate": 1.0,
+      "batch_meta": {
+        "single_token_answer_rate": 1.0,
+        "n_symbols": 26,
+        "metric": "single_token_logit_diff",
+        "leading_space": false
+      },
+      "descriptors": {
+        "tokens_per_word": 1.0,
+        "mean_prompt_tokens": 5.0,
+        "mean_prompt_words": 5.0,
+        "seq_len": 5,
+        "pool_single_token_rate": null
+      },
+      "seq_len": 5,
+      "n_prompts_used": 100,
+      "tier": "strict"
+    },
+    {
+      "model": "Qwen/Qwen2.5-1.5B",
+      "task": "induction",
+      "lang": "hi",
+      "n": 100,
+      "seed": 0,
+      "source_repo": "Qwen/Qwen2.5-1.5B",
+      "pass": false,
+      "error": null,
+      "reasons": [
+        "clean_acc 0.750 < 0.8"
+      ],
+      "clean_logit_diff": 1.21034836769104,
+      "corrupted_logit_diff": 0.4924515187740326,
+      "clean_accuracy": 0.75,
+      "single_token_answer_rate": 1.0,
+      "batch_meta": {
+        "single_token_answer_rate": 1.0,
+        "n_symbols": 30,
+        "metric": "single_token_logit_diff",
+        "leading_space": false
+      },
+      "descriptors": {
+        "tokens_per_word": 1.8,
+        "mean_prompt_tokens": 9.0,
+        "mean_prompt_words": 5.0,
+        "seq_len": 9,
+        "pool_single_token_rate": null
+      },
+      "seq_len": 9,
+      "n_prompts_used": 100,
+      "tier": "fail"
+    },
+    {
+      "model": "Qwen/Qwen2.5-1.5B",
+      "task": "ioi",
+      "lang": "hi_roman",
+      "n": 100,
+      "seed": 0,
+      "source_repo": "Qwen/Qwen2.5-1.5B",
+      "pass": false,
+      "error": null,
+      "reasons": [
+        "clean_acc 0.450 < 0.8",
+        "clean_ld -0.024 < 0.5",
+        "single_tok_rate 0.000 < 0.9"
+      ],
+      "clean_logit_diff": -0.023628678172826767,
+      "corrupted_logit_diff": -0.15233728289604187,
+      "clean_accuracy": 0.44999998807907104,
+      "single_token_answer_rate": 0.0,
+      "batch_meta": {
+        "single_token_answer_rate": 0.0,
+        "metric": "first_token_logit_diff",
+        "n_names": 16
+      },
+      "descriptors": {
+        "tokens_per_word": 1.8147086914995225,
+        "mean_prompt_tokens": 19.0,
+        "mean_prompt_words": 10.47,
+        "seq_len": 19,
+        "pool_single_token_rate": null
+      },
+      "seq_len": 19,
+      "n_prompts_used": 100,
+      "tier": "fail"
+    }
+  ]
+}

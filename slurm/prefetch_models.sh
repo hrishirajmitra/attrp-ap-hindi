@@ -25,7 +25,8 @@ TOKEN = os.environ.get("HF_TOKEN") or None
 CACHE = os.environ.get("HF_HUB_CACHE")
 api = HfApi(token=TOKEN)
 PLAIN = ["gpt2", "EleutherAI/pythia-160m", "EleutherAI/pythia-410m",
-         "Qwen/Qwen2.5-0.5B", "Qwen/Qwen2.5-1.5B", "bigscience/bloom-560m"]
+         "Qwen/Qwen2.5-0.5B", "Qwen/Qwen2.5-1.5B", "bigscience/bloom-560m",
+         "bigscience/bloom-1b1", "bigscience/bloom-1b7"]
 GATED = {"meta-llama/Llama-3.2-1B": "unsloth/Llama-3.2-1B"}
 TOK_FILES = ("tokenizer.json", "tokenizer.model", "vocab.json", "vocab.txt")
 SMALL = ["*.json", "*.txt", "*.model", "*.tiktoken", "merges.txt", "tokenizer*", "vocab*"]
