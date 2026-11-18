@@ -111,8 +111,10 @@ def eap_ig_heads_and_mlps(
     if abs(denom) < 1e-8:
         raise RuntimeError("Degenerate clean/corrupted gap for EAP-IG.")
 
-    head_scores = (head_acc / denom).cpu().numpy()
-    mlp_scores = (mlp_acc / denom).cpu().numpy()
+    # noising: delta.grad estimates (patched - clean) = -(effect), so flip to the AP convention
+    sgn = 1.0 if direction == "denoising" else -1.0
+    head_scores = (sgn * head_acc / denom).cpu().numpy()
+    mlp_scores = (sgn * mlp_acc / denom).cpu().numpy()
 
     sync(device)
     elapsed = time.perf_counter() - t0

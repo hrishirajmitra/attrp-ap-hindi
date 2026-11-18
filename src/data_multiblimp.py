@@ -14,6 +14,7 @@ from __future__ import annotations
 
 import csv
 import random
+import re
 from pathlib import Path
 
 import torch
@@ -25,6 +26,7 @@ from .tokenize import try_single_or_first
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_DIR = ROOT / "data" / "multiblimp"
 
+MIN_SINGLE_POOL = 150
 LANG_FILE = {"en": "eng_data.tsv", "hi": "hin_data.tsv"}
 
 
@@ -83,7 +85,14 @@ def generate_multiblimp_batch(
         if pair is None:
             continue
         prefix, verb, swap = pair
-        if not verb or not swap or not prefix:
+        # strip clause punctuation glued to the word (Hindi 'देगा,' vs 'दिए,')
+        verb = verb.rstrip(",.;:!?।\"”’)")
+        swap = swap.rstrip(",.;:!?।\"”’)")
+        if not verb or not swap or not prefix or verb == swap:
+            continue
+        # English: skip contractions / non-alphabetic contrasts ("is" vs "'m") -- the first
+        # token of the wrong form is an apostrophe, so the logit difference is meaningless.
+        if lang == "en" and not (re.fullmatch(r"[A-Za-z]+", verb) and re.fullmatch(r"[A-Za-z]+", swap)):
             continue
         try:
             pos_id, n_pos = try_single_or_first(
@@ -112,6 +121,14 @@ def generate_multiblimp_batch(
         raise RuntimeError(
             f"Too few usable MultiBLiMP items for lang={lang} (got {len(usable)})"
         )
+    # Prefer pairs whose contrast words are both single tokens (so the logit difference is a
+    # clean one-token contrast). If fewer than MIN_SINGLE_POOL such pairs exist the full pool is
+    # used and the batch single-token rate will (correctly) fail the competence gate.
+    pool_single_rate = sum(1 for u in usable if u["n_pos"] == 1 and u["n_neg"] == 1) / len(usable)
+    single_pool = [u for u in usable if u["n_pos"] == 1 and u["n_neg"] == 1]
+    pool_filtered = len(single_pool) >= MIN_SINGLE_POOL
+    if pool_filtered:
+        usable = single_pool
 
     clean_s, corr_s, pos_ids, neg_ids = [], [], [], []
     clean_t, corr_t = [], []
@@ -171,6 +188,8 @@ def generate_multiblimp_batch(
             "source": "multiblimp",
             "single_token_answer_rate": single_rate,
             "n_pool": len(usable),
+            "pool_single_token_rate": pool_single_rate,
+            "pool_filtered_to_single_token": pool_filtered,
             "phenomenon_counts": phen_counts,
             "metric": "first_token_logit_diff" if single_rate < 1.0 else "single_token_logit_diff",
             "items": metas,

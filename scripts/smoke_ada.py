@@ -51,11 +51,15 @@ def main() -> None:
                             flush=True,
                         )
                     out = args.out / tag
-                    run_cell(
+                    cmp_ = run_cell(
                         model, name, task, lang, direction, 0, out, "cuda",
                         n_prompts=args.n, micro_batch=4, n_ig_steps=3, ig_sweep=[3, 5],
                     )
                     assert validate_result_dir(out), "result dir incomplete"
+                    r_ = cmp_["spearman_ap_attr"]
+                    print(f"    SIGNCHECK rho(AP,AttrP)={r_:.3f}", flush=True)
+                    if task == "ioi" and lang == "en":
+                        assert r_ > 0.5, f"sign/direction bug: rho={r_}"
                 except Exception as e:  # noqa: BLE001
                     failures.append((tag, f"{type(e).__name__}: {e}"))
                     print(f"!!! FAIL {tag}: {e}\n{traceback.format_exc()[-1200:]}", flush=True)

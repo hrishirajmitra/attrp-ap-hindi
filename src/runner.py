@@ -31,6 +31,7 @@ def prompt_descriptors(model: HookedTransformer, batch) -> dict[str, Any]:
         "mean_prompt_tokens": float(sum(tok_counts) / n),
         "mean_prompt_words": float(sum(word_counts) / n),
         "seq_len": int(batch.clean_tokens.shape[1]),
+        "pool_single_token_rate": batch.meta.get("pool_single_token_rate"),
     }
 
 

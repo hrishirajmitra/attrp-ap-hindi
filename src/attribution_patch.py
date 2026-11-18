@@ -105,8 +105,10 @@ def attribution_patch_heads_and_mlps(
     if abs(denom) < 1e-8:
         raise RuntimeError("Degenerate clean/corrupted gap for attribution patching.")
 
-    head_attr = (head_acc / denom).cpu().numpy()
-    mlp_attr = (mlp_acc / denom).cpu().numpy()
+    # noising: delta.grad estimates (patched - clean) = -(effect), so flip to the AP convention
+    sgn = 1.0 if direction == "denoising" else -1.0
+    head_attr = (sgn * head_acc / denom).cpu().numpy()
+    mlp_attr = (sgn * mlp_acc / denom).cpu().numpy()
 
     sync(device)
     elapsed = time.perf_counter() - t0
