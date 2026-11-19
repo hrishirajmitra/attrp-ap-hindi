@@ -141,7 +141,7 @@ Left must be the grammatical one and right the ungrammatical one **at the word s
 
 - IOI sentences 3,4,6,8,9,13,15,16,18 (masculine objects): no issue. Sentence 2: acceptable.
 - IOI sentences 1,5,7,10,11,12,14,17,19 (feminine objects किताब/अंगूठी/मिठाई): verb should be `दी`, not `दिया`. **Not fixed in code on purpose:** the probe prompt ends before the recipient, so the verb is never shown to the model; the full-sentence form in this sheet is documentation only.
-- IOI sentence 20: `बगीचा में` should be `बगीचे में`. **Fixed** by replacing the place `बगीचा` with `मंदिर` (and romanised `bagicha` with `mandir`) in `src/data_ioi.py`; the Hindi IOI gate was re-run afterwards (`results/gate_ioi_fix/`).
+- IOI sentence 20: `बगीचा में` should be `बगीचे में`. **Fixed** by replacing the place `बगीचा` with `मंदिर` (and romanised `bagicha` with `mandir`) in `src/data_ioi.py`; the Hindi IOI gate was re-run afterwards (`results/gate_ioi_fix/`): all Hindi and romanised-Hindi IOI cells still fail the gate (accuracy 0.26-0.65), so the main results are unchanged.
 - Capitals and MultiBLiMP sections: no issues marked.
 
 ## Sign-off

@@ -1,0 +1,80 @@
+{
+  "model": "bigscience/bloom-1b7",
+  "thresholds": {
+    "n_prompts": 100,
+    "min_clean_accuracy": 0.8,
+    "min_clean_logit_diff": 0.5,
+    "max_corrupted_logit_diff": 0.25,
+    "max_corrupted_fraction": 0.5,
+    "min_single_token_rate": 0.9
+  },
+  "rows": [
+    {
+      "model": "bigscience/bloom-1b7",
+      "task": "ioi",
+      "lang": "hi",
+      "n": 100,
+      "seed": 0,
+      "source_repo": "bigscience/bloom-1b7",
+      "pass": false,
+      "error": null,
+      "reasons": [
+        "clean_acc 0.650 < 0.8",
+        "corr_ld 0.365 > max(0.25, 0.5*clean_ld)"
+      ],
+      "clean_logit_diff": 0.6153039932250977,
+      "corrupted_logit_diff": 0.3651728630065918,
+      "clean_accuracy": 0.6499999761581421,
+      "single_token_answer_rate": 1.0,
+      "batch_meta": {
+        "single_token_answer_rate": 1.0,
+        "metric": "single_token_logit_diff",
+        "n_names": 21
+      },
+      "descriptors": {
+        "tokens_per_word": 1.329243353783231,
+        "mean_prompt_tokens": 13.0,
+        "mean_prompt_words": 9.78,
+        "seq_len": 13,
+        "pool_single_token_rate": null
+      },
+      "seq_len": 13,
+      "n_prompts_used": 100,
+      "tier": "fail"
+    },
+    {
+      "model": "bigscience/bloom-1b7",
+      "task": "ioi",
+      "lang": "hi_roman",
+      "n": 100,
+      "seed": 0,
+      "source_repo": "bigscience/bloom-1b7",
+      "pass": false,
+      "error": null,
+      "reasons": [
+        "clean_acc 0.330 < 0.8",
+        "clean_ld -0.717 < 0.5",
+        "single_tok_rate 0.000 < 0.9"
+      ],
+      "clean_logit_diff": -0.7166653275489807,
+      "corrupted_logit_diff": -0.07195670902729034,
+      "clean_accuracy": 0.32999998331069946,
+      "single_token_answer_rate": 0.0,
+      "batch_meta": {
+        "single_token_answer_rate": 0.0,
+        "metric": "first_token_logit_diff",
+        "n_names": 16
+      },
+      "descriptors": {
+        "tokens_per_word": 1.8009478672985781,
+        "mean_prompt_tokens": 19.0,
+        "mean_prompt_words": 10.55,
+        "seq_len": 19,
+        "pool_single_token_rate": null
+      },
+      "seq_len": 19,
+      "n_prompts_used": 100,
+      "tier": "fail"
+    }
+  ]
+}
