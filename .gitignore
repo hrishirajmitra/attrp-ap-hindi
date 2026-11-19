@@ -20,3 +20,5 @@ results/smoke/
 .venv_path
 env.sh
 queue/
+slides/results/node_modules/
+slides/results/slide-*.jpg
