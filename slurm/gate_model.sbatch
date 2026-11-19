@@ -16,7 +16,7 @@ set -uo pipefail
 echo "JOB $SLURM_JOB_ID host=$(hostname) acct=${SLURM_JOB_ACCOUNT:-?} model=$GATE_MODEL"
 source "$HOME/mp/slurm/node_bootstrap.sh" || { echo BOOTSTRAP_FAILED; exit 1; }
 cd "$HOME/mp"
-"$VENV/bin/python" scripts/gate.py --models "$GATE_MODEL" --out-dir "$HOME/mp/results/gate"
+"$VENV/bin/python" scripts/gate.py --models "$GATE_MODEL" --out-dir "${GATE_OUT:-$HOME/mp/results/gate}" ${GATE_EXTRA:-}
 rc=$?
 echo "GATE_EXIT $rc"
 exit $rc

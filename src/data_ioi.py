@@ -38,7 +38,7 @@ NAMES_HI = [
 PLACES_EN = ["store", "park", "restaurant", "school", "hospital", "office", "garden", "library"]
 OBJECTS_EN = ["drink", "book", "ring", "kiss", "bone", "letter", "gift", "necklace"]
 
-PLACES_HI = ["बाज़ार", "पार्क", "रेस्तरां", "स्कूल", "अस्पताल", "दफ़्तर", "बगीचा", "पुस्तकालय"]
+PLACES_HI = ["बाज़ार", "पार्क", "रेस्तरां", "स्कूल", "अस्पताल", "दफ़्तर", "मंदिर", "पुस्तकालय"]
 OBJECTS_HI = ["पानी", "किताब", "अंगूठी", "उपहार", "पत्र", "हार", "फूल", "मिठाई"]
 
 TEMPLATES_EN = [
@@ -70,7 +70,7 @@ NAMES_HI_ROMAN = [
     "Ram", "Sita", "Amit", "Neeta", "Raj", "Geeta", "Ananya", "Arav",
     "Kabir", "Meera", "Rohan", "Priya", "Ajay", "Neha", "Vivek", "Pooja",
 ]
-PLACES_HI_ROMAN = ["bazaar", "park", "school", "hospital", "daftar", "bagicha"]
+PLACES_HI_ROMAN = ["bazaar", "park", "school", "hospital", "daftar", "mandir"]
 OBJECTS_HI_ROMAN = ["paani", "kitaab", "uphaar", "patra", "haar", "mithai"]
 
 
