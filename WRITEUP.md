@@ -109,7 +109,7 @@ Other numbers: AP costs ~49x AttrP in wall time; first-token-tier cell Llama-3.2
 4. "Seeds" resample prompts from the same templates / MultiBLiMP pool with the same model weights; CIs reflect prompt sampling, not variation across trained models.
 5. Agreement uses the single-token pool of MultiBLiMP pairs (the logit difference is then a clean one-token contrast); this selects frequent verbs.
 6. The Hindi templates have **not** been reviewed by a native speaker (`data/NATIVE_REVIEW.md`).
-7. Llama-3.2-1B weights are from the `unsloth` mirror; Gemma-3 was replaced by BLOOM (Amendment 2).
+7. Llama-3.2-1B weights are from the `unsloth` mirror. **Gemma-3-1B was not run**: TransformerLens 2.15 cannot load it and a newer TL needs torch >= 2.6, unavailable on Ada's CUDA 12.1 setup; it was replaced by BLOOM (Amendment 2, item 1). Hindi results therefore rest mostly on one family.
 8. Competence-gate rule changes (corrupted-LD criterion, first-token tier, extra BLOOM models) were made after seeing gate numbers but before any patching result; they are listed in Amendment 2.
 
 ## Reproduce (Ada)
