@@ -1,24 +1,132 @@
-# Native-speaker review checklist (Hindi)
+# Native-speaker review sheet (Hindi) - about 10 minutes
 
-Review before citing Hindi IOI / hand agreement / ne-perfective results.
-MultiBLiMP pairs are source-published; spot-check a sample for sense.
+**How to review:** read each line; do nothing if it is fine. Only write a short note next to a line that is wrong or unnatural (put `x` in the last column and the fix after it). Templated probe sentences may sound slightly stiff - that is OK; mark only things a native speaker would call *wrong* (grammar, gender, meaning) or *confusing*.
 
-## Hindi IOI templates (`src/data_ioi.py`)
+Why it matters: results on Hindi IOI/capitals depend on these sentences. Note that every model failed the competence gate on Hindi IOI and capitals, so a template problem could be part of the reason - which is exactly what this review can tell us.
 
-Full intended sentence: `{X} और {Y} {PLACE} गए। {Z} ने {OBJ} {IO} को दिया।`  
-Prompt ends before `{IO}`.
+## 1. Hindi IOI (20 sample sentences)
 
-- [ ] Sounds natural to a native speaker (register OK for a templated probe)
-- [ ] Recipient is the only plausible next name
-- [ ] `{OBJ}` is an object that can take `को` + `दिया` / equivalent
-- [ ] Names in `NAMES_HI` are common given names, not rare/awkward
+Probe prompt ends **before** the recipient (shown in **bold**); the model must predict that name.
 
-## Hand agreement / ne-perfective (stretch)
+| # | Full sentence | x / fix |
+|--:|---|---|
+| 1 | फिर, विकास और मीरा बाज़ार गए। कमल ने किताब **मीरा** को दिया। |  |
+| 2 | जब अनन्या और अनीता स्कूल पहुँचे, तो नीता ने पानी **अनीता** को दिया। |  |
+| 3 | गीता और सुरेश के पार्क जाने के बाद, लता ने उपहार **सुरेश** को दिया। |  |
+| 4 | फिर, गीता और सुरेश ने पार्क में मज़ा किया। नीता ने उपहार **सुरेश** को दिया। |  |
+| 5 | फिर, नीता और कमल बाज़ार गए। विवेक ने अंगूठी **कमल** को दिया। |  |
+| 6 | जब मोहन और लता पार्क पहुँचे, तो मीरा ने पत्र **लता** को दिया। |  |
+| 7 | प्रिया और अनन्या के दफ़्तर जाने के बाद, अजय ने किताब **अनन्या** को दिया। |  |
+| 8 | फिर, राज और नीता ने पुस्तकालय में मज़ा किया। नेहा ने फूल **नीता** को दिया। |  |
+| 9 | फिर, विकास और दीपक अस्पताल गए। अनीता ने उपहार **दीपक** को दिया। |  |
+| 10 | जब प्रिया और पूजा अस्पताल पहुँचे, तो गीता ने मिठाई **पूजा** को दिया। |  |
+| 11 | कविता और माया के पार्क जाने के बाद, मोहन ने किताब **माया** को दिया। |  |
+| 12 | फिर, लता और रोहन ने रेस्तरां में मज़ा किया। कविता ने मिठाई **रोहन** को दिया। |  |
+| 13 | फिर, लता और अमित दफ़्तर गए। राज ने हार **अमित** को दिया। |  |
+| 14 | जब संजय और अनिल पार्क पहुँचे, तो दीपक ने किताब **अनिल** को दिया। |  |
+| 15 | दीपा और रीना के बाज़ार जाने के बाद, राज ने पत्र **रीना** को दिया। |  |
+| 16 | फिर, माया और मोहन ने दफ़्तर में मज़ा किया। राहुल ने पानी **मोहन** को दिया। |  |
+| 17 | फिर, दीपक और संजय पार्क गए। रोहन ने मिठाई **संजय** को दिया। |  |
+| 18 | जब नीता और नेहा रेस्तरां पहुँचे, तो मोहन ने उपहार **नेहा** को दिया। |  |
+| 19 | कमल और अनिल के रेस्तरां जाने के बाद, गीता ने मिठाई **अनिल** को दिया। |  |
+| 20 | फिर, कमल और दीपा ने बगीचा में मज़ा किया। कबीर ने पत्र **दीपा** को दिया। |  |
 
-- [ ] Subject-agreeing intransitives: gender on verb matches subject
-- [ ] Ne-perfective: verb gender matches **object**, not subject
-- [ ] Objects in ne items are clear masculine/feminine nouns
+**Known concern to judge:** the verb is always `दिया` (masc.). With feminine objects (किताब, अंगूठी, मिठाई) it should be `दी`. The verb is *after* the cut, so the model never sees it - but is the sentence acceptable as a probe? ( ) fine  ( ) must fix
+
+**Names** (common given names? mark rare/odd ones): राम, सीता, अमित, नीता, राज, गीता, अनन्या, आरव, कबीर, मीरा, रोहन, प्रिया, अजय, नेहा, विवेक, पूजा, अरुण, दीपा, मोहन, सुनीता, विकास, कविता, संजय, अनीता, राहुल, कमल, लता, सुरेश, माया, दीपक, रीना, अनिल
+
+**Places:** बाज़ार, पार्क, रेस्तरां, स्कूल, अस्पताल, दफ़्तर, बगीचा, पुस्तकालय  
+**Objects:** पानी, किताब, अंगूठी, उपहार, पत्र, हार, फूल, मिठाई
+
+Templates:
+
+- `फिर, {X} और {Y} {PLACE} गए। {Z} ने {OBJ}`
+- `जब {X} और {Y} {PLACE} पहुँचे, तो {Z} ने {OBJ}`
+- `{X} और {Y} के {PLACE} जाने के बाद, {Z} ने {OBJ}`
+- `फिर, {X} और {Y} ने {PLACE} में मज़ा किया। {Z} ने {OBJ}`
+
+Romanised variants (same structure, Latin script; tick if the romanisation is a normal way to write it):
+
+- `Phir, {X} aur {Y} {PLACE} gaye. {Z} ne {OBJ}`
+- `Jab {X} aur {Y} {PLACE} pahunche, to {Z} ne {OBJ}`
+- `{X} aur {Y} ke {PLACE} jaane ke baad, {Z} ne {OBJ}`
+- `Phir, {X} aur {Y} ne {PLACE} mein maza kiya. {Z} ne {OBJ}`
+
+## 2. Capitals (30 pairs): is the Hindi spelling the usual one?
+
+| Country | Capital | x / fix |
+|---|---|---|
+| फ़्रांस | पेरिस |  |
+| जर्मनी | बर्लिन |  |
+| इटली | रोम |  |
+| स्पेन | मैड्रिड |  |
+| जापान | टोक्यो |  |
+| चीन | बीजिंग |  |
+| रूस | मास्को |  |
+| मिस्र | काहिरा |  |
+| कनाडा | ओटावा |  |
+| ऑस्ट्रेलिया | कैनबरा |  |
+| भारत | दिल्ली |  |
+| ब्राज़ील | ब्रासीलिया |  |
+| ग्रीस | एथेंस |  |
+| तुर्की | अंकारा |  |
+| पोलैंड | वारसॉ |  |
+| स्वीडन | स्टॉकहोम |  |
+| नॉर्वे | ओस्लो |  |
+| पुर्तगाल | लिस्बन |  |
+| थाईलैंड | बैंकॉक |  |
+| वियतनाम | हनोई |  |
+| ईरान | तेहरान |  |
+| इराक | बगदाद |  |
+| चिली | सैंटियागो |  |
+| पेरू | लीमा |  |
+| क्यूबा | हवाना |  |
+| केन्या | नैरोबी |  |
+| नाइजीरिया | अबुजा |  |
+| अफ़ग़ानिस्तान | काबुल |  |
+| पाकिस्तान | इस्लामाबाद |  |
+| नेपाल | काठमांडू |  |
+
+Templates (`{COUNTRY}` filled in):
+
+- `{COUNTRY} की राजधानी है`
+- `प्रश्न: {COUNTRY} की राजधानी क्या है? उत्तर:`
+- `{COUNTRY} की राजधानी शहर है`
+
+## 3. MultiBLiMP spot check (25 random pairs, from the published dataset)
+
+Left must be the grammatical one and right the ungrammatical one **at the word shown**. Mark any pair where the left is not clearly correct or both are acceptable.
+
+| # | Context (last words) | Correct | Wrong | x |
+|--:|---|---|---|---|
+| 1 | …लोगों ने उन पर पत्थर भी | **फेंके** | फेंक |  |
+| 2 | …उसके तार किन और आतंकियों से | **जुड़े** | जुड़ी |  |
+| 3 | …के लिए किस प्रकार राजी हो | **गए** | जाओ |  |
+| 4 | …इस बीच लहरें | **उठी** | उठ |  |
+| 5 | …सैफई गांव तक ठहर कर रह | **गया** | जाओ |  |
+| 6 | …लगाई गई बोली दूसरे स्थान पर | **रही** | रहें |  |
+| 7 | …अपील की अर्जी को अंतिम रूप | **देंगे** | दिए |  |
+| 8 | …किसी उचित कार्रवाई के धूल चाट | **रही** | रहा |  |
+| 9 | …जब फाइलें निश्चित स्थान पर नहीं | **मिलीं** | मिले |  |
+| 10 | …की हल्की - हल्की बौछारें शुरू | **हुई** | होती |  |
+| 11 | …चुबंक की तरह खींचने का काम | **करती** | करतीं |  |
+| 12 | …खेलने के लिए समुद्र तट पर | **जा** | गया |  |
+| 13 | …५० फीसदी से भी अधिक मिलने | **लगी** | लगीं |  |
+| 14 | …आदिवासी इलाकों में काफी असरदार हो | **रहा** | रहें |  |
+| 15 | …दिनों की गंगा यात्रा पर निकले | **हैं** | है |  |
+| 16 | …२० प्रश्नों को बिना बारी के | **उठाएंगे** | उठाएगी |  |
+| 17 | …प्रक्रिया नए साल में भी जारी | **रहेगी** | रहेगा |  |
+| 18 | …कम से कम दो दिन और | **लगेंगे** | लगता |  |
+| 19 | …मदर टेरेसा को संत की पदवी | **दी,** | देनी, |  |
+| 20 | …सरकारी विभागों में धड़ल्ले से चल | **रहा** | रहें |  |
+| 21 | …लालकृष्ण आडवाणी की प्रेरणा उनकी ताकत | **रहेगी** | रहेंगी |  |
+| 22 | …से ३७,००० रुपये लौटाने के आदेश | **दिए** | दीं |  |
+| 23 | …साल के आखिर तक मंजूर हो | **सकेगा.** | सकेगी. |  |
+| 24 | …मां उन्हें देखने के लिए तड़पती | **रहीं** | रहो |  |
+| 25 | …को इस करार पर दस्तखत करने | **होंगे** | होगा |  |
 
 ## Sign-off
+
+Overall: ( ) templates fine  ( ) fine after the fixes noted  ( ) not usable
 
 Reviewer: ______________  Date: ______________
