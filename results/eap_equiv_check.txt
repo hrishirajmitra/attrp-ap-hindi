@@ -1,0 +1,6 @@
+# Output of scripts/test_eap_equiv.py on Ada (SLURM job 91330, mp-eaptest, 2026-11-19). GPT-2, IOI and agreement, both directions.
+ioi denoising: max|AttrP-EAP(alpha=0)|=0.00e+00  rho(AttrP,EAP5)=0.428 rho(AttrP,EAP50)=0.428 sum(AttrP)=-0.196 sum(EAP50)=2.654
+ioi noising: max|AttrP-EAP(alpha=0)|=0.00e+00  rho(AttrP,EAP5)=0.664 rho(AttrP,EAP50)=0.662 sum(AttrP)=0.309 sum(EAP50)=2.654
+agreement denoising: max|AttrP-EAP(alpha=0)|=0.00e+00  rho(AttrP,EAP5)=0.527 rho(AttrP,EAP50)=0.524 sum(AttrP)=1.385 sum(EAP50)=2.500
+agreement noising: max|AttrP-EAP(alpha=0)|=0.00e+00  rho(AttrP,EAP5)=0.699 rho(AttrP,EAP50)=0.719 sum(AttrP)=0.778 sum(EAP50)=2.500
+EAP_EQUIV_OK

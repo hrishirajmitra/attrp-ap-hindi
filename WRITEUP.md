@@ -80,7 +80,7 @@ python scripts/exploratory_rank.py results       # post-hoc restricted-rank anal
 - 9 models: GPT-2, Pythia-160m/410m (English controls), Qwen2.5-0.5B/1.5B, Llama-3.2-1B, **BLOOM-560m/1b1/1b7** (Gemma-3-1B was dropped: TransformerLens 2.15 cannot load it; BLOOM has Hindi in its pretraining data). Llama weights come from the ungated `unsloth/Llama-3.2-1B` mirror because the official repo refused the token.
 - 4 tasks (IOI, capitals, MultiBLiMP subject-verb agreement, induction) x English/Hindi, plus romanised-Hindi IOI: 66 candidate cells, all gated first (`results/gate_coverage.md`).
 - Every gated cell: AP, first-order AttrP and EAP-IG, both directions (denoising, noising), 5 seeds x 100 prompts, fp32, EAP-IG step sweep {5,10,20} on seed 0. **440 runs, 0 failures.** Compute: Ada 2080 Ti, about 4 h wall on up to 12 GPUs across the `irel` and `research` accounts.
-- Correctness checks that ran on the cluster: the new engine reproduces the v1 GPT-2 IOI scores to 1e-6 (`results/validate_v1.json`); EAP-IG at alpha=0 equals AttrP exactly, and EAP-IG at 5 steps matches 50 steps (`scripts/test_eap_equiv.py`); the fast AP path is self-checked against the full forward pass in every run.
+- Correctness checks that ran on the cluster: the new engine reproduces the v1 GPT-2 IOI scores to 1e-6 (`results/validate_v1.json`); on GPT-2 (IOI and agreement, both directions) EAP-IG at alpha=0 equals AttrP exactly, and its rank agreement with AttrP is the same at 5 and 50 steps to within 0.02 (`scripts/test_eap_equiv.py`, output saved in `results/eap_equiv_check.txt`); the fast AP path is self-checked against the full forward pass in every run.
 - Bugs found *by* those checks and fixed before the grid: noising-direction AttrP/EAP-IG had the opposite sign to AP; MultiBLiMP contrasts were polluted by contractions and glued punctuation; capitals used a multi-token answer pool.
 
 ## Results (seed means over 5 seeds; "core" = strict-gate cells, excluding Pythia and induction)
@@ -108,7 +108,7 @@ Other numbers: AP costs ~49x AttrP in wall time (median per-run ratio, core deno
 3. H3 has only 3 pairs, all from one family; the equivalence margin (+/-0.05) was fixed before the results.
 4. "Seeds" resample prompts from the same templates / MultiBLiMP pool with the same model weights; CIs reflect prompt sampling, not variation across trained models.
 5. Agreement uses the single-token pool of MultiBLiMP pairs (the logit difference is then a clean one-token contrast); this selects frequent verbs.
-6. The Hindi templates have **not** been reviewed by a native speaker (`data/NATIVE_REVIEW.md`).
+6. The Hindi templates were reviewed by one native speaker, the author, after the grid had run (`data/NATIVE_REVIEW.md`). One IOI place word was corrected and the Hindi IOI gate re-run (`results/gate_ioi_fix/`); every Hindi and romanised IOI cell still fails, so no result changed. There was no independent second reviewer.
 7. Llama-3.2-1B weights are from the `unsloth` mirror. **Gemma-3-1B was not run**: TransformerLens 2.15 cannot load it and a newer TL needs torch >= 2.6, unavailable on Ada's CUDA 12.1 setup; it was replaced by BLOOM (Amendment 2, item 1). Hindi results therefore rest mostly on one family.
 8. Competence-gate rule changes (corrupted-LD criterion, first-token tier, extra BLOOM models) were made after seeing gate numbers but before any patching result; they are listed in Amendment 2.
 
