@@ -118,7 +118,7 @@ def main() -> None:
             }
         )
 
-    # Cost ratios from core denoising
+    # Wall times over the core denoising runs (strict tier, appendix=False; one run = one seed)
     t_ap, t_attr, t_eap = [], [], []
     for r in core_den:
         a, b, c = f(r, "t_ap"), f(r, "t_attr"), f(r, "t_eap")
@@ -128,9 +128,20 @@ def main() -> None:
         if c and b and b > 0:
             t_eap.append(c)
 
+    # Reported cost ratios come from summary.json (scripts/analyze_story.py, H5): the MEDIAN over
+    # the same core denoising runs of the per-run time ratio t_ap/t_attr and t_eap/t_attr, so the
+    # deck, ANALYSIS.md and WRITEUP.md quote one figure. The ratio of mean times is kept alongside
+    # for reference only (it is what the mean seconds on slide 2 imply).
+    h5 = summary.get("H5", {})
+    means_ap = mean(t_ap) / mean(t_attr) if t_attr else float("nan")
+    means_eap = mean(t_eap) / mean(t_attr) if t_attr and t_eap else float("nan")
     cost = {
-        "ap_over_attrp": mean(t_ap) / mean(t_attr) if t_attr else float("nan"),
-        "eap_over_attrp": mean(t_eap) / mean(t_attr) if t_attr and t_eap else float("nan"),
+        "ap_over_attrp": h5.get("time_ratio_ap_over_attrp", means_ap),
+        "eap_over_attrp": h5.get("time_ratio_eap_over_attrp", means_eap),
+        "ratio_definition": "median over core denoising runs of the per-run wall-time ratio (summary.json H5)",
+        "ap_over_attrp_ratio_of_means": means_ap,
+        "eap_over_attrp_ratio_of_means": means_eap,
+        "n_runs_timed": len(t_attr),
         "mean_t_ap": mean(t_ap),
         "mean_t_attr": mean(t_attr),
         "mean_t_eap": mean(t_eap),
@@ -197,9 +208,29 @@ def main() -> None:
 
     gpt2_ioi = cell_means("gpt2", "ioi", "en")
     qwen_ioi = cell_means("Qwen/Qwen2.5-0.5B", "ioi", "en")
+    # BLOOM IOI (en): seed-mean MLP Pearson r(AP, AttrP) per size, quoted in the slide 7 notes
+    bloom_ioi_mlp_r = {
+        size: cell_means(f"bigscience/{size}", "ioi", "en")["mlp_r"]
+        for size in ("bloom-560m", "bloom-1b1", "bloom-1b7")
+    }
 
-    # Noising mean rho
-    noising = [f(r, "rho") for r in cells if r["direction"] == "noising" and r["appendix"].lower() == "false"]
+    # Clean-accuracy range of the failing Hindi IOI / Hindi capitals / romanised IOI gate cells
+    hi_fail_acc = [
+        r["acc"]
+        for r in gate_rows
+        if r["tier"] == "fail"
+        and (r["task"], r["lang"]) in {("ioi", "hi"), ("capitals", "hi"), ("ioi", "hi_roman")}
+        and r["acc"] is not None
+    ]
+
+    # Noising mean rho over core cells (strict tier, appendix=False), as in summary.json
+    noising = [
+        f(r, "rho")
+        for r in cells
+        if r["direction"] == "noising"
+        and r["appendix"].lower() == "false"
+        and (r["model"], r["task"], r["lang"]) in strict_keys
+    ]
     noising = [x for x in noising if x is not None]
 
     # Fertility / clean LD for H4 backup
@@ -270,7 +301,14 @@ def main() -> None:
             "gpt2_ioi": gpt2_ioi,
             "qwen05_ioi": qwen_ioi,
         },
-        "noising_mean_rho": mean(noising),
+        "bloom_ioi_mlp_r": bloom_ioi_mlp_r,
+        "hindi_fail_acc": {
+            "min": min(hi_fail_acc),
+            "max": max(hi_fail_acc),
+            "n_cells": len(hi_fail_acc),
+            "scope": "failing ioi/hi, capitals/hi and ioi/hi_roman cells in results/gate_coverage.json",
+        },
+        "noising_mean_rho": summary.get("noising_mean_rho", mean(noising)),
         "summary": summary,
     }
 

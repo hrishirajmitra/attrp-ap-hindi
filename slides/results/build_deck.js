@@ -179,7 +179,7 @@ async function main() {
   pres.addSection({ title: "Close" });
   slide9(pres, C);
 
-  // Backup for Q&amp;A
+  // Backup for Q&A
   pres.addSection({ title: "Backup" });
   backup1(pres, C);
   backup2(pres, C);
@@ -264,7 +264,7 @@ function slide1(pres, C) {
 
 function slide2(pres, C) {
   const s = pres.addSlide({ masterName: "CONTENT", sectionTitle: "Opening" });
-  s.addText("Activation patching is exact — and about 49× slower", {
+  s.addText(`Activation patching is exact — and about ${fmt(DATA.cost.ap_over_attrp, 0)}× slower`, {
     placeholder: "title",
   });
 
@@ -341,7 +341,7 @@ function slide2(pres, C) {
     [
       { text: `~${fmt(DATA.cost.ap_over_attrp, 0)}×  `, options: { bold: true, fontSize: 28, color: COL.saffron } },
       {
-        text: "wall-time of activation vs attribution patching on our grid. Question: when do they agree?",
+        text: "wall-time of AP vs AttrP on our grid. When do they agree?",
         options: { fontSize: 15, color: COL.white },
       },
     ],
@@ -352,7 +352,7 @@ function slide2(pres, C) {
     notes([
       "Point to the left card first: activation patching literally copies a component's activation from a clean run into a corrupted run. Exact, slow.",
       "Right card: attribution patching is a Taylor approximation — one backward pass, all components at once.",
-      "The ~49× is measured wall time on our Ada 2080 Ti grid, mean over core cells — not a theoretical FLOP count. Say that if asked.",
+      `The ~${fmt(DATA.cost.ap_over_attrp, 0)}× is measured wall time on our Ada 2080 Ti grid — the median per-run AP/AttrP time ratio over the ${DATA.cost.n_runs_timed} core denoising runs (the mean times on the cards, ~${fmt(DATA.cost.mean_t_ap, 0)} s vs ~${fmt(DATA.cost.mean_t_attr, 1)} s, give the same ~${fmt(DATA.cost.ap_over_attrp_ratio_of_means, 0)}×). Not a theoretical FLOP count. Say that if asked.`,
       "End on the question in the banner. Transition: here is what we actually ran.",
       "Q: Why not just always use activation patching? A: At 1.5B+ parameters and many cells, it is the bottleneck. The cheap method is what people ship.",
     ])
@@ -435,16 +435,22 @@ function slide3(pres, C) {
     }
   });
 
+  s.addShape(pres.shapes.RECTANGLE, {
+    x: 0.5,
+    y: 4.05,
+    w: 9.0,
+    h: 0.7,
+    fill: { color: COL.light },
+  });
   s.addText(
     "Rule: if the model cannot do the task (clean accuracy < 0.80, clean logit-diff < 0.5), we do not localise it.",
     {
-      x: 0.5,
+      x: 0.75,
       y: 4.05,
-      w: 9.0,
+      w: 8.5,
       h: 0.7,
       fontSize: 14,
       color: COL.ink,
-      fill: { color: COL.light },
       margin: 0,
       valign: "middle",
       isTextBox: true,
@@ -454,8 +460,8 @@ function slide3(pres, C) {
   s.addNotes(
     notes([
       "Walk the four boxes left to right. Emphasise the gate: we refuse to localise behaviour the model does not have.",
-      "Gemma-3 was in the proposal; TransformerLens 2.15 cannot load it on our Ada torch build, so BLOOM replaced it — logged before any patching result.",
-      "440 runs, zero failures. About four hours of wall time across irel and research accounts.",
+      "Gemma-3 was in the proposal; TransformerLens 2.15 cannot load it on our Ada torch build, so BLOOM replaced it — logged in Amendment 2, before any grid result.",
+      `${DATA.meta.n_runs} runs, zero failures. About four hours of wall time across irel and research accounts.`,
       "Transition: the gate itself is the first finding — especially for Hindi.",
       "Q: Why five seeds? A: They resample prompts, not weights. CIs reflect prompt sampling.",
     ])
@@ -578,7 +584,7 @@ function slide4(pres, C) {
 
   s.addNotes(
     notes([
-      "This grid is the Hindi headline. Point to the right half: Hindi IOI, capitals, and romanised IOI are red everywhere — models cannot do the task (accuracy 0.27–0.64).",
+      `This grid is the Hindi headline. Point to the right half: Hindi IOI and romanised IOI are red in all six models gated on Hindi; Hindi capitals is red except one first-token pass (Llama, the orange half-circle). In the ${DATA.hindi_fail_acc.n_cells} red cells of those three columns clean accuracy is ${fmt(DATA.hindi_fail_acc.min, 2)}–${fmt(DATA.hindi_fail_acc.max, 2)} — the models cannot do the task.`,
       "Green Hindi cells: agreement on BLOOM (three sizes) and induction on BLOOM/Llama. That is the entire Hindi evidence for AttrP≈AP.",
       "Grey cells are English-only models we never gated on Hindi.",
       "Native-speaker review of Hindi templates: one place-word fix; re-gate unchanged. So this is mostly model competence, not broken templates.",
@@ -607,6 +613,11 @@ function slide5(pres, C) {
   const shortTask = { agreement: "agr", capitals: "cap", ioi: "ioi", induction: "ind" };
   const labels = bars.map((b) => `${shortModel(b.model)} ${shortTask[b.task] || b.task}/${b.lang}`);
   const values = bars.map((b) => Math.round(b.rho * 1000) / 1000);
+  const H1_THRESHOLD = DATA.h1.threshold; // preregistered 0.90
+  // One colour per bar: pptxgenjs colours a single-series bar chart per point when chartColors
+  // has more than one entry. Fail red for seed-mean rho below the threshold, teal otherwise.
+  const barColors = bars.map((b) => (b.rho < H1_THRESHOLD ? COL.fail : COL.teal));
+  const nMiss = barColors.filter((c) => c === COL.fail).length;
 
   s.addChart(
     pres.charts.BAR,
@@ -615,22 +626,36 @@ function slide5(pres, C) {
       x: 0.4,
       y: 1.0,
       w: 7.0,
-      h: 3.9,
+      h: 3.65,
       barGrouping: "clustered",
-      chartColors: [COL.teal],
+      chartColors: barColors,
       showValue: false,
       showLegend: false,
       catAxisLabelColor: COL.muted,
       catAxisLabelFontSize: 8,
       catAxisLabelFontFace: "+mn-lt",
-      valAxisMinValue: 0.8,
-      valAxisMaxValue: 1.0,
+      valAxisMinVal: 0.8,
+      valAxisMaxVal: 1.0,
+      valAxisMajorUnit: 0.05,
+      valAxisLabelFormatCode: "0.00",
       valAxisLabelColor: COL.muted,
       valAxisLabelFontSize: 10,
       valAxisLabelFontFace: "+mn-lt",
       valGridLine: { color: "D0D5D8", size: 0.5 },
       catGridLine: { style: "none" },
     }
+  );
+
+  // Legend-style caption for the bar colours (the 0.90 gridline is the threshold)
+  s.addText(
+    [
+      { text: "■ ", options: { color: COL.teal } },
+      { text: `ρ ≥ ${fmt(H1_THRESHOLD, 2)} (${bars.length - nMiss} cells)     `, options: { color: COL.ink } },
+      { text: "■ ", options: { color: COL.fail } },
+      { text: `red = below the preregistered ${fmt(H1_THRESHOLD, 2)} (${nMiss} cells)     `, options: { color: COL.ink } },
+      { text: "axis starts at 0.80", options: { color: COL.muted } },
+    ],
+    { x: 0.6, y: 4.72, w: 6.8, h: 0.28, fontSize: 11, margin: 0, valign: "middle", isTextBox: true }
   );
 
   // Threshold callout
@@ -683,14 +708,14 @@ function slide5(pres, C) {
       "22 of 24 strict-tier core cells pass. The two misses are Qwen English agreement — still high, just under the bar.",
       "Noising direction is a bit lower (mean ρ ≈ 0.93) but the same story.",
       "Transition: among the cells that pass the Hindi gate, is AttrP worse in Hindi?",
-      "Q: Is 0.90 magic? A: Preregistered. Restricted ρ on |AP|&gt;0.05 heads is usually even higher.",
+      "Q: Is 0.90 magic? A: No, but it was fixed in the preregistration. The two misses are 0.86 and 0.88; the other 22 cells are 0.91–0.995. Do not lean on the restricted ρ (heads with |AP|>0.05): only a handful of heads pass that cut-off (median 4 per run), and it is higher than the plain ρ in just 11 of the 22 cells where it is defined.",
     ])
   );
 }
 
 function slide6(pres, C) {
   const s = pres.addSlide({ masterName: "CONTENT", sectionTitle: "Findings" });
-  s.addText("Finding 3: Hindi matches English where it can be tested", {
+  s.addText("Finding 3: where testable, Hindi matches English", {
     placeholder: "title",
   });
 
@@ -723,14 +748,21 @@ function slide6(pres, C) {
       catAxisLabelColor: COL.ink,
       catAxisLabelFontSize: 12,
       catAxisLabelFontFace: "+mn-lt",
-      valAxisMinValue: 0.9,
-      valAxisMaxValue: 1.0,
+      valAxisMinVal: 0.8,
+      valAxisMaxVal: 1.0,
+      valAxisMajorUnit: 0.05,
+      valAxisLabelFormatCode: "0.00",
       valAxisLabelColor: COL.muted,
       valAxisLabelFontSize: 11,
       valAxisLabelFontFace: "+mn-lt",
       valGridLine: { color: "D0D5D8", size: 0.5 },
       catGridLine: { style: "none" },
-      showValue: false,
+      showValue: true,
+      dataLabelFormatCode: "0.00",
+      dataLabelPosition: "outEnd",
+      dataLabelFontSize: 11,
+      dataLabelFontFace: "+mn-lt",
+      dataLabelColor: COL.ink,
     }
   );
 
@@ -780,8 +812,8 @@ function slide6(pres, C) {
 
   s.addNotes(
     notes([
-      "Only place we can pair English and Hindi on the same model and task with a strict gate: BLOOM agreement, three sizes.",
-      "Bars are almost the same. TOST equivalence within ±0.05 — preregistered margin. Pooled difference +0.009.",
+      "Only core task where we can pair English and Hindi on the same model with a strict gate: BLOOM agreement, three sizes. (Induction also pairs, on BLOOM and Llama, but it is appendix-only by the preregistration; Hindi is within 0.02 of English there too.)",
+      `Bars are almost the same; the axis starts at 0.80. Equivalence test (TOST, preregistered margin ±0.05): pooled Hindi−English difference +${fmt(DATA.h3.pooled_mean_diff, 3)}, 90% CI [${fmt(DATA.summary.H3.ci90[0], 3)}, +${fmt(DATA.summary.H3.ci90[1], 3)}], 95% CI [${fmt(DATA.h3.ci95[0], 3)}, +${fmt(DATA.h3.ci95[1], 3)}] — both inside the margin, so the verdict is equivalent.`,
       "Say the caveat out loud: three pairs, one family. We do not claim this for Hindi IOI — those cells never gated.",
       "Transition: heads look good. What about MLPs?",
       "Q: Is BLOOM special? A: It is the only family with usable Hindi agreement. That is a limit, not a virtue.",
@@ -812,15 +844,20 @@ function slide7(pres, C) {
       legendFontSize: 12,
       lineDataSymbol: "circle",
       lineDataSymbolSize: 8,
+      showCatAxisTitle: true,
       catAxisTitle: "MLP layer",
       catAxisTitleColor: COL.muted,
       catAxisTitleFontSize: 11,
+      catAxisTitleFontFace: "+mn-lt",
       catAxisLabelColor: COL.ink,
       catAxisLabelFontSize: 11,
       catAxisLabelFontFace: "+mn-lt",
+      showValAxisTitle: true,
       valAxisTitle: "Effect on logit difference",
       valAxisTitleColor: COL.muted,
       valAxisTitleFontSize: 11,
+      valAxisTitleFontFace: "+mn-lt",
+      valAxisTitleRotate: -90,
       valAxisLabelColor: COL.muted,
       valAxisLabelFontSize: 11,
       valAxisLabelFontFace: "+mn-lt",
@@ -867,7 +904,7 @@ function slide7(pres, C) {
       "H2 said MLP AttrP would anti-correlate in most cells. Rejected: only 2 of 24 core cells. The famous GPT-2 IOI failure is real — and it is almost entirely MLP 0.",
       "Walk the chart: teal and saffron overlap from layer 1 onward; only layer 0 flips sign.",
       "Same layer-0 pattern in Qwen-0.5B and both Pythias on IOI. Labelled post hoc — we looked after seeing H2 fail.",
-      "BLOOM IOI MLPs actually agree (ρ ≈ +1). So this is circuit-specific, not universal.",
+      `BLOOM IOI MLPs actually agree: Pearson r(AP, AttrP) ≈ +${fmt(Math.min(...Object.values(DATA.bloom_ioi_mlp_r)), 3)} or higher in all three sizes. So this is circuit-specific, not universal.`,
       "Transition: can integrated gradients fix layer 0 without breaking heads?",
       "Q: Why MLP 0? A: Early nonlinearities; the linear AttrP approximation is worst there. We did not claim a mechanism beyond that.",
     ])
@@ -876,11 +913,15 @@ function slide7(pres, C) {
 
 function slide8(pres, C) {
   const s = pres.addSlide({ masterName: "CONTENT", sectionTitle: "Findings" });
-  s.addText("Finding 5: integrated gradients trades one error for another", {
+  s.addText("Finding 5: EAP-IG swaps one error for another", {
     placeholder: "title",
   });
 
   const g = DATA.eap_examples.gpt2_ioi;
+  // EAP-IG step sweep (seed 0, core denoising cells): grid means per step count, from summary.json
+  const sweep = DATA.h5.step_sweep_seed0;
+  const SWEEP_RHO = ["5", "10", "20"].map((k) => fmt(sweep[k].mean_head_rho, 2)).join(" / ");
+  const SWEEP_MLP = ["5", "10", "20"].map((k) => fmt(sweep[k].mean_mlp_r, 2)).join(" / ");
 
   // Two comparison cards
   const cards = [
@@ -955,11 +996,11 @@ function slide8(pres, C) {
   s.addText(
     [
       {
-        text: `Cost: EAP-IG is ~${fmt(DATA.cost.eap_over_attrp, 1)}× AttrP. `,
+        text: `Cost: EAP-IG (5 steps) is ~${fmt(DATA.cost.eap_over_attrp, 1)}× AttrP. `,
         options: { bold: true, color: COL.saffron },
       },
       {
-        text: "Across the grid, mean head ρ drops by 0.36; MLP gain is ≈ 0 (CI crosses zero). Not a free upgrade. 5/10/20 steps agree — not a convergence issue.",
+        text: `Across the grid, mean head ρ drops by ${fmt(-DATA.h5.head_rho_gain_mean, 2)}; MLP gain is ≈ 0 (CI crosses zero). Not a free upgrade. More steps do not help: mean head ρ is ${SWEEP_RHO} at 5 / 10 / 20 steps (seed 0).`,
         options: { color: COL.white },
       },
     ],
@@ -970,9 +1011,10 @@ function slide8(pres, C) {
     notes([
       "H5 asked whether EAP-IG repairs MLP agreement. Preregistered verdict: no (mean MLP gain CI crosses zero).",
       "Exploratory look at GPT-2 IOI: EAP-IG does fix MLP 0 (−0.93 → +0.95) but head ρ collapses 0.99 → 0.40. That trade is the point of this slide.",
-      "Alpha=0 of EAP-IG equals AttrP exactly — we checked. So the head drop is real, not a bug.",
+      "Sanity check on the code: with a single gradient evaluation at α=0 (the corrupted-input end of the path for denoising, the clean end for noising) EAP-IG reduces to AttrP. scripts/test_eap_equiv.py asserts this to 1e-5 on GPT-2 (IOI and agreement, both directions). So the head drop comes from integrating along the path, not from a different code path.",
+      `Cost: ~${fmt(DATA.cost.eap_over_attrp, 1)}× is the median per-run EAP-IG/AttrP wall-time ratio over the ${DATA.cost.n_runs_timed} core denoising runs, at 5 steps.`,
       "Practitioner takeaway coming next: use AttrP for heads; pay for AP on early MLPs when it matters.",
-      "Q: More IG steps? A: 5, 10, 20 give the same numbers. Not under-integration.",
+      `Q: More IG steps? A: We swept 5, 10 and 20 steps on seed 0 (${sweep["5"].n} core cells). The grid means barely move: head ρ ${SWEEP_RHO}, MLP r ${SWEEP_MLP}. Single cells shift by up to 0.09 in head ρ between step counts, far less than the 0.36 drop, so it is not under-integration. Per-cell MLP r is noisier (shifts up to 0.33).`,
     ])
   );
 }
@@ -982,9 +1024,9 @@ function slide9(pres, C) {
   s.addText("Takeaway: a three-line rule", { placeholder: "title" });
 
   const rules = [
-    { n: "1", t: "Use AttrP for attention heads", d: "ρ ≥ 0.90 in 22/24 core cells; ~49× cheaper than AP." },
+    { n: "1", t: "Use AttrP for attention heads", d: `ρ ≥ 0.90 in 22/24 core cells; ~${fmt(DATA.cost.ap_over_attrp, 0)}× cheaper than AP.` },
     { n: "2", t: "Check early MLPs with real AP", d: "Layer 0 can flip sign under AttrP (IOI-type circuits)." },
-    { n: "3", t: "Gate the task before localising", d: "Hindi IOI/capitals fail every model — nothing to patch." },
+    { n: "3", t: "Gate the task before localising", d: "Hindi IOI fails in all 6 models gated on Hindi, capitals in 5 of 6 — nothing to patch." },
   ];
   rules.forEach((r, i) => {
     const y = 1.2 + i * 0.95;
@@ -1167,7 +1209,7 @@ function backup3(pres, C) {
   const s = pres.addSlide({ masterName: "CONTENT", sectionTitle: "Backup" });
   s.addText("Backup: deviations and H4 (observational)", { placeholder: "title" });
 
-  s.addText("Amendment 2 (before any patching result)", {
+  s.addText("Amendment 2 (gate phase, before any grid result)", {
     x: 0.5,
     y: 1.1,
     w: 4.5,
@@ -1195,6 +1237,7 @@ function backup3(pres, C) {
       color: COL.ink,
       paraSpaceAfter: 6,
       margin: 0,
+      valign: "top",
       isTextBox: true,
     }
   );
@@ -1247,12 +1290,13 @@ function backup3(pres, C) {
       color: COL.ink,
       paraSpaceAfter: 4,
       margin: 0,
+      valign: "top",
       isTextBox: true,
     }
   );
 
   s.addNotes(
-    "Backup for design-change questions and the fertility hypothesis. All Amendment 2 items were decided before any AP/AttrP comparison existed."
+    "Backup for design-change questions and the fertility hypothesis. Amendment 2 was written during the gate phase, before any grid result existed. Do not claim more than that: the gate-rule changes came after the first gate numbers, and the noising sign fix was found by a smoke test that compared AP and AttrP (ρ = −0.92) when no study results existed."
   );
 }
 
@@ -1266,31 +1310,31 @@ Rehearse from the notes pane in PowerPoint, or from this page. Aim ~1 minute per
 Open with the question. One sentence of setup: AP is exact and expensive; AttrP is the cheap shortcut. Preview the answer: heads yes; early MLPs sometimes no; Hindi only where the model can do the task.
 
 ## 2. Trade-off
-Left = causal gold standard. Right = first-order Taylor. ~49× is measured wall time on our grid. End on: when do they agree?
+Left = causal gold standard. Right = first-order Taylor. ~${fmt(DATA.cost.ap_over_attrp, 0)}× is measured wall time on our grid (median per-run ratio; mean ~${fmt(DATA.cost.mean_t_ap, 0)} s vs ~${fmt(DATA.cost.mean_t_attr, 1)} s per run). End on: when do they agree?
 
 ## 3. What we ran
-Four boxes left to right. Emphasise the competence gate. Gemma→BLOOM if asked. 440 runs, 0 failures.
+Four boxes left to right. Emphasise the competence gate: ${DATA.meta.n_gate_cells} cells gated, ${DATA.meta.n_runnable} runnable (${DATA.meta.n_strict} strict + ${DATA.meta.n_first_token} first-token). Gemma→BLOOM if asked. ${DATA.meta.n_runs} runs, 0 failures.
 
 ## 4. Gate / Hindi
-Point at the red Hindi block. Green Hindi = BLOOM agreement (+ induction). Native review: one place-word fix; re-gate unchanged.
+Point at the red Hindi block: Hindi IOI and romanised IOI fail in all 6 models gated on Hindi; capitals fails in 5 of 6 (one first-token pass, Llama). Failing-cell accuracy ${fmt(DATA.hindi_fail_acc.min, 2)}–${fmt(DATA.hindi_fail_acc.max, 2)}. Green Hindi = BLOOM agreement (+ induction on BLOOM/Llama). Native review: one place-word fix; re-gate unchanged.
 
 ## 5. Heads (H1)
-22/24 cells ρ≥0.90. Two Qwen agreement misses. Threshold was preregistered.
+22/24 core cells ρ≥0.90 (teal bars). Two Qwen English-agreement misses, 0.86 and 0.88 (red bars). Threshold was preregistered. Noising mean ρ ${fmt(DATA.noising_mean_rho, 2)}.
 
 ## 6. Hindi = English (H3)
-Three BLOOM pairs. Equivalent within ±0.05. Say the caveat out loud.
+Three BLOOM agreement pairs. Pooled Hindi−English +${fmt(DATA.h3.pooled_mean_diff, 3)}, 95% CI [${fmt(DATA.h3.ci95[0], 3)}, +${fmt(DATA.h3.ci95[1], 3)}]: equivalent within ±0.05. Say the caveat out loud.
 
 ## 7. MLP layer 0 (H2 exploratory)
-Chart: only layer 0 disagrees. Same pattern Qwen-0.5B / Pythia IOI. BLOOM IOI MLPs agree — circuit-specific.
+Chart: only layer 0 disagrees (AP +${fmt(DATA.mlp_layers.gpt2_ioi.ap[0], 2)} vs AttrP ${fmt(DATA.mlp_layers.gpt2_ioi.attr[0], 2).replace("-", "−")}; layers 1–11 within 0.01). MLP r < 0 in only 2/24 core cells (H2 rejected). Same pattern Qwen-0.5B / Pythia IOI. BLOOM IOI MLPs agree (Pearson r ≈ +${fmt(Math.min(...Object.values(DATA.bloom_ioi_mlp_r)), 3)}) — circuit-specific.
 
 ## 8. EAP-IG (H5)
-Fixes MLP 0, breaks head ranking. ~3.4× AttrP. Not under-integration (5/10/20 agree).
+GPT-2 IOI: fixes MLP 0 (r ${fmt(DATA.eap_examples.gpt2_ioi.mlp_r, 2).replace("-", "−")} → +${fmt(DATA.eap_examples.gpt2_ioi.eap_mlp_r, 2)}), breaks head ranking (ρ ${fmt(DATA.eap_examples.gpt2_ioi.rho, 2)} → ${fmt(DATA.eap_examples.gpt2_ioi.eap_rho, 2)}). Grid: mean head ρ drops ${fmt(-DATA.h5.head_rho_gain_mean, 2)}; cost ~${fmt(DATA.cost.eap_over_attrp, 1)}× AttrP (5 steps). Not under-integration: mean head ρ ${["5", "10", "20"].map((k) => fmt(DATA.h5.step_sweep_seed0[k].mean_head_rho, 2)).join(" / ")} at 5 / 10 / 20 steps (seed 0).
 
 ## 9. Takeaway
 Three rules. One breath of limits. Questions.
 
 ## Backup
-Gate table · noising mean ρ · Amendment 2 + H4 observational.
+Gate table · noising mean ρ ${fmt(DATA.noising_mean_rho, 2)} · Amendment 2 (gate phase, before any grid result) + H4 observational (Spearman ${fmt(DATA.h4.rho_vs_tokens_per_word.rho, 2).replace("-", "−")} with tokens/word, +${fmt(DATA.h4.rho_vs_clean_ld.rho, 2)} with clean LD).
 `;
   fs.writeFileSync(path.join(ROOT, "speaker_notes.md"), md);
 }

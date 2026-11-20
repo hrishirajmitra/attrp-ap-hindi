@@ -73,7 +73,7 @@ python scripts/exploratory_rank.py results       # post-hoc restricted-rank anal
 
 # Extension (v2): Hindi, more tasks, more models
 
-**Protocol:** [PREREGISTRATION_v2.md](PREREGISTRATION_v2.md) (Amendments 1-2 record every deviation, all made before any AP/AttrP/EAP-IG comparison existed). Formal proposal: [proposal/proposal.pdf](proposal/proposal.pdf). Full analysis: [results/analysis/ANALYSIS.md](results/analysis/ANALYSIS.md); raw per-run table: `results/analysis/cells.csv`; every run: `results/grid/<model>__<task>__<lang>__<direction>__seed<k>/`.
+**Protocol:** [PREREGISTRATION_v2.md](PREREGISTRATION_v2.md) (Amendments 1-2 record every deviation; Amendment 1 predates any gate or grid result, Amendment 2 was made during the gate phase, before any grid result existed). Formal proposal: [proposal/proposal.pdf](proposal/proposal.pdf). Full analysis: [results/analysis/ANALYSIS.md](results/analysis/ANALYSIS.md); raw per-run table: `results/analysis/cells.csv`; every run: `results/grid/<model>__<task>__<lang>__<direction>__seed<k>/`.
 
 ## What was run
 
@@ -85,7 +85,7 @@ python scripts/exploratory_rank.py results       # post-hoc restricted-rank anal
 
 ## Results (seed means over 5 seeds; "core" = strict-gate cells, excluding Pythia and induction)
 
-**Gate coverage (a result in itself).** 43 of 66 cells pass the strict gate, 1 passes only as a first-token contrast, 22 fail. **English passes almost everywhere. Hindi passes in only two settings: agreement on BLOOM (3 sizes) and induction on BLOOM/Llama.** Hindi IOI, Hindi capitals and romanised-Hindi IOI fail the competence gate in every model (accuracy 0.27-0.64, i.e. the models cannot do the task, so there is nothing to localise). Qwen2.5 and Llama cannot form a single-token Hindi agreement contrast at all (byte-level BPE: the first token of a correct and an incorrect verb form coincide).
+**Gate coverage (a result in itself).** 43 of 66 cells pass the strict gate, 1 passes only as a first-token contrast, 22 fail. **English passes almost everywhere. Hindi passes in only two settings: agreement on BLOOM (3 sizes) and induction on BLOOM/Llama.** Hindi IOI and romanised-Hindi IOI fail the competence gate in every model, and Hindi capitals in five of the six (Llama-3.2-1B passes it only as a first-token contrast); the failing cells have accuracy 0.27-0.64, i.e. the models cannot do the task, so there is nothing to localise. Qwen2.5 and Llama cannot form a single-token Hindi agreement contrast at all (byte-level BPE: the first token of a correct and an incorrect verb form coincide).
 
 | Hypothesis | Verdict | Evidence |
 |---|---|---|
@@ -93,13 +93,13 @@ python scripts/exploratory_rank.py results       # post-hoc restricted-rank anal
 | **H2**: MLP outputs anti-correlate (r < 0) in most cells | **Rejected** (2 / 24 cells) | The v1 GPT-2 IOI failure (r = -0.93) reproduces, and also appears in Qwen2.5-0.5B IOI (-0.87) and in Pythia IOI/induction, but in most cells MLP r is strongly positive (BLOOM: 0.89-0.998). The MLP failure is circuit-specific (IOI-type name-mover MLP structure), not general. |
 | **H3**: AttrP is worse in Hindi than English | **Not supported; equivalent within +/-0.05** | Hindi-minus-English rho on agreement, BLOOM 560m/1b1/1b7: -0.008, -0.007, +0.041; pooled +0.009, 95% CI [-0.017, +0.040]. **Scope: one task, one model family, 3 pairs.** |
 | **H4**: rho falls with tokenizer fertility, rises with clean logit difference | Supported, **but observational** | Across the 24 core cells, Spearman(rho, tokens/word) = -0.51 [-0.73, -0.15]; Spearman(rho, clean LD) = +0.45 [0.07, 0.72]. Fertility and model/task are entangled (no Hindi cells with high fertility passed the gate), so this does not establish a causal effect of Hindi. |
-| **H5**: EAP-IG repairs MLP agreement and is worth its cost | **Rejected** (preregistered pooled test) | Mean MLP-r gain over AttrP −0.05 (95% CI [−0.21, +0.10]); mean head ρ *drops* by 0.36 (CI [−0.39, −0.32]); cost ~3.4× AttrP. Convergence is not the issue (5/10/20 steps agree; EAP at α=0 equals AttrP). **Exploratory (not in H5):** on GPT-2 IOI specifically, EAP-IG *does* fix the MLP-0 failure (mlp r −0.93 → +0.95) while collapsing head ρ (0.99 → 0.40) — it trades one error for another, so it is still not a free upgrade. |
+| **H5**: EAP-IG repairs MLP agreement and is worth its cost | **Rejected** (preregistered pooled test) | Mean MLP-r gain over AttrP −0.05 (95% CI [−0.21, +0.10]); mean head ρ *drops* by 0.36 (CI [−0.39, −0.32]); cost ~3.5× AttrP (median per-run wall-time ratio over the 120 core denoising runs, 5 steps). Convergence is not the issue (5/10/20 steps agree; EAP at α=0 equals AttrP). **Exploratory (not in H5):** on GPT-2 IOI specifically, EAP-IG *does* fix the MLP-0 failure (mlp r −0.93 → +0.95) while collapsing head ρ (0.99 → 0.40) — it trades one error for another, so it is still not a free upgrade. |
 
-Other numbers: AP costs ~49x AttrP in wall time; first-token-tier cell Llama-3.2-1B capitals/hi: rho = 0.895, top-14 overlap 0.86 (sensitivity only). Pythia (English appendix) behaves like GPT-2: rho 0.84-0.98, IOI MLP r about -0.85.
+Other numbers: AP costs ~49x AttrP in wall time (median per-run ratio, core denoising runs); first-token-tier cell Llama-3.2-1B capitals/hi: rho = 0.895, top-14 overlap 0.86 (sensitivity only). Pythia (English appendix) behaves like GPT-2: rho 0.84-0.98, IOI MLP r about -0.85.
 
 ## Answer to the question
 
-**Cheap first-order attribution patching reproduces activation patching for head ranking in all but two (Qwen agreement/English) of the 24 core cells and gives the same answer in Hindi as in English wherever a Hindi cell is testable. It fails for MLP outputs in IOI-type circuits (GPT-2, Qwen-0.5B, Pythia), and that failure is concentrated in MLP layer 0 (post hoc). EAP-IG is not a free upgrade: the preregistered pooled test rejects an MLP-agreement gain, and on GPT-2 IOI it fixes layer 0 while breaking head ranking (~3.4× the cost of AttrP).**
+**Cheap first-order attribution patching reproduces activation patching for head ranking in all but two (Qwen agreement/English) of the 24 core cells and gives the same answer in Hindi as in English wherever a Hindi cell is testable. It fails for MLP outputs in IOI-type circuits (GPT-2, Qwen-0.5B, Pythia), and that failure is concentrated in MLP layer 0 (post hoc). EAP-IG is not a free upgrade: the preregistered pooled test rejects an MLP-agreement gain, and on GPT-2 IOI it fixes layer 0 while breaking head ranking (~3.5× the cost of AttrP).**
 
 ## Limits (read before citing)
 

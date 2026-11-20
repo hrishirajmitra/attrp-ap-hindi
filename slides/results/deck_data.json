@@ -12,8 +12,12 @@
     "course": "Mechanistic Interpretability mini-project \u00b7 IIIT Hyderabad"
   },
   "cost": {
-    "ap_over_attrp": 49.10114934535596,
-    "eap_over_attrp": 3.3909214552901363,
+    "ap_over_attrp": 48.70011210711196,
+    "eap_over_attrp": 3.4640429289700085,
+    "ratio_definition": "median over core denoising runs of the per-run wall-time ratio (summary.json H5)",
+    "ap_over_attrp_ratio_of_means": 49.10114934535596,
+    "eap_over_attrp_ratio_of_means": 3.3909214552901363,
+    "n_runs_timed": 120,
     "mean_t_ap": 156.70829772257613,
     "mean_t_attr": 3.191540316507841,
     "mean_t_eap": 10.82226253466991
@@ -1501,7 +1505,18 @@
       "n": 5
     }
   },
-  "noising_mean_rho": 0.9280323523387765,
+  "bloom_ioi_mlp_r": {
+    "bloom-560m": 0.9975492016885787,
+    "bloom-1b1": 0.9965853719493984,
+    "bloom-1b7": 0.9968646352923906
+  },
+  "hindi_fail_acc": {
+    "min": 0.26999998092651367,
+    "max": 0.6399999856948853,
+    "n_cells": 17,
+    "scope": "failing ioi/hi, capitals/hi and ioi/hi_roman cells in results/gate_coverage.json"
+  },
+  "noising_mean_rho": 0.9290379100487379,
   "summary": {
     "n_runs": 440,
     "gate_passed": 43,
