@@ -94,14 +94,16 @@ const BLOOM_MLP = speakable(Math.min(...Object.values(DATA.bloom_ioi_mlp_r)), 3)
 const MISS0 = DATA.h1.bars.filter((b) => !b.pass_h1);
 const MISS_A = speakable(MISS0[0].rho, 2);
 const MISS_B = speakable(MISS0[1].rho, 2);
+const N_ABOVE_95 = DATA.h1.bars.filter((b) => b.rho > 0.95).length;
 
 const SCRIPT = [
   {
     id: 1,
     title: "Title",
     say: [
-      `Activation patching finds which attention heads and MLP layers matter for a behaviour. Exact, and expensive. Attribution patching is the cheap first-order shortcut people use when models get bigger.`,
-      `I measured when the cheap method matches the expensive one, across tasks, models, and English and Hindi. Short answer: for heads, almost always. For MLPs, not always, and the failure is usually one early layer. Hindi only where the model can do the task.`,
+      `If you want to know which parts of a language model are responsible for a behaviour, the standard tool is activation patching. It is a causal test and it is exact, but it is expensive. So in practice people reach for attribution patching, a gradient-based shortcut that is far cheaper.`,
+      `My question is simple: when can the shortcut stand in for the real thing? I am not proposing a new method. I measured how often the cheap method gives the same answer as the expensive one, across four tasks, nine models, and two languages, English and Hindi.`,
+      `Here is where this ends up. For attention heads, the two methods agree almost everywhere. For MLP layers they sometimes disagree, and when they do, it comes from a single early layer. And for Hindi, I could only ask the question where the model can actually do the task, which turned out to be a result in its own right.`,
     ].join("\n\n"),
     ask: [
       `Is this a new method? No. I measure when an existing cheap method matches the expensive one, across languages.`,
@@ -111,91 +113,115 @@ const SCRIPT = [
     id: 2,
     title: "Trade-off",
     say: [
-      `On the left, activation patching: copy one component from a clean run into a corrupted run. Exact, slow. On the right, attribution patching: a Taylor approximation, one forward and one backward, every component ranked at once.`,
-      `On this grid the median wall-time ratio is about ${AP_X}: roughly ${MEAN_AP} seconds against ${MEAN_ATTR} seconds per run on a 2080 Ti. When do they agree?`,
+      `Let me make the two methods concrete. Take a prompt the model gets right, the clean prompt, and a minimally changed version where that answer no longer follows, the corrupted prompt.`,
+      `In activation patching, on the left, I run the corrupted prompt, and I copy in the activation of one component, say one attention head, from the clean run. If the right answer comes back, that head matters. Then I repeat that for every head and every MLP layer, which is why it is slow.`,
+      `Attribution patching, on the right, replaces all of those runs with a first-order approximation. One forward pass and one backward pass, and I get an estimated effect for every component at once.`,
+      `On my grid the difference is about ${AP_X} times. A typical run takes about ${MEAN_AP} seconds with activation patching and about ${MEAN_ATTR} seconds with attribution patching, on the same GPU. A gap that size is why people use the shortcut, so what I want to know is whether its answers can be trusted.`,
     ].join("\n\n"),
     ask: [
       `Why not always use activation patching? At one and a half billion parameters and many cells, it is the bottleneck.`,
-      `The ${AP_X} is median wall time over ${DATA.cost.n_runs_timed} core denoising runs, not a FLOP count.`,
+      `The ${AP_X} is the median per-run wall-time ratio over ${DATA.cost.n_runs_timed} core denoising runs on a 2080 Ti, not a FLOP count.`,
     ],
   },
   {
     id: 3,
     title: "What I ran",
     say: [
-      `Nine models under two billion parameters: GPT-2, Pythia, Qwen, Llama, BLOOM. Four tasks in English and Hindi: indirect object, capitals, agreement, induction. A cell is one model on one task in one language.`,
-      `Before I patch, I gate on competence: clean accuracy at least point eight, and a clear logit difference. Sixty-six cells gated, forty-four runnable. Then ${DATA.meta.n_runs} runs, five seeds, zero failures.`,
+      `Nine models, all under two billion parameters: GPT-2 and two Pythia models, which are English only, then two Qwen models, Llama 3.2, and three sizes of BLOOM, which I also tested in Hindi.`,
+      `Four tasks, each in English and in Hindi. The first is indirect object identification. The prompt is something like: After Mary and John went to the store, John gave a book to. And the answer is Mary. The others are country capitals, subject-verb agreement, and induction, where the model has to continue a repeated pattern.`,
+      `I will call one model on one task in one language a cell. Before patching any cell, I check that the model can actually do the task. This is the competence gate: at least 80 percent accuracy on clean prompts, and a clear gap between the score of the right answer and the wrong one. If a model cannot do the task, there is no behaviour to explain, so I do not patch it.`,
+      `${DATA.meta.n_gate_cells} cells went through the gate and ${DATA.meta.n_runnable} were usable. On those I ran activation patching, attribution patching, and integrated gradients, a third method I will come back to. Each in two patching directions, with five seeds. That is ${DATA.meta.n_runs} runs, and all of them completed. The hypotheses and the thresholds were fixed before the grid was run.`,
     ].join("\n\n"),
     ask: [
-      `Why five seeds? They resample prompts, not weights.`,
-      `Gemma three was in the proposal; tooling could not load it, so BLOOM replaced it before any grid result.`,
+      `Why five seeds? They resample prompts, not weights. The intervals reflect prompt sampling.`,
+      `Of the ${DATA.meta.n_runnable} usable cells, ${DATA.meta.n_strict} pass fully and ${DATA.meta.n_first_token} passes only on the first token of the answer.`,
+      `Gemma 3 was in the proposal; the library could not load it, so BLOOM replaced it before any grid result.`,
     ],
   },
   {
     id: 4,
     title: "Hindi gate",
     say: [
-      `Before I could compare anything, most Hindi tasks dropped out. English is green everywhere. Hindi indirect-object fails in all six models I gated, Devanagari and romanised. Capitals fails in five of six; only Llama gets it, and only on the first token. Failing accuracy is ${FAIL_ACC_LO} to ${FAIL_ACC_HI} percent, so there is nothing to localise.`,
-      `What remains is BLOOM agreement, plus induction on BLOOM and Llama. I reviewed the Hindi templates myself; one place-word fix, re-gate unchanged.`,
+      `The gate produced the first result, and it is about Hindi. Each row is a model, and each column is a task in one language. Green means the model passed, and grey means I did not test it.`,
+      `The left half, English, is green everywhere. The right half is mostly red. None of the six models can do the Hindi indirect-object task, in Devanagari or in romanised Hindi. Hindi capitals fails in five of the six. Llama is the exception, and it passes only on the first token of the answer, which is the orange half circle. In the red cells of those columns, the models pick the right answer between ${FAIL_ACC_LO} and ${FAIL_ACC_HI} percent of the time, so there is no reliable behaviour to trace.`,
+      `What survives in Hindi is subject-verb agreement on the three BLOOM models, and induction on BLOOM and Llama. That is all the Hindi evidence I have for the main question.`,
+      `Could this be my prompts and not the models? I went through the Hindi templates myself and found one error, a place word in the wrong form. I fixed it and ran the gate again, and every Hindi indirect-object cell still fails. So I read this as a limit of these small models, not of the prompts.`,
     ].join("\n\n"),
     ask: [
       `Why so little Hindi? That is the finding. You cannot localise a behaviour the model does not have.`,
+      `Why do Qwen and Llama fail Hindi agreement? The right and wrong verb forms start with the same token, so there is no clean single-token contrast.`,
     ],
   },
   {
     id: 5,
     title: "Heads",
     say: [
-      `Where the gate passes, do the methods agree on heads? Each bar is the Spearman correlation of head rankings. The threshold of ${H1_THR} was preregistered.`,
-      `${H1_PASS} of ${H1_N} cells clear it. The two misses, in red, are Qwen English agreement at ${MISS_A} and ${MISS_B}. Still high, just under the bar. Noising averages about ${NOISE_RHO}. Is attribution worse in Hindi?`,
+      `Now the main question, on the cells that passed. For each cell, both methods give every attention head a score, and I ask whether they put the heads in the same order. The measure is the Spearman rank correlation, where 1 means an identical ranking. Each bar is one cell, averaged over five seeds. Note that the axis starts at 0.80.`,
+      `The main analysis covers ${H1_N} cells; induction and the Pythia models are kept as side checks. Before running anything, I set the bar at ${H1_THR}. ${H1_PASS} of the ${H1_N} cells clear it, and ${N_ABOVE_95} of them are above 0.95. The two that miss, in red, are the two Qwen models on English agreement, at ${MISS_A} and ${MISS_B}, so they are close.`,
+      `The other patching direction averages about ${NOISE_RHO}, with the same picture.`,
+      `So for attention heads, the shortcut gives you essentially the ranking the expensive method would. Three of these bars are Hindi, and they look like the rest. The next slide tests that properly.`,
     ].join("\n\n"),
     ask: [
-      `Is ${H1_THR} magic? No; it was fixed in the preregistration. Do not lean on restricted correlation over large-effect heads: higher than plain correlation in only eleven of twenty-two cells.`,
+      `Is ${H1_THR} magic? No, but it was fixed in the preregistration. Do not lean on the restricted correlation over large-effect heads: only a handful of heads pass that cut-off, and it is higher than the plain correlation in just eleven of the twenty-two cells where it is defined.`,
+      `The other direction is noising: patching the corrupted activation into the clean run.`,
     ],
   },
   {
     id: 6,
     title: "Hindi vs English",
     say: [
-      `The only full-gate English–Hindi pair is BLOOM agreement, three sizes. The bars are almost the same. Equivalence within plus or minus point zero five: pooled difference plus ${H3_DIFF}, ninety-five percent CI from ${H3_LO} to ${H3_HI}.`,
-      `Caveat out loud: three pairs, one family, one task. I do not claim this for Hindi IOI. Heads look fine. What about MLPs?`,
+      `Is the shortcut any worse in Hindi than in English? To compare fairly I need the same model, on the same task, passing the gate in both languages. That leaves subject-verb agreement on the three BLOOM models.`,
+      `The teal bars are English and the orange bars are Hindi. For the two smaller models English is very slightly higher, and for the largest one Hindi is higher. I ran an equivalence test with a margin of 0.05 that I fixed in advance. The pooled Hindi minus English difference is plus ${H3_DIFF}, and the 95 percent interval runs from ${H3_LO} to ${H3_HI}, which is inside the margin. So on this evidence, the two languages are equivalent.`,
+      `I want to be clear about how narrow this is. It is three pairs, from one model family, on one task. It says nothing about Hindi indirect object identification, because no model could do that task.`,
+      `So far this has all been about attention heads. MLP layers are a different story.`,
     ].join("\n\n"),
     ask: [
       `Is BLOOM special? It is the only family with usable Hindi agreement. That is a limit, not a virtue.`,
+      `Induction also pairs English and Hindi, on BLOOM and Llama. It is a side check by the preregistration; Hindi is within 0.02 of English there too.`,
     ],
   },
   {
     id: 7,
     title: "MLP layer 0",
     say: [
-      `I predicted MLP anti-correlation in most cells. Rejected: only two of twenty-four. The GPT-2 IOI failure is real, and it is almost entirely layer zero: activation ${MLP0_AP}, attribution ${MLP0_ATTR}. From layer one onward the lines sit on top of each other.`,
-      `Same pattern in Qwen point five B and both Pythias; that part is exploratory. BLOOM MLPs agree. Can integrated gradients fix layer zero without changing the head ranking?`,
+      `On GPT-2's indirect-object task, attribution patching gives MLP scores that are anti-correlated with the true ones. I predicted that this would happen in most cells. It does not. It happens in only two of the ${H1_N}: GPT-2 and the small Qwen model, both on the indirect-object task.`,
+      `So I looked at where the disagreement comes from. This chart is GPT-2. The horizontal axis is the MLP layer, and the vertical axis is the effect of patching that layer. From layer 1 to layer 11 the two lines sit on top of each other, within 0.01. The whole disagreement is layer 0. Activation patching says layer 0 has a large positive effect, ${MLP0_AP}. Attribution patching says ${MLP0_ATTR}. It gets the sign wrong.`,
+      `I see the same thing in the small Qwen model and in both Pythia models on this task. I only looked at this after my prediction failed, so treat it as exploratory. And it is not universal: on the BLOOM models, the MLP scores agree almost perfectly on the same task.`,
+      `The obvious next question is whether a better approximation fixes it.`,
     ].join("\n\n"),
     ask: [
-      `Why layer zero? Early nonlinearities; the linear approximation is worst there.`,
+      `Why layer zero? Probably early nonlinearities, where the linear approximation is worst. I did not test a mechanism.`,
+      `BLOOM indirect-object MLPs: Pearson r between the two methods is about ${BLOOM_MLP} or higher in all three sizes.`,
     ],
   },
   {
     id: 8,
     title: "Integrated gradients",
     say: [
-      `On GPT-2 IOI, integrated gradients fixes layer zero: MLP agreement goes from ${EAP_MLP_BEFORE} to ${EAP_MLP_AFTER}. But head ranking drops from ${EAP_RHO_BEFORE} to ${EAP_RHO_AFTER}. That trade is the point.`,
-      `Across the grid, mean head correlation drops by ${HEAD_DROP}, and the MLP gain is indistinguishable from zero. Cost about ${EAP_X} times attribution patching. More steps do not help.`,
+      `That better approximation is integrated gradients. Instead of taking a single gradient, it averages the gradient at several points on the path between the corrupted input and the clean one. The version I used is called EAP-IG.`,
+      `On GPT-2 it does repair layer 0. On the left, agreement on MLP layers goes from ${EAP_MLP_BEFORE} to plus ${EAP_MLP_AFTER}. But look at the right. On the same model and task, agreement on attention heads falls from ${EAP_RHO_BEFORE} to ${EAP_RHO_AFTER}. It fixes one thing and loses the other.`,
+      `And that is not just GPT-2. Across all ${H1_N} cells, head agreement drops by ${HEAD_DROP} on average, and the average gain on MLPs is not distinguishable from zero. It also costs about ${EAP_X} times as much as plain attribution patching. I checked whether it simply needed more integration steps. At 5, 10 and 20 steps the average head agreement is ${SWEEP_RHO}, so no.`,
+      `One caution on reading this. Integrated gradients measures something slightly different from patching one component at a time, so lower agreement does not prove it is wrong. But if what you want is the activation patching answer, it is not a substitute.`,
     ].join("\n\n"),
     ask: [
-      `Alpha zero reduces to attribution patching; checked on GPT-2. The head drop is from integrating along the path.`,
-      `Step sweep on seed 0: mean head correlation ${SWEEP_RHO} at five, ten, twenty steps.`,
+      `Is the head drop a bug? With a single gradient at alpha zero, EAP-IG reduces exactly to attribution patching; I checked that on GPT-2. The drop comes from integrating along the path.`,
+      `More steps? The sweep is seed 0 over the ${H1_N} core cells. Single cells move by up to 0.09 in head correlation between step counts, far less than the ${HEAD_DROP} drop.`,
+      `The preregistered question was whether EAP-IG repairs MLP agreement across the grid. The answer is no: the interval on the mean gain crosses zero.`,
     ],
   },
   {
     id: 9,
     title: "Takeaway",
     say: [
-      `Three rules. Use attribution patching for heads: ${H1_PASS} of ${H1_N}, about ${AP_X} times cheaper. Check early MLPs with real activation patching; layer zero can flip sign. Gate the task before you localise.`,
-      `Limits: Hindi evidence is narrow, mostly BLOOM agreement. Gemma was dropped for tooling. Seeds resample prompts. I reviewed the templates myself. Thank you.`,
+      `So what would I do in practice? Three things.`,
+      `First, for attention heads, use attribution patching. It agreed with activation patching in ${H1_PASS} of ${H1_N} cells, and it is about ${AP_X} times cheaper.`,
+      `Second, do not trust it on early MLP layers. Run real activation patching on those, because layer 0 can come out with the wrong sign.`,
+      `Third, check that the model can do the task before you localise anything. In Hindi, that check removed most of what I had planned to study.`,
+      `Now the limits. The Hindi evidence is thin: one task on one model family, plus induction. Gemma was in my original plan and had to be replaced by BLOOM, because the library could not load it. The five seeds resample prompts, not model weights. And the Hindi templates were checked only by me.`,
+      `Thank you. I am happy to take questions.`,
     ].join("\n\n"),
     ask: [
-      `What next? A larger Hindi-capable model with single-token agreement, or hand-hooked Gemma once tooling catches up.`,
+      `What next? A larger Hindi-capable model with a single-token agreement contrast, or a hand-hooked Gemma once the tooling catches up.`,
     ],
   },
   {
@@ -234,9 +260,9 @@ function notesFor(id) {
 
 function writeSpeakerNotesMd() {
   const lines = [
-    `# Speaker notes · results deck (≈10 min live)`,
+    `# Speaker notes · results deck (13 minute talk)`,
     ``,
-    `Spoken text is cut for a ~10 minute live talk. Aim under a minute per main slide; leave "If asked" for questions.`,
+    `The spoken text is sized for a 13 minute talk, about a minute and a half per slide. "If asked" items are for questions, not for the talk.`,
     `Spoken text is filled from the same SCRIPT that builds the deck; numbers come from deck_data.json.`,
     ``,
   ];
