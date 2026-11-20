@@ -9,8 +9,8 @@
 #SBATCH -c 8
 #SBATCH --mem=32G
 #SBATCH -t 06:00:00
-#SBATCH -o /home2/hrishiraj.mitra/mp-attrpatch-logs/%x-%j.out
-#SBATCH -e /home2/hrishiraj.mitra/mp-attrpatch-logs/%x-%j.err
+#SBATCH -o /home2/%u/mp-attrpatch-logs/%x-%j.out
+#SBATCH -e /home2/%u/mp-attrpatch-logs/%x-%j.err
 #
 # After setup_env.sbatch, re-submit with:
 #   NODE=$(cat ~/mp/.compute_node)
@@ -61,9 +61,9 @@ OUT="$HOME/mp/results/full_${CORR}_seed${SEED}"
 rm -f "$OUT/WRITEUP.md"
 
 # Mirror small results to login /share1 if mounted
-if [[ -d /share1/hrishiraj.mitra ]]; then
-  mkdir -p /share1/hrishiraj.mitra/mp-attrpatch/results
-  cp -a "$OUT" /share1/hrishiraj.mitra/mp-attrpatch/results/ || true
+if [[ -d /share1/$USER ]]; then
+  mkdir -p /share1/$USER/mp-attrpatch/results
+  cp -a "$OUT" /share1/$USER/mp-attrpatch/results/ || true
 fi
 
 echo "Full run done → $OUT"

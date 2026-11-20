@@ -7,8 +7,8 @@
 #SBATCH -c 4
 #SBATCH --mem=16G
 #SBATCH -t 00:30:00
-#SBATCH -o /home2/hrishiraj.mitra/mp-attrpatch-logs/%x-%j.out
-#SBATCH -e /home2/hrishiraj.mitra/mp-attrpatch-logs/%x-%j.err
+#SBATCH -o /home2/%u/mp-attrpatch-logs/%x-%j.out
+#SBATCH -e /home2/%u/mp-attrpatch-logs/%x-%j.err
 set -uo pipefail
 source "$HOME/mp/slurm/node_bootstrap.sh" || { echo BOOTSTRAP_FAILED; exit 1; }
 cd "$HOME/mp"

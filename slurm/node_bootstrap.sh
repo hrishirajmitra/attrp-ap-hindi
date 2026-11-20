@@ -27,7 +27,7 @@ if [[ -z "${MP_SCRATCH:-}" ]]; then
   if (( _best < 20 )); then
     echo "[node_bootstrap $(hostname)] ERROR: no local disk with >=20GB free (best=${_best}G)"; return 1
   fi
-  MP_SCRATCH="$_bestdir/hrishiraj.mitra"
+  MP_SCRATCH="$_bestdir/$USER"
 fi
 MP_REQ="${MP_REQ:-$HOME/mp/requirements.txt}"
 MP_WHEELHOUSE="${MP_WHEELHOUSE:-$HOME/wheelhouse}"

@@ -9,8 +9,8 @@
 #SBATCH -c 8
 #SBATCH --mem=32G
 #SBATCH -t 08:00:00
-#SBATCH -o /home2/hrishiraj.mitra/mp-attrpatch-logs/%x-%A_%a.out
-#SBATCH -e /home2/hrishiraj.mitra/mp-attrpatch-logs/%x-%A_%a.err
+#SBATCH -o /home2/%u/mp-attrpatch-logs/%x-%A_%a.out
+#SBATCH -e /home2/%u/mp-attrpatch-logs/%x-%A_%a.err
 #SBATCH --array=0-0
 #
 # After gate:

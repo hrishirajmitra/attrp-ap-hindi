@@ -4,6 +4,7 @@ __pycache__/
 venv/
 *.pt
 *.npz
+!results/**/scores.npz
 *.aux
 *.log
 *.out
@@ -23,3 +24,10 @@ queue/
 slides/results/node_modules/
 slides/results/slide-*.jpg
 slides/results/talk_narration.mp3
+*.bbl
+*.blg
+*.fls
+*.fdb_latexmk
+*.xdv
+report/build.log
+report/report.pdf

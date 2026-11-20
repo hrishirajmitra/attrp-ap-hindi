@@ -8,7 +8,7 @@ set -uo pipefail
 
 : "${VENV:?source slurm/node_bootstrap.sh first}"
 : "${HF_HOME:?source slurm/node_bootstrap.sh first}"
-SCRATCH="${MP_SCRATCH:-/ssd_scratch/hrishiraj.mitra}"
+SCRATCH="${MP_SCRATCH:-/ssd_scratch/$USER}"
 mkdir -p "$HF_HOME"
 
 exec 8>"$SCRATCH/.prefetch.lock"

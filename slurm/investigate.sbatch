@@ -11,8 +11,8 @@
 #SBATCH -c 8
 #SBATCH --mem=48G
 #SBATCH -t 01:00:00
-#SBATCH -o /home2/hrishiraj.mitra/mp-attrpatch-logs/%x-%j.out
-#SBATCH -e /home2/hrishiraj.mitra/mp-attrpatch-logs/%x-%j.err
+#SBATCH -o /home2/%u/mp-attrpatch-logs/%x-%j.out
+#SBATCH -e /home2/%u/mp-attrpatch-logs/%x-%j.err
 set -uo pipefail
 echo "JOB $SLURM_JOB_ID host=$(hostname) account=${SLURM_JOB_ACCOUNT:-?}"; nvidia-smi -L
 # shellcheck disable=SC1091

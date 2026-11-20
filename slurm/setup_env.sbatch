@@ -9,8 +9,8 @@
 #SBATCH -c 4
 #SBATCH --mem=16G
 #SBATCH -t 02:00:00
-#SBATCH -o /home2/hrishiraj.mitra/mp-attrpatch-logs/%x-%j.out
-#SBATCH -e /home2/hrishiraj.mitra/mp-attrpatch-logs/%x-%j.err
+#SBATCH -o /home2/%u/mp-attrpatch-logs/%x-%j.out
+#SBATCH -e /home2/%u/mp-attrpatch-logs/%x-%j.err
 
 set -euo pipefail
 mkdir -p "$HOME/mp-attrpatch-logs" "$HOME/mp/results"

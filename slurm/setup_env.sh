@@ -3,7 +3,7 @@
 # /share1 is login-only. Use /ssd_scratch (node-local) for venv + HF cache.
 set -euo pipefail
 
-SHARE_LOGIN="${SHARE_LOGIN:-/share1/hrishiraj.mitra}"
+SHARE_LOGIN="${SHARE_LOGIN:-/share1/$USER}"
 HOME_MP="${HOME_MP:-$HOME/mp}"
 SCRATCH_BASE="${SCRATCH_BASE:-/ssd_scratch/$USER}"
 VENV="${VENV:-$SCRATCH_BASE/venvs/mp-attrpatch}"

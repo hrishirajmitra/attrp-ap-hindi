@@ -9,8 +9,8 @@
 #SBATCH -c 8
 #SBATCH --mem=32G
 #SBATCH -t 04:00:00
-#SBATCH -o /home2/hrishiraj.mitra/mp-attrpatch-logs/%x-%j.out
-#SBATCH -e /home2/hrishiraj.mitra/mp-attrpatch-logs/%x-%j.err
+#SBATCH -o /home2/%u/mp-attrpatch-logs/%x-%j.out
+#SBATCH -e /home2/%u/mp-attrpatch-logs/%x-%j.err
 #
 # NODE=$(cat ~/mp/.compute_node)
 # sbatch --nodelist=$NODE ~/mp/slurm/run_gate.sbatch

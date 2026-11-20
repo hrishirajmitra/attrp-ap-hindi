@@ -10,8 +10,8 @@
 #SBATCH -c 8
 #SBATCH --mem=30G
 #SBATCH -t 08:00:00
-#SBATCH -o /home2/hrishiraj.mitra/mp-attrpatch-logs/%x-%A_%a.out
-#SBATCH -e /home2/hrishiraj.mitra/mp-attrpatch-logs/%x-%A_%a.err
+#SBATCH -o /home2/%u/mp-attrpatch-logs/%x-%A_%a.out
+#SBATCH -e /home2/%u/mp-attrpatch-logs/%x-%A_%a.err
 set -uo pipefail
 echo "JOB $SLURM_JOB_ID/${SLURM_ARRAY_TASK_ID:-0} host=$(hostname) acct=${SLURM_JOB_ACCOUNT:-?}"
 source "$HOME/mp/slurm/node_bootstrap.sh" || { echo BOOTSTRAP_FAILED; exit 1; }

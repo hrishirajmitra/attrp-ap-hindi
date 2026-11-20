@@ -1,80 +1,85 @@
-# Attribution Patching vs Activation Patching — multi-cell extension
+# When does attribution patching agree with activation patching?
 
-Mini-project **A**, extended: same question (does AttrP reproduce AP, and where does it fail?) across **English/Hindi**, **four tasks**, and **≤2B models**, with a competence gate matching tasks to models.
+Mini-project for CL3.412 *Mechanistic Interpretability of Language Models* (IIIT Hyderabad), Hrishiraj Mitra (2023111037).
 
-- v1 (done): GPT-2 small × IOI — [WRITEUP.md](WRITEUP.md), [PREREGISTRATION.md](PREREGISTRATION.md)
-- v2 (grid): [PREREGISTRATION_v2.md](PREREGISTRATION_v2.md)
+**Question.** Activation patching (AP) is the standard causal test for which heads and MLPs a model uses, but it costs one forward pass per component. Attribution patching (AttrP) replaces those passes with one gradient. Where does it rank components the way AP does, and where does it break, once the task, the language (English / Hindi) and the model change?
 
-## Layout
+**Short answer** (440 runs; 9 models of at most 2B parameters; 4 tasks; both patching directions; 5 prompt seeds):
+
+- A competence gate runs first. Of 66 (model, task, language) cells, 43 pass strictly and 22 fail. Every Hindi IOI cell fails: the models cannot do the task.
+- Where the comparison can be run, AttrP reproduces the AP **head** ranking in 22 of 24 core cells (Spearman rho >= 0.90), at about 1/49 of the cost.
+- On the one task where Hindi can be tested well (agreement, BLOOM family), Hindi agrees as well as English, within +/-0.05. One task, one family, three pairs.
+- AttrP fails on **MLP** outputs of IOI-type circuits, concentrated in MLP layer 0.
+- Node-level integrated gradients (EAP-IG) repairs layer 0 on GPT-2 IOI but lowers head agreement by 0.36 on average, at about 3.5x the cost of AttrP. Not a free upgrade.
+
+![Head agreement per core cell](report/generated/fig_rho_cells.png)
+
+## Where to look
+
+| What | Where |
+|---|---|
+| Final report | [report.pdf](report.pdf) (source: [report/report.tex](report/report.tex)) |
+| Talk slides, speaker notes | [slides/results/results_deck.pdf](slides/results/results_deck.pdf), [.pptx](slides/results/results_deck.pptx), [speaker_notes.md](slides/results/speaker_notes.md) |
+| Protocol, fixed before the grid | [PREREGISTRATION_v2.md](PREREGISTRATION_v2.md) (with amendments), pilot: [PREREGISTRATION.md](PREREGISTRATION.md) |
+| Working write-up (pilot + extension) | [WRITEUP.md](WRITEUP.md) |
+| Full analysis tables | [results/analysis/ANALYSIS.md](results/analysis/ANALYSIS.md), `results/analysis/cells.csv` |
+| Gate coverage | [results/gate_coverage.md](results/gate_coverage.md) |
+| Every run | `results/grid/<model>__<task>__<lang>__<direction>__seed<k>/` (scores, comparison, metadata) |
+| Hindi template review | [data/NATIVE_REVIEW.md](data/NATIVE_REVIEW.md) |
+| Proposal | [proposal/proposal.pdf](proposal/proposal.pdf) |
+| Literature | [literature/PAPERS.md](literature/PAPERS.md), [literature/references.bib](literature/references.bib) |
+
+## Repository layout
 
 ```
-mp/
-├── PREREGISTRATION.md          # v1 locked protocol
-├── PREREGISTRATION_v2.md       # multi-cell protocol + H1–H4
-├── src/
-│   ├── batch.py                # TaskBatch
-│   ├── data.py                 # factory
-│   ├── data_ioi.py / data_capitals.py / data_agreement.py / data_induction.py
-│   ├── activation_patch.py     # AP (+ denoising/noising)
-│   ├── attribution_patch.py    # AttrP
-│   ├── eap_ig.py               # EAP-IG (+ step sweep)
-│   ├── compare.py              # rho, restricted rho, top-k overlap
-│   ├── registry.py             # models, tasks, gate thresholds
-│   └── tokenize.py
-├── scripts/
-│   ├── tokenizer_audit.py
-│   ├── gate.py                 # competence gate → coverage table
-│   ├── make_cell_list.py       # expand gated cells → array jobs
-│   ├── run_all.py              # --model --task --lang --direction
-│   ├── aggregate_seeds.py      # v1 + grid + H3 paired test
-│   └── ...
-├── slurm/
-│   ├── setup_env.sbatch
-│   ├── run_gate.sbatch
-│   ├── run_grid.sbatch         # SLURM array over gated cells
-│   └── run_all.sbatch          # legacy GPT-2 IOI
-└── results/
+src/                 AP, AttrP, EAP-IG, task generators, metrics, model loading, registry (gate thresholds)
+scripts/             gate, queue, workers, analysis, report/deck data      (see scripts/README.md)
+slurm/               cluster jobs for the Ada cluster                      (see slurm/README.md)
+results/             gate output, 440 runs under grid/, analysis/
+data/                MultiBLiMP local copies, native-review sheet
+report/              report.tex, bibliography, generated tables/figures
+slides/              proposal deck and results deck (source: build_deck.js)
 ```
 
-## Ada workflow (v2)
+## How the study was run (Ada cluster, one RTX 2080 Ti per job)
 
 ```bash
-# See scripts/ada_workflow.sh for the full sequence.
-sbatch ~/mp/slurm/setup_env.sbatch
-NODE=$(cat ~/mp/.compute_node)
-
-sbatch --nodelist=$NODE ~/mp/slurm/run_validate.sbatch   # engine sanity (+ optional EAP-IG)
-sbatch --nodelist=$NODE ~/mp/slurm/run_gate.sbatch       # tokenizer + competence gate
-
-# after gate: lock cells (no --allow-expected)
-$VENV/bin/python scripts/make_cell_list.py --directions denoising noising
-N=$(python3 -c "import json; print(json.load(open('results/gated_cells.json'))['n_jobs'])")
-sbatch --nodelist=$NODE --array=0-$((N-1)) ~/mp/slurm/run_grid.sbatch   # stage 1
-
-sbatch --nodelist=$NODE ~/mp/slurm/run_stage2.sbatch   # language compare + logit lens
+sbatch slurm/setup_env.sbatch                                    # environment (see requirements.txt)
+sbatch --export=ALL,GATE_MODEL=<model> slurm/gate_model.sbatch   # competence gate, one job per model
+python scripts/merge_gate.py                                     # -> results/gate_coverage.*, gated_cells.json
+python scripts/queue_init.py --queue-dir <shared dir>            # one task per gated (cell, direction, seed)
+sbatch --array=0-7 slurm/worker.sbatch                           # workers pull tasks from the queue
+sbatch slurm/analyze.sbatch                                      # -> results/analysis/
 ```
 
-Offline planning (no GPU/torch):
+Account and QoS flags (`-A`, `--qos`) are cluster-specific and left to you. Local smoke test on a tiny batch:
 
 ```bash
-python3 scripts/gate.py --offline
-python3 scripts/tokenizer_audit.py --offline
-python3 scripts/make_cell_list.py --allow-expected --directions denoising
+python scripts/run_all.py --model gpt2 --task ioi --lang en --n-prompts 4 --device cpu --out results/smoke --skip-eap
 ```
 
-## Local smoke (CPU, tiny N)
+Environment: PyTorch 2.1 to 2.4 and **TransformerLens 2.15** (newer TransformerLens needs torch >= 2.6, which the cluster's CUDA 12.1 setup could not provide; this is also why Gemma-3 could not be loaded). Everything runs in fp32.
+
+## Rebuilding the report and the slides (light, runs on a laptop)
 
 ```bash
-python scripts/run_all.py --model gpt2 --task ioi --lang en \
-  --n-prompts 4 --device cpu --out results/smoke --skip-eap
+uv run --with matplotlib --with numpy python scripts/make_report_assets.py   # numbers, tables, figures from saved results
+cd report && latexmk -xelatex report.tex && cp report.pdf ../report.pdf      # needs XeLaTeX and Noto Sans Devanagari
+cd slides/results && npm install && node build_deck.js                        # needs pptxgenjs
 ```
 
-## Status
+Every number in the report comes from `results/analysis/summary.json` and `cells.csv` through `scripts/make_report_assets.py`.
 
-| Phase | Status |
-|-------|--------|
-| v1 GPT-2 IOI (5 seeds × abc/flip) | Done — see WRITEUP.md |
-| Pipeline generalisation | Done |
-| Offline expected gate / tokenizer notes | Done — `results/gate_coverage.*`, `results/tokenizer_audit.*` |
-| Ada gate + grid runs | Pending (needs cluster) |
-| Grid writeup numbers | Pending Ada results |
+## Limits
+
+Read these before citing (details in the report, section 5):
+
+- Hindi evidence is narrow: agreement and induction on BLOOM, induction on Llama. Nothing is claimed for Hindi IOI or factual recall, because no model passed the gate.
+- Seeds resample prompts from the same templates and weights, so intervals describe prompt sampling, not variation across trained models.
+- The EAP-IG here is a node-level variant, not the edge-level method of Hanna et al.
+- The gate rule gained one branch and one tier after the first gate numbers were seen, before any patching result (Amendment 2). Gemma-3-1B and Sarvam-1 could not be run (TransformerLens support).
+- The Hindi templates were reviewed by one native speaker, the author.
+
+## Licence and data
+
+Code: MIT, see [LICENSE](LICENSE). The MultiBLiMP data in `data/multiblimp/` comes from [jumelet/multiblimp](https://huggingface.co/datasets/jumelet/multiblimp) and keeps its own licence (see the dataset card). Models are downloaded from Hugging Face and keep their own licences; Llama-3.2-1B weights were loaded from the `unsloth/Llama-3.2-1B` mirror.

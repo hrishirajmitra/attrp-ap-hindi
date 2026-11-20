@@ -9,8 +9,8 @@
 #SBATCH -c 8
 #SBATCH --mem=32G
 #SBATCH -t 01:30:00
-#SBATCH -o /home2/hrishiraj.mitra/mp-attrpatch-logs/%x-%j.out
-#SBATCH -e /home2/hrishiraj.mitra/mp-attrpatch-logs/%x-%j.err
+#SBATCH -o /home2/%u/mp-attrpatch-logs/%x-%j.out
+#SBATCH -e /home2/%u/mp-attrpatch-logs/%x-%j.err
 set -uo pipefail
 : "${GATE_MODEL:?set GATE_MODEL}"
 echo "JOB $SLURM_JOB_ID host=$(hostname) acct=${SLURM_JOB_ACCOUNT:-?} model=$GATE_MODEL"
