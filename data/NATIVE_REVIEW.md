@@ -146,6 +146,6 @@ Left must be the grammatical one and right the ungrammatical one **at the word s
 
 ## Sign-off
 
-Overall: ( ) templates fine  ( ) fine after the fixes noted  ( ) not usable
+Overall: ( ) templates fine  (x) fine after the fixes noted  ( ) not usable
 
-Reviewer: ______________  Date: ______________
+Reviewer: Hrishiraj Mitra (project author)  Date: 19/11/26
