@@ -246,6 +246,88 @@ const SCRIPT = [
     ].join("\n\n"),
     ask: [],
   },
+  {
+    id: 13,
+    title: "Appendix: activation patching",
+    say: [
+      `Every task is built as pairs. The clean prompt is one the model gets right; the corrupted prompt has the same template and the same token length, but the cue that decides the answer is changed, so the answer no longer follows.`,
+      `The metric is the logit difference at the last token: the logit of the correct answer minus the logit of the wrong one.`,
+      `In the denoising direction I run the corrupted prompt, overwrite one component's output with its value from the clean run, and measure again. I divide the change by the full clean-minus-corrupted gap, so 1 means that component alone restores the behaviour and 0 means it does nothing. Noising is the mirror image: run the clean prompt and put in the corrupted value.`,
+      `One forward pass per component per batch is what makes it slow. To save time, each patched pass starts at the patched layer from a cached residual stream, and every run checks that shortcut against the full forward pass.`,
+    ].join("\n\n"),
+    ask: [
+      `Why the ABC corruption for IOI? It is the standard one from Wang et al.: replacing all three names removes the information about who the indirect object is, without changing the template.`,
+      `Why equal token length? So clean and corrupted activations line up position by position and no padding is needed.`,
+    ],
+  },
+  {
+    id: 14,
+    title: "Appendix: attribution patching",
+    say: [
+      `Attribution patching replaces the per-component re-run with a first-order Taylor expansion of the metric around the corrupted run. If one component's activation moves from its corrupted value to its clean value, the change in the metric is approximately that difference dotted with the gradient of the metric with respect to the activation.`,
+      `So I need three things: the clean activations, from one cached forward pass; the corrupted activations and the gradient at every head and MLP output, from one forward and one backward pass; and a dot product per component. The result is divided by the same clean-minus-corrupted gap as activation patching, so the two scores are on the same scale.`,
+      `The approximation is good when the metric is close to linear along the change. It is known to be weak when a patch pushes through a strong nonlinearity, such as a saturated attention softmax, or when the activation change is large, as in early layers. The layer-zero result in this study fits that.`,
+    ].join("\n\n"),
+    ask: [
+      `Is any training involved? No. The weights are frozen; the gradient is taken with respect to activations only.`,
+      `Does micro-batching change the numbers? No. The metric is a mean over prompts, so summing the per-chunk contributions gives exactly the single-batch value.`,
+    ],
+  },
+  {
+    id: 15,
+    title: "Appendix: integrated gradients",
+    say: [
+      `Integrated gradients replaces the single gradient at the corrupted point with an average of gradients along a straight path of inputs from corrupted to clean. Here the path is in the token embeddings: at step alpha the input is the corrupted embedding plus alpha times the difference. I take five midpoints along the path, average the gradient at each component, and dot it with the same clean-minus-corrupted activation difference.`,
+      `With a single step at alpha equals zero, this is exactly attribution patching. I checked that on GPT-2 and the difference was zero.`,
+      `Why can it disagree with activation patching even when it is a better approximation of something? Along the path every component moves toward clean at once. Activation patching moves one component and holds the rest at their corrupted values. So integrated gradients answers a slightly different question.`,
+      `This is node-level, on head and MLP outputs, not the edge-level method of Hanna and colleagues.`,
+    ].join("\n\n"),
+    ask: [
+      `Why five steps? The pilot used five; the five, ten, twenty sweep on seed 0 shows the grid means do not move.`,
+    ],
+  },
+  {
+    id: 16,
+    title: "Appendix: measuring agreement",
+    say: [
+      `For heads I use Spearman rank correlation over all heads, because what you use these scores for is choosing which components to look at, and a rank statistic does not care about scale.`,
+      `For MLPs I use Pearson correlation over layers, as in the GPT-2 pilot. There are only twelve to twenty-eight layers per model, and the question is whether the sign flips.`,
+      `Two secondary checks: the rank correlation restricted to heads with an activation-patching effect above 0.05, and the overlap of the top fourteen heads. Fourteen is the size of the known GPT-2 indirect-object circuit.`,
+      `Each cell has five seeds, and a seed resamples the hundred prompts. Intervals are bootstrap intervals over seeds. For Hindi against English I used an equivalence test, two one-sided tests, because the question is whether the two are the same, and a non-significant difference alone does not show that.`,
+    ].join("\n\n"),
+    ask: [
+      `Why not top-k precision against a known circuit? Known circuits exist only for GPT-2 IOI, so for the other cells I compare with activation patching itself.`,
+    ],
+  },
+  {
+    id: 17,
+    title: "Appendix: gate thresholds",
+    say: [
+      `The gate exists because agreement between two attribution methods means nothing if the model is not doing the task. Each threshold guards against one specific way a cell could be meaningless.`,
+      `Accuracy of at least 0.80: chance is 0.50 for a two-way choice, so this asks for a reliable behaviour, not an occasional one.`,
+      `Clean logit difference of at least 0.5: every score is divided by the clean-minus-corrupted gap, and a tiny gap turns the scores into noise.`,
+      `Corrupted logit difference of at most 0.25, or at most half the clean value: the corruption has to actually remove the behaviour. The half rule was added in Amendment 2, because agreement corruptions leave a residual grammatical preference, and the absolute cap alone rejected every agreement cell.`,
+      `Single-token answers in at least 90 percent of prompts: the metric reads one token per answer. Cells that fail only this are kept as a first-token tier and used only as a sensitivity check.`,
+    ].join("\n\n"),
+    ask: [
+      `Why 100 prompts? Same as the GPT-2 pilot. At 80 percent accuracy, 100 prompts give a 95 percent interval of about plus or minus 0.08.`,
+      `Were thresholds changed after seeing results? The corrupted-gap rule and the first-token tier were changed after the first gate numbers, before any comparison of methods. They are in Amendment 2.`,
+    ],
+  },
+  {
+    id: 18,
+    title: "Appendix: other design choices",
+    say: [
+      `The head threshold of 0.90 is a judgement call, not something derived from data. The GPT-2 pilot used 0.80 and reached about 0.99, so for the grid I set a stricter bar, and fixed it before the grid ran.`,
+      `The equivalence margin of 0.05 is the same size as the pilot's bar for a meaningful improvement in rank correlation, and it was also fixed in advance.`,
+      `The restricted cut-off of 0.05 was set in advance to stop many near-zero heads from inflating the correlation; in the pilot, 86 to 88 percent of heads had effects below 0.02.`,
+      `Denoising is the primary direction, as in the pilot; noising is the secondary check. Everything runs in 32-bit floats on models up to two billion parameters, which is what fits on one eleven-gigabyte 2080 Ti, and avoids half-precision rounding in the gradients.`,
+      `BLOOM replaced Gemma 3 because the library could not load Gemma, and two more BLOOM sizes were added because the first gate left only one usable Hindi cell. Both changes came before any comparison of methods.`,
+    ].join("\n\n"),
+    ask: [
+      `Is 0.90 cherry-picked? It was fixed before the grid. With 0.80, as in the pilot, every core cell would pass; the two Qwen misses are 0.86 and 0.88.`,
+    ],
+  },
 ];
 
 function notesFor(id) {
@@ -281,6 +363,18 @@ function writeSpeakerNotesMd() {
     `Gate table · noising mean ${NOISE_RHO} · Amendment 2 (gate phase, before any grid result) · fertility observational (Spearman ${speakable(DATA.h4.rho_vs_tokens_per_word.rho, 2)} with tokens/word, ${speakable(DATA.h4.rho_vs_clean_ld.rho, 2)} with clean LD).`
   );
   lines.push(``);
+  lines.push(`# Appendix (for questions; not part of the 13 minutes)`);
+  lines.push(``);
+  for (const e of SCRIPT.filter((x) => x.id >= 13)) {
+    lines.push(`## ${e.id}. ${e.title.replace(/^Appendix: /, "")}`);
+    lines.push(e.say);
+    if (e.ask && e.ask.length) {
+      lines.push(``);
+      lines.push(`**If asked**`);
+      for (const q of e.ask) lines.push(`- ${q}`);
+    }
+    lines.push(``);
+  }
   fs.writeFileSync(path.join(ROOT, "speaker_notes.md"), lines.join("\n"));
 }
 
@@ -413,6 +507,14 @@ async function main() {
   backup1(pres, C);
   backup2(pres, C);
   backup3(pres, C);
+
+  pres.addSection({ title: "Appendix" });
+  appendixAP(pres);
+  appendixAttrP(pres);
+  appendixIG(pres);
+  appendixMetrics(pres);
+  appendixGate(pres);
+  appendixDesign(pres);
 
   await pres.writeFile({ fileName: OUT });
 
@@ -1464,6 +1566,333 @@ function backup3(pres, C) {
   );
 
   s.addNotes(notesFor(12));
+}
+
+/* -------------------- Appendix -------------------- */
+
+function hdr(text) {
+  return { text, options: { bold: true, color: COL.white, fill: { color: COL.charcoal } } };
+}
+
+function whyTable(s, header, rows, colW, y = 1.1, rowH = 0.5, fontSize = 11) {
+  const body = rows.map((r) =>
+    r.map((cell, j) => ({
+      text: cell,
+      options: { color: j === 0 ? COL.ink : j === 1 ? COL.teal : COL.ink, bold: j < 2 },
+    }))
+  );
+  s.addTable([header.map(hdr), ...body], {
+    x: 0.5,
+    y,
+    w: 9.0,
+    colW,
+    border: [{ pt: 0.5, color: "D0D5D8" }],
+    fontFace: "Calibri",
+    fontSize,
+    valign: "middle",
+    rowH,
+    margin: [3, 6, 3, 6],
+  });
+}
+
+function formulaBox(s, runs, y, h = 0.75) {
+  s.addShape("roundRect", { x: 0.5, y, w: 9.0, h, fill: { color: COL.card }, rectRadius: 0.08 });
+  s.addText(runs, {
+    x: 0.7,
+    y,
+    w: 8.6,
+    h,
+    fontFace: "Cambria",
+    fontSize: 17,
+    color: COL.ink,
+    align: "center",
+    valign: "middle",
+    margin: 0,
+    isTextBox: true,
+  });
+}
+
+function bullets(s, items, x, y, w, h, fontSize = 13) {
+  s.addText(
+    items.map((t, i) => ({
+      text: t,
+      options: { bullet: { type: "number" }, breakLine: i < items.length - 1 },
+    })),
+    { x, y, w, h, fontSize, color: COL.ink, paraSpaceAfter: 5, margin: 0, valign: "top", isTextBox: true }
+  );
+}
+
+const sub = (t) => ({ text: t, options: { subscript: true } });
+const txt = (t, o = {}) => ({ text: t, options: o });
+
+function appendixAP(pres) {
+  const s = pres.addSlide({ masterName: "CONTENT", sectionTitle: "Appendix" });
+  s.addText("Appendix: how activation patching works", { placeholder: "title" });
+
+  formulaBox(
+    s,
+    [
+      txt("score"),
+      sub("c"),
+      txt("  =  "),
+      txt("( m(corrupted, a"),
+      sub("c"),
+      txt(" ← clean) − m(corrupted) )  /  ( m(clean) − m(corrupted) )"),
+    ],
+    1.05,
+    0.65
+  );
+  s.addText("m = logit(correct answer) − logit(wrong answer) at the last token. 1 = component restores the behaviour; 0 = no effect.", {
+    x: 0.5,
+    y: 1.75,
+    w: 9.0,
+    h: 0.3,
+    fontSize: 11,
+    color: COL.muted,
+    align: "center",
+    margin: 0,
+    isTextBox: true,
+  });
+
+  bullets(
+    s,
+    [
+      "Build a clean prompt the model gets right and a corrupted prompt with the same template and token length.",
+      "Run the corrupted prompt, overwrite one head or MLP output with its clean value, and measure m again.",
+      "Repeat for every component. Noising is the mirror image: clean run, corrupted value.",
+      "Each patched pass starts at the patched layer from a cached residual; every run checks this against the full pass.",
+    ],
+    0.5,
+    2.2,
+    4.3,
+    2.9,
+    12
+  );
+
+  s.addTable(
+    [
+      [hdr("Task"), hdr("Corrupted prompt"), hdr("Answer pair")],
+      ["IOI", "all three names replaced (ABC)", "IO vs subject"],
+      ["Capitals", "a different country", "its capital vs the other"],
+      ["Agreement", "another sentence's prefix", "agreeing vs non-agreeing verb"],
+      ["Induction", "A B C A B pattern broken", "copied token vs distractor"],
+    ].map((r, i) => (i === 0 ? r : r.map((t) => ({ text: t, options: { color: COL.ink } })))),
+    {
+      x: 5.0,
+      y: 2.2,
+      w: 4.5,
+      colW: [0.95, 1.85, 1.7],
+      border: [{ pt: 0.5, color: "D0D5D8" }],
+      fontFace: "Calibri",
+      fontSize: 10,
+      valign: "middle",
+      rowH: 0.42,
+      margin: [2, 4, 2, 4],
+    }
+  );
+
+  s.addNotes(notesFor(13));
+}
+
+function appendixAttrP(pres) {
+  const s = pres.addSlide({ masterName: "CONTENT", sectionTitle: "Appendix" });
+  s.addText("Appendix: how the gradient shortcut works", { placeholder: "title" });
+
+  formulaBox(
+    s,
+    [
+      txt("Δ̂"),
+      sub("c"),
+      txt("  =  ( a"),
+      sub("c"),
+      txt("(clean) − a"),
+      sub("c"),
+      txt("(corrupted) )  ·  ∇"),
+      sub("a_c"),
+      txt(" m  |"),
+      sub("corrupted"),
+      txt("     ÷ ( m(clean) − m(corrupted) )"),
+    ],
+    1.05,
+    0.65
+  );
+  s.addText("First-order Taylor expansion of m around the corrupted run: the change in one activation, times the slope of m with respect to it.", {
+    x: 0.5,
+    y: 1.75,
+    w: 9.0,
+    h: 0.3,
+    fontSize: 11,
+    color: COL.muted,
+    align: "center",
+    margin: 0,
+    isTextBox: true,
+  });
+
+  s.addText("What it costs", { x: 0.5, y: 2.2, w: 4.3, h: 0.3, fontSize: 14, bold: true, color: COL.ink, margin: 0, isTextBox: true });
+  bullets(
+    s,
+    [
+      "One forward pass on the clean prompt, caching every head and MLP output.",
+      "One forward and one backward pass on the corrupted prompt, keeping the gradient at each output.",
+      "One dot product per component. Weights stay frozen; nothing is trained.",
+    ],
+    0.5,
+    2.6,
+    4.3,
+    2.4,
+    12
+  );
+
+  s.addText("Where it should break", { x: 5.2, y: 2.2, w: 4.3, h: 0.3, fontSize: 14, bold: true, color: COL.ink, margin: 0, isTextBox: true });
+  bullets(
+    s,
+    [
+      "When m is far from linear along the change, for example a saturated attention softmax.",
+      "When the activation change is large, as in early layers that act like an extended embedding.",
+      "The layer-0 MLP result in this study fits the second case.",
+    ],
+    5.2,
+    2.6,
+    4.3,
+    2.4,
+    12
+  );
+
+  s.addNotes(notesFor(14));
+}
+
+function appendixIG(pres) {
+  const s = pres.addSlide({ masterName: "CONTENT", sectionTitle: "Appendix" });
+  s.addText("Appendix: integrated gradients (EAP-IG)", { placeholder: "title" });
+
+  formulaBox(
+    s,
+    [
+      txt("Δ̂"),
+      sub("c"),
+      txt("  =  ( a"),
+      sub("c"),
+      txt("(clean) − a"),
+      sub("c"),
+      txt("(corrupted) )  ·  "),
+      txt("1/n  Σ"),
+      sub("k"),
+      txt("  ∇"),
+      sub("a_c"),
+      txt(" m |"),
+      sub("x(α_k)"),
+      txt("      x(α) = e"),
+      sub("corr"),
+      txt(" + α (e"),
+      sub("clean"),
+      txt(" − e"),
+      sub("corr"),
+      txt(")"),
+    ],
+    1.05,
+    0.65
+  );
+  s.addText("Average the gradient along a straight path of token embeddings from corrupted to clean; α_k = (k + ½)/n, n = 5.", {
+    x: 0.5,
+    y: 1.75,
+    w: 9.0,
+    h: 0.3,
+    fontSize: 11,
+    color: COL.muted,
+    align: "center",
+    margin: 0,
+    isTextBox: true,
+  });
+
+  const cards = [
+    {
+      t: "Reduces to attribution patching",
+      d: "With one step at α = 0 the formula is exactly attribution patching. Checked on GPT-2, IOI and agreement, both directions: difference 0.",
+    },
+    {
+      t: "Why it can disagree with AP",
+      d: "Along the path every component moves toward clean at once. Activation patching moves one component and holds the rest corrupted.",
+    },
+    {
+      t: "What this version is",
+      d: "Node-level, on head and MLP outputs; not the edge-level method of Hanna et al. Steps 5, 10, 20 swept on seed 0.",
+    },
+  ];
+  cards.forEach((c, i) => {
+    const x = 0.5 + i * 3.07;
+    s.addShape("roundRect", { x, y: 2.25, w: 2.86, h: 2.0, fill: { color: COL.light }, line: { color: "D0D5D8", width: 0.5 }, rectRadius: 0.08 });
+    s.addText(c.t, { x: x + 0.15, y: 2.38, w: 2.56, h: 0.55, fontSize: 13, bold: true, color: COL.plum, margin: 0, valign: "top", isTextBox: true });
+    s.addText(c.d, { x: x + 0.15, y: 2.9, w: 2.56, h: 1.3, fontSize: 12, color: COL.ink, margin: 0, valign: "top", isTextBox: true });
+  });
+
+  s.addNotes(notesFor(15));
+}
+
+function appendixMetrics(pres) {
+  const s = pres.addSlide({ masterName: "CONTENT", sectionTitle: "Appendix" });
+  s.addText("Appendix: how agreement is measured", { placeholder: "title" });
+  whyTable(
+    s,
+    ["Question", "Statistic", "Why this one"],
+    [
+      ["Do heads rank the same?", "Spearman ρ, all heads", "Scores are used to pick components; ranks ignore scale"],
+      ["Do MLP layers agree?", "Pearson r, over layers", "12–28 values per model; the question is whether the sign flips"],
+      ["Among heads that matter?", "Restricted ρ, |AP| > 0.05", "Most heads have near-zero effect and add rank noise"],
+      ["Same top heads?", "Top-14 overlap", "14 = size of the known GPT-2 IOI circuit"],
+      ["How stable?", "5 seeds, bootstrap CI", "A seed resamples the 100 prompts"],
+      ["Is Hindi the same as English?", "Equivalence test (TOST), ±0.05", "A non-significant difference does not show sameness"],
+    ],
+    [2.6, 2.7, 3.7],
+    1.1,
+    0.55,
+    12
+  );
+  s.addNotes(notesFor(16));
+}
+
+function appendixGate(pres) {
+  const s = pres.addSlide({ masterName: "CONTENT", sectionTitle: "Appendix" });
+  s.addText("Appendix: why the gate thresholds are what they are", { placeholder: "title" });
+  whyTable(
+    s,
+    ["Criterion", "Threshold", "What it guards against"],
+    [
+      ["Clean accuracy", "≥ 0.80", "Chance is 0.50; asks for a reliable behaviour, not an occasional one"],
+      ["Clean logit difference", "≥ 0.5", "Scores are divided by clean − corrupted; a tiny gap makes them noise"],
+      ["Corrupted logit difference", "≤ 0.25, or ≤ ½ × clean", "Corruption must remove the behaviour; ½ rule added for agreement (Amendment 2)"],
+      ["Single-token answers", "≥ 90% of prompts", "The metric reads one token per answer; else first-token tier (sensitivity only)"],
+      ["Prompts per check", "100, seed 0", "Same as the GPT-2 pilot; at 0.80 accuracy the 95% CI is about ±0.08"],
+      ["Prompt shape", "equal token length", "Clean and corrupted align position by position; no padding"],
+    ],
+    [2.3, 2.0, 4.7],
+    1.1,
+    0.55,
+    12
+  );
+  s.addNotes(notesFor(17));
+}
+
+function appendixDesign(pres) {
+  const s = pres.addSlide({ masterName: "CONTENT", sectionTitle: "Appendix" });
+  s.addText("Appendix: why the other design choices", { placeholder: "title" });
+  whyTable(
+    s,
+    ["Choice", "Value", "Reason"],
+    [
+      ["Head agreement bar", "ρ ≥ 0.90", "Judgement call: pilot bar 0.80, pilot got 0.99; fixed before grid"],
+      ["Equivalence margin", "±0.05", "Same size as the pilot's bar for a meaningful Δρ; fixed in advance"],
+      ["Restricted cut-off", "|AP| > 0.05", "Set in advance; in the pilot 86–88% of heads were below 0.02"],
+      ["Integration steps", "5 (sweep 5/10/20)", "Pilot value; the sweep checks that more steps change nothing"],
+      ["Direction", "denoising first", "As in the pilot; noising run on the same cells as a check"],
+      ["Precision and size", "fp32, ≤ 2B params", "Fits one 11 GB 2080 Ti; no half-precision rounding in gradients"],
+      ["Models", "Gemma-3 → BLOOM ×3", "Gemma-3 won't load in TL 2.15; first gate left 1 Hindi cell"],
+    ],
+    [2.2, 2.1, 4.7],
+    1.05,
+    0.47,
+    12
+  );
+  s.addNotes(notesFor(18));
 }
 
 main().catch((e) => {

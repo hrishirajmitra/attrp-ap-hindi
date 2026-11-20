@@ -124,3 +124,82 @@ Thank you. I am happy to take questions.
 
 ## Backup
 Gate table · noising mean 0.93 · Amendment 2 (gate phase, before any grid result) · fertility observational (Spearman minus 0.51 with tokens/word, 0.45 with clean LD).
+
+# Appendix (for questions; not part of the 13 minutes)
+
+## 13. activation patching
+Every task is built as pairs. The clean prompt is one the model gets right; the corrupted prompt has the same template and the same token length, but the cue that decides the answer is changed, so the answer no longer follows.
+
+The metric is the logit difference at the last token: the logit of the correct answer minus the logit of the wrong one.
+
+In the denoising direction I run the corrupted prompt, overwrite one component's output with its value from the clean run, and measure again. I divide the change by the full clean-minus-corrupted gap, so 1 means that component alone restores the behaviour and 0 means it does nothing. Noising is the mirror image: run the clean prompt and put in the corrupted value.
+
+One forward pass per component per batch is what makes it slow. To save time, each patched pass starts at the patched layer from a cached residual stream, and every run checks that shortcut against the full forward pass.
+
+**If asked**
+- Why the ABC corruption for IOI? It is the standard one from Wang et al.: replacing all three names removes the information about who the indirect object is, without changing the template.
+- Why equal token length? So clean and corrupted activations line up position by position and no padding is needed.
+
+## 14. attribution patching
+Attribution patching replaces the per-component re-run with a first-order Taylor expansion of the metric around the corrupted run. If one component's activation moves from its corrupted value to its clean value, the change in the metric is approximately that difference dotted with the gradient of the metric with respect to the activation.
+
+So I need three things: the clean activations, from one cached forward pass; the corrupted activations and the gradient at every head and MLP output, from one forward and one backward pass; and a dot product per component. The result is divided by the same clean-minus-corrupted gap as activation patching, so the two scores are on the same scale.
+
+The approximation is good when the metric is close to linear along the change. It is known to be weak when a patch pushes through a strong nonlinearity, such as a saturated attention softmax, or when the activation change is large, as in early layers. The layer-zero result in this study fits that.
+
+**If asked**
+- Is any training involved? No. The weights are frozen; the gradient is taken with respect to activations only.
+- Does micro-batching change the numbers? No. The metric is a mean over prompts, so summing the per-chunk contributions gives exactly the single-batch value.
+
+## 15. integrated gradients
+Integrated gradients replaces the single gradient at the corrupted point with an average of gradients along a straight path of inputs from corrupted to clean. Here the path is in the token embeddings: at step alpha the input is the corrupted embedding plus alpha times the difference. I take five midpoints along the path, average the gradient at each component, and dot it with the same clean-minus-corrupted activation difference.
+
+With a single step at alpha equals zero, this is exactly attribution patching. I checked that on GPT-2 and the difference was zero.
+
+Why can it disagree with activation patching even when it is a better approximation of something? Along the path every component moves toward clean at once. Activation patching moves one component and holds the rest at their corrupted values. So integrated gradients answers a slightly different question.
+
+This is node-level, on head and MLP outputs, not the edge-level method of Hanna and colleagues.
+
+**If asked**
+- Why five steps? The pilot used five; the five, ten, twenty sweep on seed 0 shows the grid means do not move.
+
+## 16. measuring agreement
+For heads I use Spearman rank correlation over all heads, because what you use these scores for is choosing which components to look at, and a rank statistic does not care about scale.
+
+For MLPs I use Pearson correlation over layers, as in the GPT-2 pilot. There are only twelve to twenty-eight layers per model, and the question is whether the sign flips.
+
+Two secondary checks: the rank correlation restricted to heads with an activation-patching effect above 0.05, and the overlap of the top fourteen heads. Fourteen is the size of the known GPT-2 indirect-object circuit.
+
+Each cell has five seeds, and a seed resamples the hundred prompts. Intervals are bootstrap intervals over seeds. For Hindi against English I used an equivalence test, two one-sided tests, because the question is whether the two are the same, and a non-significant difference alone does not show that.
+
+**If asked**
+- Why not top-k precision against a known circuit? Known circuits exist only for GPT-2 IOI, so for the other cells I compare with activation patching itself.
+
+## 17. gate thresholds
+The gate exists because agreement between two attribution methods means nothing if the model is not doing the task. Each threshold guards against one specific way a cell could be meaningless.
+
+Accuracy of at least 0.80: chance is 0.50 for a two-way choice, so this asks for a reliable behaviour, not an occasional one.
+
+Clean logit difference of at least 0.5: every score is divided by the clean-minus-corrupted gap, and a tiny gap turns the scores into noise.
+
+Corrupted logit difference of at most 0.25, or at most half the clean value: the corruption has to actually remove the behaviour. The half rule was added in Amendment 2, because agreement corruptions leave a residual grammatical preference, and the absolute cap alone rejected every agreement cell.
+
+Single-token answers in at least 90 percent of prompts: the metric reads one token per answer. Cells that fail only this are kept as a first-token tier and used only as a sensitivity check.
+
+**If asked**
+- Why 100 prompts? Same as the GPT-2 pilot. At 80 percent accuracy, 100 prompts give a 95 percent interval of about plus or minus 0.08.
+- Were thresholds changed after seeing results? The corrupted-gap rule and the first-token tier were changed after the first gate numbers, before any comparison of methods. They are in Amendment 2.
+
+## 18. other design choices
+The head threshold of 0.90 is a judgement call, not something derived from data. The GPT-2 pilot used 0.80 and reached about 0.99, so for the grid I set a stricter bar, and fixed it before the grid ran.
+
+The equivalence margin of 0.05 is the same size as the pilot's bar for a meaningful improvement in rank correlation, and it was also fixed in advance.
+
+The restricted cut-off of 0.05 was set in advance to stop many near-zero heads from inflating the correlation; in the pilot, 86 to 88 percent of heads had effects below 0.02.
+
+Denoising is the primary direction, as in the pilot; noising is the secondary check. Everything runs in 32-bit floats on models up to two billion parameters, which is what fits on one eleven-gigabyte 2080 Ti, and avoids half-precision rounding in the gradients.
+
+BLOOM replaced Gemma 3 because the library could not load Gemma, and two more BLOOM sizes were added because the first gate left only one usable Hindi cell. Both changes came before any comparison of methods.
+
+**If asked**
+- Is 0.90 cherry-picked? It was fixed before the grid. With 0.80, as in the pilot, every core cell would pass; the two Qwen misses are 0.86 and 0.88.
