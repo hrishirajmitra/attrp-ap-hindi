@@ -22,3 +22,4 @@ env.sh
 queue/
 slides/results/node_modules/
 slides/results/slide-*.jpg
+slides/results/talk_narration.mp3

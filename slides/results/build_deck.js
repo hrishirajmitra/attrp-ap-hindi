@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * Build slides/results/results_deck.pptx from deck_data.json.
- * Structured deck: theme + layouts + native charts + speaker notes.
+ * One SCRIPT array drives pptx notes, speaker_notes.md, and narration_script.txt.
  */
 const fs = require("fs");
 const path = require("path");
@@ -26,10 +26,10 @@ const THEME = {
     lt1: "FFFFFF",
     dk2: "36454F",
     lt2: "F4F6F7",
-    accent1: "0D7377", // teal — activation patching
-    accent2: "E07A3D", // saffron — attribution patching
-    accent3: "6B3A6B", // plum — EAP-IG
-    accent4: "C0392B", // fail red
+    accent1: "0D7377",
+    accent2: "E07A3D",
+    accent3: "6B3A6B",
+    accent4: "C0392B",
     accent5: "2C3E50",
     accent6: "7F8C8D",
     hlink: "0D7377",
@@ -59,8 +59,227 @@ function fmt(x, d = 2) {
   return Number(x).toFixed(d);
 }
 
-function notes(lines) {
-  return lines.filter(Boolean).join("\n\n");
+function speakable(n, d = 2) {
+  const s = fmt(n, d);
+  if (s.startsWith("-")) return "minus " + s.slice(1);
+  return s;
+}
+
+/* -------------------- Spoken script (single source) -------------------- */
+
+const AP_X = fmt(DATA.cost.ap_over_attrp, 0);
+const EAP_X = fmt(DATA.cost.eap_over_attrp, 1);
+const MEAN_AP = fmt(DATA.cost.mean_t_ap, 0);
+const MEAN_ATTR = fmt(DATA.cost.mean_t_attr, 1);
+const H1_N = DATA.h1.n_cells;
+const H1_FAIL_N = Array.isArray(DATA.h1.failing) ? DATA.h1.failing.length : Number(DATA.h1.failing);
+const H1_PASS = H1_N - H1_FAIL_N;
+const H1_THR = fmt(DATA.h1.threshold, 2);
+const MLP0_AP = speakable(DATA.mlp_layers.gpt2_ioi.ap[0], 2);
+const MLP0_ATTR = speakable(DATA.mlp_layers.gpt2_ioi.attr[0], 2);
+const EAP_MLP_BEFORE = speakable(DATA.eap_examples.gpt2_ioi.mlp_r, 2);
+const EAP_MLP_AFTER = speakable(DATA.eap_examples.gpt2_ioi.eap_mlp_r, 2);
+const EAP_RHO_BEFORE = speakable(DATA.eap_examples.gpt2_ioi.rho, 2);
+const EAP_RHO_AFTER = speakable(DATA.eap_examples.gpt2_ioi.eap_rho, 2);
+const HEAD_DROP = speakable(-DATA.h5.head_rho_gain_mean, 2);
+const H3_DIFF = speakable(DATA.h3.pooled_mean_diff, 3);
+const H3_LO = speakable(DATA.h3.ci95[0], 3);
+const H3_HI = speakable(DATA.h3.ci95[1], 3);
+const NOISE_RHO = speakable(DATA.noising_mean_rho, 2);
+const FAIL_ACC_LO = fmt(DATA.hindi_fail_acc.min * 100, 0);
+const FAIL_ACC_HI = fmt(DATA.hindi_fail_acc.max * 100, 0);
+const SWEEP = DATA.h5.step_sweep_seed0;
+const SWEEP_RHO = ["5", "10", "20"].map((k) => speakable(SWEEP[k].mean_head_rho, 2)).join(", ");
+const BLOOM_MLP = speakable(Math.min(...Object.values(DATA.bloom_ioi_mlp_r)), 3);
+const MISS0 = DATA.h1.bars.filter((b) => !b.pass_h1);
+const MISS_A = speakable(MISS0[0].rho, 2);
+const MISS_B = speakable(MISS0[1].rho, 2);
+
+const SCRIPT = [
+  {
+    id: 1,
+    title: "Title",
+    say: [
+      `Activation patching is the usual way to find which attention heads and which MLP layers matter for a behaviour. It is exact, and it is expensive. Attribution patching is the first-order shortcut people reach for when models get bigger.`,
+      `I am not proposing a new method. I measured when the cheap method gives the same answer as the expensive one, across tasks, models, and across English and Hindi.`,
+      `The short version: for attention heads, almost always. For MLP outputs, not always, and the failure is usually one early layer. And for Hindi, I can only test it where the model can actually do the task. That last point turns out to matter as much as the methods themselves.`,
+    ].join("\n\n"),
+    ask: [
+      `Is this a new method? No. I measure when an existing cheap method matches the expensive one, across languages.`,
+    ],
+  },
+  {
+    id: 2,
+    title: "Trade-off",
+    say: [
+      `On the left is activation patching. You run the model on a clean prompt and on a corrupted prompt, then copy one component's activation from the clean run into the corrupted run. That tells you how much that component mattered. Exact, and slow.`,
+      `On the right is attribution patching. It is a Taylor approximation: one forward pass, one backward pass, and every component is ranked at once.`,
+      `On my grid the median wall-time ratio is about ${AP_X}, over the ${DATA.cost.n_runs_timed} core denoising runs. Roughly ${MEAN_AP} seconds against ${MEAN_ATTR} seconds per run, on a two thousand eighty Ti. That is measured wall time, not a theoretical operation count. The question of the talk is when that cheaper ranking matches the expensive one.`,
+    ].join("\n\n"),
+    ask: [
+      `Why not always use activation patching? At one and a half billion parameters and many cells, it is the bottleneck. The cheap method is what people ship.`,
+    ],
+  },
+  {
+    id: 3,
+    title: "What I ran",
+    say: [
+      `I ran nine models under two billion parameters: GPT-2, two Pythias, two Qwens, Llama three point two, and three BLOOM sizes. Four tasks, each in English and Hindi: the indirect-object task, capitals, subject-verb agreement, and induction.`,
+      `A cell here is one model on one task in one language. Before I patch anything I run a competence gate: clean accuracy at least point eight, and a clear logit difference. If the model cannot do the task, I do not localise it.`,
+      `Sixty-six cells went through the gate. Forty-four were runnable: forty-three with a full pass, and one that only works on the first token. Then ${DATA.meta.n_runs} runs: activation patching, attribution patching, and integrated gradients, two directions, five seeds. Zero failures.`,
+      `One note if it comes up: Gemma three was in the original plan. The tooling could not load it, so BLOOM replaced it, and that was logged before any grid result.`,
+    ].join("\n\n"),
+    ask: [
+      `Why five seeds? They resample prompts, not weights. The confidence intervals reflect prompt sampling.`,
+    ],
+  },
+  {
+    id: 4,
+    title: "Hindi gate",
+    say: [
+      `Before I could compare anything, most of the Hindi tasks dropped out. This grid shows why. Each row is a model and each column is a task in one language. Green means the model passed the check.`,
+      `English is green everywhere. In Hindi, none of the six models I gated can do the indirect-object task, in Devanagari or romanised. Capitals fails in five of six; only Llama gets it, and only on the first token, the orange half circle. In the failing cells accuracy sits between ${FAIL_ACC_LO} and ${FAIL_ACC_HI} percent, so there is no behaviour to trace.`,
+      `What is left in Hindi is verb agreement on the three BLOOM models, plus induction on BLOOM and Llama. That is the entire Hindi evidence for whether the two methods agree.`,
+      `I checked the Hindi templates myself and fixed one place word. Rerunning the gate changed nothing, so I think this is the models and not my prompts.`,
+    ].join("\n\n"),
+    ask: [
+      `Why so little Hindi? That is the finding. You cannot localise a behaviour the model does not have.`,
+    ],
+  },
+  {
+    id: 5,
+    title: "Heads",
+    say: [
+      `Where the gate passes, do the two methods agree on heads? Each bar is one cell. Height is the Spearman correlation between the head rankings from activation patching and from attribution patching. The threshold of ${H1_THR} was fixed in the preregistration before any comparison ran.`,
+      `${H1_PASS} of ${H1_N} cells clear it. The two that miss, in red, are Qwen English agreement, at ${MISS_A} and ${MISS_B}. Still high, just under the bar. Everything else sits between point nine one and point nine nine five.`,
+      `The noising direction averages about ${NOISE_RHO} and tells the same story. So among the cells that pass the Hindi gate, is attribution patching worse in Hindi?`,
+    ].join("\n\n"),
+    ask: [
+      `Is ${H1_THR} magic? No, but it was fixed in the preregistration. The two misses are ${MISS_A} and ${MISS_B}; the other ${H1_PASS} cells are point nine one to point nine nine five. Do not lean on the restricted correlation over heads with large activation-patching effect: only a handful of heads pass that cut-off, and it is higher than the plain correlation in just eleven of the twenty-two cells where it is defined.`,
+    ],
+  },
+  {
+    id: 6,
+    title: "Hindi vs English",
+    say: [
+      `The only place I can pair English and Hindi on the same model with a full gate pass is BLOOM agreement, three sizes. Induction also pairs on BLOOM and Llama, but that was set aside as appendix by the preregistration.`,
+      `The bars are almost the same; the axis starts at point eight zero. An equivalence test with a preregistered margin of plus or minus point zero five puts the pooled Hindi minus English difference at plus ${H3_DIFF}. The ninety-five percent interval runs from ${H3_LO} to ${H3_HI}, inside the margin, so the verdict is equivalent.`,
+      `I want the caveat clear: three pairs, one model family, one task. I do not claim this for Hindi indirect object identification. Those cells never passed the gate. Heads look fine. What about MLPs?`,
+    ].join("\n\n"),
+    ask: [
+      `Is BLOOM special? It is the only family with usable Hindi agreement. That is a limit, not a virtue.`,
+    ],
+  },
+  {
+    id: 7,
+    title: "MLP layer 0",
+    say: [
+      `I predicted that attribution patching would anti-correlate on MLP outputs in most cells. That failed: only two of twenty-four. The GPT-2 failure on the indirect-object task is real, but it is almost entirely layer zero.`,
+      `From layer one onward the two lines sit on top of each other. Only layer zero flips sign: ${MLP0_AP} for activation patching, ${MLP0_ATTR} for attribution patching. Layers one through eleven match within point zero one.`,
+      `The same pattern shows up in Qwen point five B and in both Pythias on this task. That part is exploratory; I looked after the prediction failed. On BLOOM the MLPs agree almost perfectly, Pearson r about ${BLOOM_MLP} or higher, so this is specific to some circuits, not universal.`,
+      `Can integrated gradients fix layer zero without changing the head ranking?`,
+    ].join("\n\n"),
+    ask: [
+      `Why layer zero? Early nonlinearities; the linear approximation is worst there. I did not claim a mechanism beyond that.`,
+    ],
+  },
+  {
+    id: 8,
+    title: "Integrated gradients",
+    say: [
+      `I asked whether integrated gradients repairs MLP agreement. Across the grid, the preregistered answer is no: the mean MLP gain is not distinguishable from zero.`,
+      `On GPT-2 indirect object identification it does fix layer zero: MLP agreement goes from ${EAP_MLP_BEFORE} to ${EAP_MLP_AFTER}. But the head ranking no longer matches activation patching. It drops from ${EAP_RHO_BEFORE} to ${EAP_RHO_AFTER}. That trade is the point of this slide.`,
+      `Across the whole grid the mean head correlation drops by ${HEAD_DROP}. Integrated gradients also costs about ${EAP_X} times attribution patching, at five steps. More steps do not help: mean head correlation is ${SWEEP_RHO} at five, ten and twenty steps. So this is not under-integration. Use attribution patching for heads; pay for activation patching on early MLPs when it matters.`,
+    ].join("\n\n"),
+    ask: [
+      `Does integrated gradients at one endpoint equal attribution patching? Yes. With a single gradient at alpha equals zero it reduces to attribution patching; I checked that on GPT-2 to one e minus five. The head drop comes from integrating along the path.`,
+      `More steps? Single cells shift by up to point zero nine in head correlation between step counts, far less than the ${HEAD_DROP} drop.`,
+    ],
+  },
+  {
+    id: 9,
+    title: "Takeaway",
+    say: [
+      `Three rules from this.`,
+      `Use attribution patching for attention heads. It agreed in ${H1_PASS} of ${H1_N} cells, and it is about ${AP_X} times cheaper.`,
+      `Check early MLPs with real activation patching. Layer zero can flip sign.`,
+      `Gate the task before you localise. Hindi indirect object identification fails in all six models I gated, and capitals in five of six. If the model cannot do the task, there is no circuit worth tracing.`,
+      `The limits in one breath: the Hindi evidence is narrow, mostly BLOOM agreement. Gemma was dropped for tooling. Seeds resample prompts, not weights. And I reviewed the templates myself.`,
+      `Thank you. I am happy to take questions.`,
+    ].join("\n\n"),
+    ask: [
+      `What next? A larger Hindi-capable model with single-token agreement, or a hand-hooked Gemma once the tooling catches up.`,
+    ],
+  },
+  {
+    id: 10,
+    title: "Backup: gate counts",
+    say: `Backup. Full gate breakdown by task and language, if asked.`,
+    ask: [],
+  },
+  {
+    id: 11,
+    title: "Backup: noising",
+    say: `Backup. Secondary direction from the preregistration. Mean head correlation under noising is ${NOISE_RHO}, slightly lower than denoising, same qualitative story.`,
+    ask: [],
+  },
+  {
+    id: 12,
+    title: "Backup: amendments and fertility",
+    say: [
+      `Backup for design-change questions and the fertility hypothesis.`,
+      `Amendment 2 was written during the gate phase, before any grid result existed. Do not claim more than that: the gate-rule changes came after the first gate numbers, and the noising sign fix was found by a smoke test that compared the two methods when no study results existed.`,
+      `Fertility and clean logit difference correlate with agreement at Spearman ${speakable(DATA.h4.rho_vs_tokens_per_word.rho, 2)} and ${speakable(DATA.h4.rho_vs_clean_ld.rho, 2)}. Observational only.`,
+    ].join("\n\n"),
+    ask: [],
+  },
+];
+
+function notesFor(id) {
+  const e = SCRIPT.find((x) => x.id === id);
+  if (!e) return "";
+  const parts = [e.say];
+  if (e.ask && e.ask.length) {
+    parts.push("If asked:\n" + e.ask.map((q) => "• " + q).join("\n"));
+  }
+  return parts.join("\n\n");
+}
+
+function writeSpeakerNotesMd() {
+  const lines = [
+    `# Speaker notes · results deck (≈10 min)`,
+    ``,
+    `Rehearse from the notes pane in PowerPoint, or from this page. Aim about one minute per main slide.`,
+    `Spoken text is filled from the same SCRIPT that builds the deck; numbers come from deck_data.json.`,
+    ``,
+  ];
+  for (const e of SCRIPT.filter((x) => x.id <= 9)) {
+    lines.push(`## ${e.id}. ${e.title}`);
+    lines.push(e.say);
+    if (e.ask && e.ask.length) {
+      lines.push(``);
+      lines.push(`**If asked**`);
+      for (const q of e.ask) lines.push(`- ${q}`);
+    }
+    lines.push(``);
+  }
+  lines.push(`## Backup`);
+  lines.push(
+    `Gate table · noising mean ${NOISE_RHO} · Amendment 2 (gate phase, before any grid result) · fertility observational (Spearman ${speakable(DATA.h4.rho_vs_tokens_per_word.rho, 2)} with tokens/word, ${speakable(DATA.h4.rho_vs_clean_ld.rho, 2)} with clean LD).`
+  );
+  lines.push(``);
+  fs.writeFileSync(path.join(ROOT, "speaker_notes.md"), lines.join("\n"));
+}
+
+function writeNarrationScript() {
+  const parts = [];
+  for (const e of SCRIPT.filter((x) => x.id <= 9)) {
+    parts.push(e.say);
+  }
+  const text = parts.join("\n\n");
+  fs.writeFileSync(path.join(ROOT, "narration_script.txt"), text + "\n");
+  const words = text.trim().split(/\s+/).length;
+  console.log("narration words:", words);
 }
 
 async function main() {
@@ -68,14 +287,13 @@ async function main() {
   pres.defineLayout({ name: "LAYOUT_16x9", width: 10, height: 5.625 });
   pres.layout = "LAYOUT_16x9";
   pres.author = DATA.meta.author;
-  pres.title = "When can the cheap patching method replace the expensive one?";
+  pres.title = "When can attribution patching stand in for activation patching?";
   pres.subject = "AttrP vs AP · English/Hindi multi-cell study";
   pres.company = "IIIT Hyderabad";
   pres.theme = { headFontFace: THEME.headFontFace, bodyFontFace: THEME.bodyFontFace };
 
   const C = pres.SchemeColor;
 
-  // Layouts
   pres.defineSlideMaster({
     title: "TITLE_DARK",
     background: { color: COL.charcoal },
@@ -115,7 +333,7 @@ async function main() {
             w: 9.0,
             h: 0.7,
             color: COL.ink,
-            fontSize: 26,
+            fontSize: 24,
             bold: true,
             margin: 0,
           },
@@ -163,7 +381,6 @@ async function main() {
     slideNumber: { x: 9.2, y: 5.28, w: 0.5, h: 0.25, color: "A0A8B0", fontSize: 10 },
   });
 
-  // Sections
   pres.addSection({ title: "Opening" });
   slide1(pres, C);
   slide2(pres, C);
@@ -179,7 +396,6 @@ async function main() {
   pres.addSection({ title: "Close" });
   slide9(pres, C);
 
-  // Backup for Q&A
   pres.addSection({ title: "Backup" });
   backup1(pres, C);
   backup2(pres, C);
@@ -187,7 +403,6 @@ async function main() {
 
   await pres.writeFile({ fileName: OUT });
 
-  // Apply theme colors into the package (needs NODE_PATH to this folder's node_modules)
   try {
     if (!module.paths.includes(path.join(ROOT, "node_modules"))) {
       module.paths.unshift(path.join(ROOT, "node_modules"));
@@ -200,8 +415,8 @@ async function main() {
     console.warn("Hint: NODE_PATH=" + path.join(ROOT, "node_modules") + " node build_deck.js");
   }
 
-  // Export speaker notes markdown
   writeSpeakerNotesMd();
+  writeNarrationScript();
   console.log("wrote", OUT);
 }
 
@@ -209,10 +424,10 @@ async function main() {
 
 function slide1(pres, C) {
   const s = pres.addSlide({ masterName: "TITLE_DARK", sectionTitle: "Opening" });
-  s.addText("When can the cheap patching method\nreplace the expensive one?", {
+  s.addText("When can attribution patching\nstand in for activation patching?", {
     placeholder: "title",
   });
-  s.addText("Attribution patching vs activation patching · English and Hindi · 9 models", {
+  s.addText("English and Hindi · nine models · a competence gate before every comparison", {
     x: 0.6,
     y: 3.4,
     w: 8.8,
@@ -232,7 +447,6 @@ function slide1(pres, C) {
     margin: 0,
     isTextBox: true,
   });
-  // Accent dots for method colours
   [
     [COL.teal, "Activation"],
     [COL.saffron, "Attribution"],
@@ -251,24 +465,15 @@ function slide1(pres, C) {
       isTextBox: true,
     });
   });
-  s.addNotes(
-    notes([
-      "Open with the question on the slide — don't read the subtitle. Pause one beat.",
-      "One sentence of setup: activation patching is the causal gold standard for finding which heads and MLPs matter, but it is expensive. Attribution patching is the cheap first-order shortcut everyone uses when models get bigger.",
-      "Today's answer, upfront: for attention heads, yes — almost always. For MLP outputs, not always, and the failure is usually one early layer. Hindi only where the model can do the task.",
-      "Transition: so what is the trade-off, exactly?",
-      "Q: Is this a new method? A: No — we measure when an existing cheap method matches the expensive one, across languages.",
-    ])
-  );
+  s.addNotes(notesFor(1));
 }
 
 function slide2(pres, C) {
   const s = pres.addSlide({ masterName: "CONTENT", sectionTitle: "Opening" });
-  s.addText(`Activation patching is exact — and about ${fmt(DATA.cost.ap_over_attrp, 0)}× slower`, {
+  s.addText(`Activation patching is exact, but about ${AP_X} times slower`, {
     placeholder: "title",
   });
 
-  // Two method cards
   s.addShape(pres.shapes.ROUNDED_RECTANGLE, {
     x: 0.5,
     y: 1.15,
@@ -311,24 +516,23 @@ function slide2(pres, C) {
   });
   s.addText(
     [
-      { text: "Causal gold standard", options: { bold: true, breakLine: true } },
-      { text: "One forward pass per head / MLP", options: { breakLine: true } },
-      { text: "Scales with #components × prompts", options: { breakLine: true } },
-      { text: `~${fmt(DATA.cost.mean_t_ap, 0)}s per cell on a 2080 Ti`, options: {} },
+      { text: "Exact causal test", options: { bold: true, breakLine: true } },
+      { text: "One forward pass per head or MLP", options: { breakLine: true } },
+      { text: "Cost grows with components and prompts", options: { breakLine: true } },
+      { text: `About ${MEAN_AP} s per cell on a 2080 Ti`, options: {} },
     ],
     { x: 0.75, y: 1.85, w: 3.8, h: 1.7, fontSize: 14, color: COL.ink, paraSpaceAfter: 6, margin: 0, isTextBox: true }
   );
   s.addText(
     [
       { text: "First-order gradient shortcut", options: { bold: true, breakLine: true } },
-      { text: "One forward + one backward pass", options: { breakLine: true } },
-      { text: "Ranks all components at once", options: { breakLine: true } },
-      { text: `~${fmt(DATA.cost.mean_t_attr, 1)}s per cell — ~${fmt(DATA.cost.ap_over_attrp, 0)}× faster`, options: {} },
+      { text: "One forward pass and one backward pass", options: { breakLine: true } },
+      { text: "Ranks every component at once", options: { breakLine: true } },
+      { text: `About ${MEAN_ATTR} s per cell, roughly ${AP_X} times faster`, options: {} },
     ],
     { x: 5.45, y: 1.85, w: 3.8, h: 1.7, fontSize: 14, color: COL.ink, paraSpaceAfter: 6, margin: 0, isTextBox: true }
   );
 
-  // Big cost callout
   s.addShape(pres.shapes.ROUNDED_RECTANGLE, {
     x: 0.5,
     y: 4.1,
@@ -339,32 +543,26 @@ function slide2(pres, C) {
   });
   s.addText(
     [
-      { text: `~${fmt(DATA.cost.ap_over_attrp, 0)}×  `, options: { bold: true, fontSize: 28, color: COL.saffron } },
+      { text: `~${AP_X}×  `, options: { bold: true, fontSize: 28, color: COL.saffron } },
       {
-        text: "wall-time of AP vs AttrP on our grid. When do they agree?",
+        text: "wall time of activation vs attribution patching on this grid. When do they agree?",
         options: { fontSize: 15, color: COL.white },
       },
     ],
     { x: 0.75, y: 4.25, w: 8.5, h: 0.55, margin: 0, valign: "middle", isTextBox: true }
   );
 
-  s.addNotes(
-    notes([
-      "Point to the left card first: activation patching literally copies a component's activation from a clean run into a corrupted run. Exact, slow.",
-      "Right card: attribution patching is a Taylor approximation — one backward pass, all components at once.",
-      `The ~${fmt(DATA.cost.ap_over_attrp, 0)}× is measured wall time on our Ada 2080 Ti grid — the median per-run AP/AttrP time ratio over the ${DATA.cost.n_runs_timed} core denoising runs (the mean times on the cards, ~${fmt(DATA.cost.mean_t_ap, 0)} s vs ~${fmt(DATA.cost.mean_t_attr, 1)} s, give the same ~${fmt(DATA.cost.ap_over_attrp_ratio_of_means, 0)}×). Not a theoretical FLOP count. Say that if asked.`,
-      "End on the question in the banner. Transition: here is what we actually ran.",
-      "Q: Why not just always use activation patching? A: At 1.5B+ parameters and many cells, it is the bottleneck. The cheap method is what people ship.",
-    ])
-  );
+  s.addNotes(notesFor(2));
 }
 
 function slide3(pres, C) {
   const s = pres.addSlide({ masterName: "CONTENT", sectionTitle: "Opening" });
-  s.addText("What we ran: gate first, then patch", { placeholder: "title" });
+  s.addText("I check that the model can do the task before patching it", {
+    placeholder: "title",
+  });
 
   const steps = [
-    { n: "1", t: "9 models", d: "GPT-2, Pythia, Qwen, Llama, BLOOM\n(≤2B / 11 GB)" },
+    { n: "1", t: "9 models", d: "GPT-2, Pythia, Qwen,\nLlama, BLOOM (≤2B)" },
     { n: "2", t: "4 tasks × en/hi", d: "IOI, capitals,\nagreement, induction" },
     { n: "3", t: "Competence gate", d: `${DATA.meta.n_gate_cells} cells →\n${DATA.meta.n_runnable} runnable` },
     { n: "4", t: `${DATA.meta.n_runs} runs`, d: "AP + AttrP + EAP-IG\n2 dirs × 5 seeds" },
@@ -443,7 +641,7 @@ function slide3(pres, C) {
     fill: { color: COL.light },
   });
   s.addText(
-    "Rule: if the model cannot do the task (clean accuracy < 0.80, clean logit-diff < 0.5), we do not localise it.",
+    "A cell is one model on one task in one language. If clean accuracy is below 0.80 or the logit difference is below 0.5, I do not localise it.",
     {
       x: 0.75,
       y: 4.05,
@@ -457,22 +655,13 @@ function slide3(pres, C) {
     }
   );
 
-  s.addNotes(
-    notes([
-      "Walk the four boxes left to right. Emphasise the gate: we refuse to localise behaviour the model does not have.",
-      "Gemma-3 was in the proposal; TransformerLens 2.15 cannot load it on our Ada torch build, so BLOOM replaced it — logged in Amendment 2, before any grid result.",
-      `${DATA.meta.n_runs} runs, zero failures. About four hours of wall time across irel and research accounts.`,
-      "Transition: the gate itself is the first finding — especially for Hindi.",
-      "Q: Why five seeds? A: They resample prompts, not weights. CIs reflect prompt sampling.",
-    ])
-  );
+  s.addNotes(notesFor(3));
 }
 
 function slide4(pres, C) {
   const s = pres.addSlide({ masterName: "CONTENT", sectionTitle: "Findings" });
-  s.addText("Finding 1: the gate is the Hindi result", { placeholder: "title" });
+  s.addText("Most small models cannot do the Hindi tasks", { placeholder: "title" });
 
-  // Build a compact gate matrix: models × key conditions
   const models = [
     "gpt2",
     "pythia-160m",
@@ -571,35 +760,26 @@ function slide4(pres, C) {
     });
   });
 
-  // Legend + takeaway
   s.addText(
     [
-      { text: "● strict  ", options: { color: COL.pass } },
-      { text: "◐ first-token  ", options: { color: COL.saffron } },
-      { text: "○ fail  ", options: { color: COL.fail } },
-      { text: "grey = not gated (English-only models)", options: { color: COL.muted } },
+      { text: "● passed  ", options: { color: COL.pass } },
+      { text: "◐ first token only  ", options: { color: COL.saffron } },
+      { text: "○ failed  ", options: { color: COL.fail } },
+      { text: "grey = English-only models, not gated on Hindi", options: { color: COL.muted } },
     ],
     { x: 0.5, y: 4.75, w: 9.0, h: 0.28, fontSize: 11, margin: 0, isTextBox: true }
   );
 
-  s.addNotes(
-    notes([
-      `This grid is the Hindi headline. Point to the right half: Hindi IOI and romanised IOI are red in all six models gated on Hindi; Hindi capitals is red except one first-token pass (Llama, the orange half-circle). In the ${DATA.hindi_fail_acc.n_cells} red cells of those three columns clean accuracy is ${fmt(DATA.hindi_fail_acc.min, 2)}–${fmt(DATA.hindi_fail_acc.max, 2)} — the models cannot do the task.`,
-      "Green Hindi cells: agreement on BLOOM (three sizes) and induction on BLOOM/Llama. That is the entire Hindi evidence for AttrP≈AP.",
-      "Grey cells are English-only models we never gated on Hindi.",
-      "Native-speaker review of Hindi templates: one place-word fix; re-gate unchanged. So this is mostly model competence, not broken templates.",
-      "Transition: where the gate passes, do the methods agree on heads?",
-      "Q: Why so little Hindi? A: That is the finding. You cannot localise a behaviour the model does not have.",
-    ])
-  );
+  s.addNotes(notesFor(4));
 }
 
 function slide5(pres, C) {
   const s = pres.addSlide({ masterName: "CONTENT", sectionTitle: "Findings" });
-  s.addText("Finding 2: for heads, the cheap method works", { placeholder: "title" });
+  s.addText("On attention heads, the two methods give the same ranking", {
+    placeholder: "title",
+  });
 
   const bars = DATA.h1.bars;
-  // Sort for readable chart: by model then task
   const shortModel = (m) => {
     if (m.startsWith("Qwen2.5-0.5")) return "Q0.5";
     if (m.startsWith("Qwen2.5-1.5")) return "Q1.5";
@@ -613,9 +793,7 @@ function slide5(pres, C) {
   const shortTask = { agreement: "agr", capitals: "cap", ioi: "ioi", induction: "ind" };
   const labels = bars.map((b) => `${shortModel(b.model)} ${shortTask[b.task] || b.task}/${b.lang}`);
   const values = bars.map((b) => Math.round(b.rho * 1000) / 1000);
-  const H1_THRESHOLD = DATA.h1.threshold; // preregistered 0.90
-  // One colour per bar: pptxgenjs colours a single-series bar chart per point when chartColors
-  // has more than one entry. Fail red for seed-mean rho below the threshold, teal otherwise.
+  const H1_THRESHOLD = DATA.h1.threshold;
   const barColors = bars.map((b) => (b.rho < H1_THRESHOLD ? COL.fail : COL.teal));
   const nMiss = barColors.filter((c) => c === COL.fail).length;
 
@@ -646,19 +824,17 @@ function slide5(pres, C) {
     }
   );
 
-  // Legend-style caption for the bar colours (the 0.90 gridline is the threshold)
   s.addText(
     [
       { text: "■ ", options: { color: COL.teal } },
-      { text: `ρ ≥ ${fmt(H1_THRESHOLD, 2)} (${bars.length - nMiss} cells)     `, options: { color: COL.ink } },
+      { text: `at or above ${fmt(H1_THRESHOLD, 2)} (${bars.length - nMiss})     `, options: { color: COL.ink } },
       { text: "■ ", options: { color: COL.fail } },
-      { text: `red = below the preregistered ${fmt(H1_THRESHOLD, 2)} (${nMiss} cells)     `, options: { color: COL.ink } },
+      { text: `below the preregistered ${fmt(H1_THRESHOLD, 2)} (${nMiss})     `, options: { color: COL.ink } },
       { text: "axis starts at 0.80", options: { color: COL.muted } },
     ],
     { x: 0.6, y: 4.72, w: 6.8, h: 0.28, fontSize: 11, margin: 0, valign: "middle", isTextBox: true }
   );
 
-  // Threshold callout
   s.addShape(pres.shapes.ROUNDED_RECTANGLE, {
     x: 7.5,
     y: 1.2,
@@ -667,7 +843,7 @@ function slide5(pres, C) {
     fill: { color: COL.card },
     rectRadius: 0.1,
   });
-  s.addText("22 / 24", {
+  s.addText(`${H1_PASS} / ${H1_N}`, {
     x: 7.6,
     y: 1.5,
     w: 1.9,
@@ -679,7 +855,7 @@ function slide5(pres, C) {
     margin: 0,
     isTextBox: true,
   });
-  s.addText("core cells\nρ ≥ 0.90", {
+  s.addText(`cells at or\nabove ${H1_THR}`, {
     x: 7.6,
     y: 2.25,
     w: 1.9,
@@ -690,7 +866,7 @@ function slide5(pres, C) {
     margin: 0,
     isTextBox: true,
   });
-  s.addText("Misses:\nQwen-0.5B agr/en\n0.86\nQwen-1.5B agr/en\n0.88", {
+  s.addText(`Misses:\nQwen-0.5B agr/en\n${MISS_A}\nQwen-1.5B agr/en\n${MISS_B}`, {
     x: 7.65,
     y: 3.05,
     w: 1.8,
@@ -702,20 +878,12 @@ function slide5(pres, C) {
     isTextBox: true,
   });
 
-  s.addNotes(
-    notes([
-      "This is H1. Head ranking agreement between AP and AttrP. Threshold 0.90 was preregistered.",
-      "22 of 24 strict-tier core cells pass. The two misses are Qwen English agreement — still high, just under the bar.",
-      "Noising direction is a bit lower (mean ρ ≈ 0.93) but the same story.",
-      "Transition: among the cells that pass the Hindi gate, is AttrP worse in Hindi?",
-      "Q: Is 0.90 magic? A: No, but it was fixed in the preregistration. The two misses are 0.86 and 0.88; the other 22 cells are 0.91–0.995. Do not lean on the restricted ρ (heads with |AP|>0.05): only a handful of heads pass that cut-off (median 4 per run), and it is higher than the plain ρ in just 11 of the 22 cells where it is defined.",
-    ])
-  );
+  s.addNotes(notesFor(5));
 }
 
 function slide6(pres, C) {
   const s = pres.addSlide({ masterName: "CONTENT", sectionTitle: "Findings" });
-  s.addText("Finding 3: where testable, Hindi matches English", {
+  s.addText("Where Hindi can be tested, it agrees as well as English", {
     placeholder: "title",
   });
 
@@ -774,7 +942,7 @@ function slide6(pres, C) {
     fill: { color: COL.card },
     rectRadius: 0.1,
   });
-  s.addText("H3 verdict", {
+  s.addText("Equivalence test", {
     x: 6.7,
     y: 1.4,
     w: 2.7,
@@ -797,7 +965,7 @@ function slide6(pres, C) {
     isTextBox: true,
   });
   s.addText(
-    `Pooled Hindi−English\nρ = +${fmt(DATA.h3.pooled_mean_diff, 3)}\n95% CI [${fmt(DATA.h3.ci95[0], 3)}, ${fmt(DATA.h3.ci95[1], 3)}]\n\nCaveat: 3 pairs,\none family (BLOOM),\nagreement only.`,
+    `Pooled Hindi − English\n+${fmt(DATA.h3.pooled_mean_diff, 3)}\n95% CI [${fmt(DATA.h3.ci95[0], 3)}, ${fmt(DATA.h3.ci95[1], 3)}]\n\nCaveat: 3 pairs,\none family (BLOOM),\nagreement only.`,
     {
       x: 6.7,
       y: 2.85,
@@ -810,20 +978,12 @@ function slide6(pres, C) {
     }
   );
 
-  s.addNotes(
-    notes([
-      "Only core task where we can pair English and Hindi on the same model with a strict gate: BLOOM agreement, three sizes. (Induction also pairs, on BLOOM and Llama, but it is appendix-only by the preregistration; Hindi is within 0.02 of English there too.)",
-      `Bars are almost the same; the axis starts at 0.80. Equivalence test (TOST, preregistered margin ±0.05): pooled Hindi−English difference +${fmt(DATA.h3.pooled_mean_diff, 3)}, 90% CI [${fmt(DATA.summary.H3.ci90[0], 3)}, +${fmt(DATA.summary.H3.ci90[1], 3)}], 95% CI [${fmt(DATA.h3.ci95[0], 3)}, +${fmt(DATA.h3.ci95[1], 3)}] — both inside the margin, so the verdict is equivalent.`,
-      "Say the caveat out loud: three pairs, one family. We do not claim this for Hindi IOI — those cells never gated.",
-      "Transition: heads look good. What about MLPs?",
-      "Q: Is BLOOM special? A: It is the only family with usable Hindi agreement. That is a limit, not a virtue.",
-    ])
-  );
+  s.addNotes(notesFor(6));
 }
 
 function slide7(pres, C) {
   const s = pres.addSlide({ masterName: "CONTENT", sectionTitle: "Findings" });
-  s.addText("Finding 4: the MLP failure is one early layer", { placeholder: "title" });
+  s.addText("On MLPs, the disagreement comes from layer 0", { placeholder: "title" });
 
   const mlp = DATA.mlp_layers.gpt2_ioi;
   const labels = mlp.ap.map((_, i) => String(i));
@@ -899,38 +1059,25 @@ function slide7(pres, C) {
     }
   );
 
-  s.addNotes(
-    notes([
-      "H2 said MLP AttrP would anti-correlate in most cells. Rejected: only 2 of 24 core cells. The famous GPT-2 IOI failure is real — and it is almost entirely MLP 0.",
-      "Walk the chart: teal and saffron overlap from layer 1 onward; only layer 0 flips sign.",
-      "Same layer-0 pattern in Qwen-0.5B and both Pythias on IOI. Labelled post hoc — we looked after seeing H2 fail.",
-      `BLOOM IOI MLPs actually agree: Pearson r(AP, AttrP) ≈ +${fmt(Math.min(...Object.values(DATA.bloom_ioi_mlp_r)), 3)} or higher in all three sizes. So this is circuit-specific, not universal.`,
-      "Transition: can integrated gradients fix layer 0 without breaking heads?",
-      "Q: Why MLP 0? A: Early nonlinearities; the linear AttrP approximation is worst there. We did not claim a mechanism beyond that.",
-    ])
-  );
+  s.addNotes(notesFor(7));
 }
 
 function slide8(pres, C) {
   const s = pres.addSlide({ masterName: "CONTENT", sectionTitle: "Findings" });
-  s.addText("Finding 5: EAP-IG swaps one error for another", {
+  s.addText("Integrated gradients fixes layer 0 but changes head ranking", {
     placeholder: "title",
   });
 
   const g = DATA.eap_examples.gpt2_ioi;
-  // EAP-IG step sweep (seed 0, core denoising cells): grid means per step count, from summary.json
-  const sweep = DATA.h5.step_sweep_seed0;
-  const SWEEP_RHO = ["5", "10", "20"].map((k) => fmt(sweep[k].mean_head_rho, 2)).join(" / ");
-  const SWEEP_MLP = ["5", "10", "20"].map((k) => fmt(sweep[k].mean_mlp_r, 2)).join(" / ");
+  const SWEEP_RHO_SHORT = ["5", "10", "20"].map((k) => fmt(SWEEP[k].mean_head_rho, 2)).join(" / ");
 
-  // Two comparison cards
   const cards = [
     {
       x: 0.5,
       title: "MLP agreement (GPT-2 IOI)",
       before: fmt(g.mlp_r, 2),
       after: fmt(g.eap_mlp_r, 2),
-      verdict: "Fixes layer-0 failure",
+      verdict: "Fixes the layer-0 failure",
       color: COL.pass,
     },
     {
@@ -938,7 +1085,7 @@ function slide8(pres, C) {
       title: "Head ranking (GPT-2 IOI)",
       before: fmt(g.rho, 2),
       after: fmt(g.eap_rho, 2),
-      verdict: "Breaks head ranking",
+      verdict: "Head ranking no longer matches AP",
       color: COL.fail,
     },
   ];
@@ -947,7 +1094,7 @@ function slide8(pres, C) {
       x: c.x,
       y: 1.15,
       w: 4.3,
-      h: 2.55,
+      h: 2.4,
       fill: { color: COL.card },
       rectRadius: 0.1,
     });
@@ -970,14 +1117,14 @@ function slide8(pres, C) {
         { text: "EAP-IG  ", options: { color: COL.plum, bold: true, fontSize: 14 } },
         { text: c.after, options: { color: COL.ink, fontSize: 28, bold: true } },
       ],
-      { x: c.x + 0.25, y: 1.9, w: 3.8, h: 0.7, margin: 0, isTextBox: true }
+      { x: c.x + 0.25, y: 1.85, w: 3.8, h: 0.7, margin: 0, isTextBox: true }
     );
     s.addText(c.verdict, {
       x: c.x + 0.25,
-      y: 2.9,
+      y: 2.75,
       w: 3.8,
-      h: 0.4,
-      fontSize: 16,
+      h: 0.5,
+      fontSize: 14,
       bold: true,
       color: c.color,
       margin: 0,
@@ -987,46 +1134,62 @@ function slide8(pres, C) {
 
   s.addShape(pres.shapes.ROUNDED_RECTANGLE, {
     x: 0.5,
-    y: 3.95,
+    y: 3.75,
     w: 9.0,
-    h: 0.95,
+    h: 1.15,
     fill: { color: COL.charcoal },
     rectRadius: 0.08,
   });
   s.addText(
     [
       {
-        text: `Cost: EAP-IG (5 steps) is ~${fmt(DATA.cost.eap_over_attrp, 1)}× AttrP. `,
+        text: `EAP-IG at 5 steps costs about ${EAP_X}× AttrP. `,
         options: { bold: true, color: COL.saffron },
       },
       {
-        text: `Across the grid, mean head ρ drops by ${fmt(-DATA.h5.head_rho_gain_mean, 2)}; MLP gain is ≈ 0 (CI crosses zero). Not a free upgrade. More steps do not help: mean head ρ is ${SWEEP_RHO} at 5 / 10 / 20 steps (seed 0).`,
+        text: `Across the grid, mean head correlation drops by ${fmt(-DATA.h5.head_rho_gain_mean, 2)}, and the MLP gain is indistinguishable from zero.`,
         options: { color: COL.white },
       },
     ],
-    { x: 0.7, y: 4.1, w: 8.6, h: 0.7, fontSize: 13, margin: 0, isTextBox: true }
+    { x: 0.7, y: 3.88, w: 8.6, h: 0.45, fontSize: 13, margin: 0, isTextBox: true }
+  );
+  s.addText(
+    `More steps do not help: mean head correlation is ${SWEEP_RHO_SHORT} at 5 / 10 / 20 steps (seed 0).`,
+    {
+      x: 0.7,
+      y: 4.4,
+      w: 8.6,
+      h: 0.35,
+      fontSize: 13,
+      color: "CAD5DC",
+      margin: 0,
+      isTextBox: true,
+    }
   );
 
-  s.addNotes(
-    notes([
-      "H5 asked whether EAP-IG repairs MLP agreement. Preregistered verdict: no (mean MLP gain CI crosses zero).",
-      "Exploratory look at GPT-2 IOI: EAP-IG does fix MLP 0 (−0.93 → +0.95) but head ρ collapses 0.99 → 0.40. That trade is the point of this slide.",
-      "Sanity check on the code: with a single gradient evaluation at α=0 (the corrupted-input end of the path for denoising, the clean end for noising) EAP-IG reduces to AttrP. scripts/test_eap_equiv.py asserts this to 1e-5 on GPT-2 (IOI and agreement, both directions). So the head drop comes from integrating along the path, not from a different code path.",
-      `Cost: ~${fmt(DATA.cost.eap_over_attrp, 1)}× is the median per-run EAP-IG/AttrP wall-time ratio over the ${DATA.cost.n_runs_timed} core denoising runs, at 5 steps.`,
-      "Practitioner takeaway coming next: use AttrP for heads; pay for AP on early MLPs when it matters.",
-      `Q: More IG steps? A: We swept 5, 10 and 20 steps on seed 0 (${sweep["5"].n} core cells). The grid means barely move: head ρ ${SWEEP_RHO}, MLP r ${SWEEP_MLP}. Single cells shift by up to 0.09 in head ρ between step counts, far less than the 0.36 drop, so it is not under-integration. Per-cell MLP r is noisier (shifts up to 0.33).`,
-    ])
-  );
+  s.addNotes(notesFor(8));
 }
 
 function slide9(pres, C) {
   const s = pres.addSlide({ masterName: "CLOSE_DARK", sectionTitle: "Close" });
-  s.addText("Takeaway: a three-line rule", { placeholder: "title" });
+  s.addText("What I would do in practice", { placeholder: "title" });
 
   const rules = [
-    { n: "1", t: "Use AttrP for attention heads", d: `ρ ≥ 0.90 in 22/24 core cells; ~${fmt(DATA.cost.ap_over_attrp, 0)}× cheaper than AP.` },
-    { n: "2", t: "Check early MLPs with real AP", d: "Layer 0 can flip sign under AttrP (IOI-type circuits)." },
-    { n: "3", t: "Gate the task before localising", d: "Hindi IOI fails in all 6 models gated on Hindi, capitals in 5 of 6 — nothing to patch." },
+    {
+      n: "1",
+      t: "Use attribution patching for attention heads",
+      d: `It agreed in ${H1_PASS} of ${H1_N} cells, and it is about ${AP_X} times cheaper.`,
+    },
+    {
+      n: "2",
+      t: "Check early MLPs with real activation patching",
+      d: "Layer 0 can flip sign under attribution patching on IOI-type circuits.",
+    },
+    {
+      n: "3",
+      t: "Gate the task before you localise",
+      d: "Hindi IOI fails in all 6 models gated on Hindi, capitals in 5 of 6.",
+    },
   ];
   rules.forEach((r, i) => {
     const y = 1.2 + i * 0.95;
@@ -1073,7 +1236,7 @@ function slide9(pres, C) {
   });
 
   s.addText(
-    "Limits: Hindi evidence = BLOOM agreement (+ induction). Gemma-3 not run (TL 2.15). Seeds resample prompts. Native review done.",
+    "Limits: Hindi evidence is mostly BLOOM agreement. Gemma-3 was dropped for tooling. Seeds resample prompts. I reviewed the templates myself.",
     {
       x: 0.6,
       y: 4.85,
@@ -1086,29 +1249,21 @@ function slide9(pres, C) {
     }
   );
 
-  s.addNotes(
-    notes([
-      "Close on the three rules. Do not reopen every finding.",
-      "Limits in one breath: Hindi is narrow; Gemma dropped for tooling; seeds are prompt resample; templates reviewed.",
-      "Offer backup slides for gate table, noising, and Amendment 2 / fertility.",
-      "Thank you — questions.",
-      "Q: What would you do next? A: A Hindi-capable larger model with single-token agreement, or a hand-hooked Gemma once TL catches up.",
-    ])
-  );
+  s.addNotes(notesFor(9));
 }
 
 /* -------------------- Backup -------------------- */
 
 function backup1(pres, C) {
   const s = pres.addSlide({ masterName: "CONTENT", sectionTitle: "Backup" });
-  s.addText("Backup: gate coverage (counts)", { placeholder: "title" });
+  s.addText("Backup: gate coverage by task and language", { placeholder: "title" });
 
   const rows = [
     [
       { text: "Condition", options: { bold: true, color: COL.white, fill: { color: COL.charcoal } } },
-      { text: "Strict", options: { bold: true, color: COL.white, fill: { color: COL.charcoal } } },
-      { text: "First-tok", options: { bold: true, color: COL.white, fill: { color: COL.charcoal } } },
-      { text: "Fail", options: { bold: true, color: COL.white, fill: { color: COL.charcoal } } },
+      { text: "Passed", options: { bold: true, color: COL.white, fill: { color: COL.charcoal } } },
+      { text: "First tok", options: { bold: true, color: COL.white, fill: { color: COL.charcoal } } },
+      { text: "Failed", options: { bold: true, color: COL.white, fill: { color: COL.charcoal } } },
     ],
   ];
   const order = [
@@ -1150,12 +1305,12 @@ function backup1(pres, C) {
     rowH: 0.36,
   });
 
-  s.addNotes("Backup slide. Use if asked for the full gate breakdown by task and language.");
+  s.addNotes(notesFor(10));
 }
 
 function backup2(pres, C) {
   const s = pres.addSlide({ masterName: "CONTENT", sectionTitle: "Backup" });
-  s.addText("Backup: noising direction still agrees on heads", { placeholder: "title" });
+  s.addText("Backup: noising still agrees on heads", { placeholder: "title" });
 
   s.addShape(pres.shapes.ROUNDED_RECTANGLE, {
     x: 1.5,
@@ -1177,7 +1332,7 @@ function backup2(pres, C) {
     margin: 0,
     isTextBox: true,
   });
-  s.addText("Mean head Spearman ρ (AP, AttrP) · noising · core cells", {
+  s.addText("Mean head Spearman correlation (AP, AttrP) under noising", {
     x: 1.7,
     y: 2.9,
     w: 6.6,
@@ -1189,7 +1344,7 @@ function backup2(pres, C) {
     isTextBox: true,
   });
   s.addText(
-    "Slightly lower than denoising, same qualitative story. Qwen/Llama agreement noising dips to ~0.76–0.86.",
+    "Slightly lower than denoising, same qualitative story. Qwen and Llama agreement noising dips to about 0.76–0.86.",
     {
       x: 1.0,
       y: 4.3,
@@ -1202,12 +1357,12 @@ function backup2(pres, C) {
       isTextBox: true,
     }
   );
-  s.addNotes("Backup. Secondary direction from the preregistration.");
+  s.addNotes(notesFor(11));
 }
 
 function backup3(pres, C) {
   const s = pres.addSlide({ masterName: "CONTENT", sectionTitle: "Backup" });
-  s.addText("Backup: deviations and H4 (observational)", { placeholder: "title" });
+  s.addText("Backup: design changes and fertility", { placeholder: "title" });
 
   s.addText("Amendment 2 (gate phase, before any grid result)", {
     x: 0.5,
@@ -1222,8 +1377,8 @@ function backup3(pres, C) {
   });
   s.addText(
     [
-      { text: "Gemma-3 → BLOOM (TL 2.15)", options: { breakLine: true } },
-      { text: "Added BLOOM-1b1 / 1b7 after first gate", options: { breakLine: true } },
+      { text: "Gemma-3 replaced by BLOOM (TL 2.15)", options: { breakLine: true } },
+      { text: "Added BLOOM-1b1 and 1b7 after first gate", options: { breakLine: true } },
       { text: "Corrupted-LD rule: max(0.25, 0.5×clean)", options: { breakLine: true } },
       { text: "First-token tier for multi-token answers", options: { breakLine: true } },
       { text: "Noising sign fix (smoke-test catch)", options: {} },
@@ -1242,7 +1397,7 @@ function backup3(pres, C) {
     }
   );
 
-  s.addText("H4: fertility & clean LD", {
+  s.addText("Fertility and clean LD (observational)", {
     x: 5.3,
     y: 1.1,
     w: 4.2,
@@ -1259,7 +1414,7 @@ function backup3(pres, C) {
   s.addText(
     [
       {
-        text: `Spearman(ρ, tokens/word) = ${fmt(tpw.rho, 2)}`,
+        text: `Spearman with tokens/word = ${fmt(tpw.rho, 2)}`,
         options: { breakLine: true },
       },
       {
@@ -1268,7 +1423,7 @@ function backup3(pres, C) {
       },
       { text: "", options: { breakLine: true } },
       {
-        text: `Spearman(ρ, clean LD) = ${fmt(cld.rho, 2)}`,
+        text: `Spearman with clean LD = ${fmt(cld.rho, 2)}`,
         options: { breakLine: true },
       },
       {
@@ -1277,7 +1432,7 @@ function backup3(pres, C) {
       },
       { text: "", options: { breakLine: true } },
       {
-        text: "Observational only — fertility entangled with model/task; no high-fertility Hindi cells gated.",
+        text: "Observational only. Fertility is entangled with model and task; no high-fertility Hindi cells gated.",
         options: { color: COL.muted },
       },
     ],
@@ -1295,48 +1450,7 @@ function backup3(pres, C) {
     }
   );
 
-  s.addNotes(
-    "Backup for design-change questions and the fertility hypothesis. Amendment 2 was written during the gate phase, before any grid result existed. Do not claim more than that: the gate-rule changes came after the first gate numbers, and the noising sign fix was found by a smoke test that compared AP and AttrP (ρ = −0.92) when no study results existed."
-  );
-}
-
-function writeSpeakerNotesMd() {
-  // Reconstruct from a lightweight mirror — notes are in the pptx; also dump a rehearsal script.
-  const md = `# Speaker notes · results deck (≈10 min)
-
-Rehearse from the notes pane in PowerPoint, or from this page. Aim ~1 minute per main slide.
-
-## 1. Title
-Open with the question. One sentence of setup: AP is exact and expensive; AttrP is the cheap shortcut. Preview the answer: heads yes; early MLPs sometimes no; Hindi only where the model can do the task.
-
-## 2. Trade-off
-Left = causal gold standard. Right = first-order Taylor. ~${fmt(DATA.cost.ap_over_attrp, 0)}× is measured wall time on our grid (median per-run ratio; mean ~${fmt(DATA.cost.mean_t_ap, 0)} s vs ~${fmt(DATA.cost.mean_t_attr, 1)} s per run). End on: when do they agree?
-
-## 3. What we ran
-Four boxes left to right. Emphasise the competence gate: ${DATA.meta.n_gate_cells} cells gated, ${DATA.meta.n_runnable} runnable (${DATA.meta.n_strict} strict + ${DATA.meta.n_first_token} first-token). Gemma→BLOOM if asked. ${DATA.meta.n_runs} runs, 0 failures.
-
-## 4. Gate / Hindi
-Point at the red Hindi block: Hindi IOI and romanised IOI fail in all 6 models gated on Hindi; capitals fails in 5 of 6 (one first-token pass, Llama). Failing-cell accuracy ${fmt(DATA.hindi_fail_acc.min, 2)}–${fmt(DATA.hindi_fail_acc.max, 2)}. Green Hindi = BLOOM agreement (+ induction on BLOOM/Llama). Native review: one place-word fix; re-gate unchanged.
-
-## 5. Heads (H1)
-22/24 core cells ρ≥0.90 (teal bars). Two Qwen English-agreement misses, 0.86 and 0.88 (red bars). Threshold was preregistered. Noising mean ρ ${fmt(DATA.noising_mean_rho, 2)}.
-
-## 6. Hindi = English (H3)
-Three BLOOM agreement pairs. Pooled Hindi−English +${fmt(DATA.h3.pooled_mean_diff, 3)}, 95% CI [${fmt(DATA.h3.ci95[0], 3)}, +${fmt(DATA.h3.ci95[1], 3)}]: equivalent within ±0.05. Say the caveat out loud.
-
-## 7. MLP layer 0 (H2 exploratory)
-Chart: only layer 0 disagrees (AP +${fmt(DATA.mlp_layers.gpt2_ioi.ap[0], 2)} vs AttrP ${fmt(DATA.mlp_layers.gpt2_ioi.attr[0], 2).replace("-", "−")}; layers 1–11 within 0.01). MLP r < 0 in only 2/24 core cells (H2 rejected). Same pattern Qwen-0.5B / Pythia IOI. BLOOM IOI MLPs agree (Pearson r ≈ +${fmt(Math.min(...Object.values(DATA.bloom_ioi_mlp_r)), 3)}) — circuit-specific.
-
-## 8. EAP-IG (H5)
-GPT-2 IOI: fixes MLP 0 (r ${fmt(DATA.eap_examples.gpt2_ioi.mlp_r, 2).replace("-", "−")} → +${fmt(DATA.eap_examples.gpt2_ioi.eap_mlp_r, 2)}), breaks head ranking (ρ ${fmt(DATA.eap_examples.gpt2_ioi.rho, 2)} → ${fmt(DATA.eap_examples.gpt2_ioi.eap_rho, 2)}). Grid: mean head ρ drops ${fmt(-DATA.h5.head_rho_gain_mean, 2)}; cost ~${fmt(DATA.cost.eap_over_attrp, 1)}× AttrP (5 steps). Not under-integration: mean head ρ ${["5", "10", "20"].map((k) => fmt(DATA.h5.step_sweep_seed0[k].mean_head_rho, 2)).join(" / ")} at 5 / 10 / 20 steps (seed 0).
-
-## 9. Takeaway
-Three rules. One breath of limits. Questions.
-
-## Backup
-Gate table · noising mean ρ ${fmt(DATA.noising_mean_rho, 2)} · Amendment 2 (gate phase, before any grid result) + H4 observational (Spearman ${fmt(DATA.h4.rho_vs_tokens_per_word.rho, 2).replace("-", "−")} with tokens/word, +${fmt(DATA.h4.rho_vs_clean_ld.rho, 2)} with clean LD).
-`;
-  fs.writeFileSync(path.join(ROOT, "speaker_notes.md"), md);
+  s.addNotes(notesFor(12));
 }
 
 main().catch((e) => {
