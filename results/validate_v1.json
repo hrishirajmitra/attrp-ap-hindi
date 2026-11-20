@@ -1,0 +1,58 @@
+{
+  "mean_rho": 0.9889253275460173,
+  "mean_mlp_r": -0.9275296792034252,
+  "worst_abs_diff": 9.48839265602075e-07,
+  "rows": [
+    {
+      "seed": 0,
+      "rho_new": 0.9821396993810787,
+      "mlp_r_new": -0.9160839745392277,
+      "max_abs_diff_ap_heads_vs_v1": 4.0185600852174095e-07,
+      "max_abs_diff_attr_heads_vs_v1": 1.5010812981497423e-07,
+      "max_abs_diff_ap_mlps_vs_v1": 3.101049991724447e-07,
+      "max_abs_diff_attr_mlps_vs_v1": 1.4224498767756444e-07,
+      "fast_mode": true
+    },
+    {
+      "seed": 1,
+      "rho_new": 0.9827264689333655,
+      "mlp_r_new": -0.9672311298064069,
+      "max_abs_diff_ap_heads_vs_v1": 5.721156966886735e-07,
+      "max_abs_diff_attr_heads_vs_v1": 3.0439914985858074e-07,
+      "max_abs_diff_ap_mlps_vs_v1": 9.48839265602075e-07,
+      "max_abs_diff_attr_mlps_vs_v1": 1.0276347414683862e-07,
+      "fast_mode": true
+    },
+    {
+      "seed": 2,
+      "rho_new": 0.9879229965436863,
+      "mlp_r_new": -0.9189529346564513,
+      "max_abs_diff_ap_heads_vs_v1": 4.520243544283743e-07,
+      "max_abs_diff_attr_heads_vs_v1": 3.7231347549404603e-07,
+      "max_abs_diff_ap_mlps_vs_v1": 3.5362755891957254e-07,
+      "max_abs_diff_attr_mlps_vs_v1": 7.017434717343507e-08,
+      "fast_mode": true
+    },
+    {
+      "seed": 3,
+      "rho_new": 0.9948758138413312,
+      "mlp_r_new": -0.9232372529745976,
+      "max_abs_diff_ap_heads_vs_v1": 4.2909479451493527e-07,
+      "max_abs_diff_attr_heads_vs_v1": 1.4918782928474705e-07,
+      "max_abs_diff_ap_mlps_vs_v1": 2.467294089592009e-07,
+      "max_abs_diff_attr_mlps_vs_v1": 1.6193131546771156e-07,
+      "fast_mode": true
+    },
+    {
+      "seed": 4,
+      "rho_new": 0.9969616590306244,
+      "mlp_r_new": -0.9121431040404426,
+      "max_abs_diff_ap_heads_vs_v1": 6.322518361473982e-07,
+      "max_abs_diff_attr_heads_vs_v1": 2.860344234800749e-07,
+      "max_abs_diff_ap_mlps_vs_v1": 6.658910992329847e-07,
+      "max_abs_diff_attr_mlps_vs_v1": 4.026785958011203e-07,
+      "fast_mode": true
+    }
+  ],
+  "pass": true
+}

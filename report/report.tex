@@ -151,7 +151,7 @@ Across the 24 core cells, Spearman $\rho$ between agreement and tokens per word 
 \end{enumerate}
 
 \section{Reproducibility}
-Code and results: \url{https://github.com/hrishirajmitra/attrp-ap-hindi}. The repository holds all code, per-run results (\texttt{results/grid/}, 440 runs), the gate output and the analysis tables are in the project repository; the protocol is in \texttt{PREREGISTRATION\_v2.md} with its amendments and the numbers quoted here are generated from \texttt{results/analysis/summary.json} and \texttt{cells.csv} by \texttt{scripts/make\_report\_assets.py}. Runs used one RTX 2080 Ti per job on the university cluster, about 4 hours wall-clock on up to 12 GPUs for the whole grid. A GPT-2 IOI pilot (v1, five seeds) preceded the grid: AttrP head $\rho=0.99$ and MLP $r=-0.93$ under ABC corruption.
+Code and results: \url{https://github.com/hrishirajmitra/attrp-ap-hindi}. The repository holds all code, per-run results (\texttt{results/grid/}, 440 runs), the gate output and the analysis tables are in the project repository; the protocol is in \texttt{PREREGISTRATION\_v2.md} with its amendments and the numbers quoted here are generated from \texttt{results/analysis/summary.json} and \texttt{cells.csv} by \texttt{scripts/make\_report\_assets.py}. Runs used one RTX 2080 Ti per job on the university cluster, about 4 hours wall-clock on up to 12 GPUs for the whole grid. The grid engine reproduces the pilot's per-component scores to within $10^{-6}$ (\texttt{results/validate\_v1.json}). A GPT-2 IOI pilot (v1, five seeds) preceded the grid: AttrP head $\rho=0.99$ and MLP $r=-0.93$ under ABC corruption.
 
 \bibliographystyle{plainnat}
 \bibliography{references}
